@@ -3,9 +3,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Load Path
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path "~/env")
+(add-to-list 'load-path "~/env/emacs")
 (require 'smooth-scrolling)
 (require 'psvn)
+(require 'goto-last-change)
+(require 'yasnippet-bundle)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -117,8 +120,6 @@
 (iswitchb-mode t)
 
 ;;go to last edit point
-(load-file "~/env/goto-last-change.el")
-(require 'goto-last-change)
 (global-set-key [(meta p)(u)] 'goto-last-change)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
