@@ -1,0 +1,240 @@
+# GNU Screen configuration file
+
+# This file can be found at http://jinome.stanford.edu/stat366/unix/.screenrc
+# Modified to play well with emacs, by moving Ctrl-A to Ctrl-P 
+# Modification of original files by Sven Guckes, Sarunas Vancevicius, and Mike Perry
+# Sarunas Vancevicius original: http://www.redbrick.dcu.ie/~svan/configs/screenrc
+# Mike Perry original:  http://fscked.org/writings/225notes/unix/.screenrc
+
+shell /bin/bash
+
+autodetach         on             
+crlf               off             
+deflogin           off             
+hardcopy_append    on              
+startup_message    off             
+vbell              off             
+
+#the default of A interferes with emacs keybindings for terminal
+escape	"^Pp" 
+
+#run everything in unicode, to allow display of international characters w/o problems
+defutf8 on 
+
+# ===============================================================
+# VARIABLES - Number values
+# ===============================================================
+defscrollback         10000            # default: 100
+silencewait           15              # default: 30
+
+
+#Change keybindings for convenience
+bindkey -k k7 prev
+bindkey -k k8 next
+bindkey -k k5 windowlist -b
+
+hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%< "
+
+bind u screen -t 'luke' ssh varun@$luke
+bind e screen -t 'dev' ssh -i $HOME/work/keys/id_production_web ubuntu@$dev
+bind v screen -t 'dev2' ssh -i $HOME/work/keys/id_production_web ubuntu@$dev2
+bind p screen -t 'fqprod' ssh -i $HOME/work/keys/id_production_web ubuntu@$prod
+
+
+
+# caption description:
+# caption always "%?%F%{-b bc}%:%{-b bb}%?%C|%D|%M %d|%H%?%F%{+u wb}%? %L=%-Lw%45>%{+b by}%n%f* %t%{-}%+Lw%-0<"
+# 
+# Anything I don't describe is treated literally.
+# 
+# %?          - Start of a conditional statement.
+#  %F         - Use this part of the statement if the window has focus (i.e. it
+#               is the only window or the currently active one).
+#  %{-b bc}   - Turn off bold, blue foreground, cyan background.
+# %:          - else
+#  %{-b bb}   - Turn off bold, blue foreground, blue background (this obscures
+#               the text on non-focused windows and just gives a blue line).
+# %?          - End conditional statement.
+#  %C         - time (hh:mm, leading space) in 12 hour format
+#  %D         - Three-letter day-of-week appreviation
+#  %M         - Three-letter month appreviation
+#  %d         - Day of the month
+#  %H         - hostname
+#  %?         - Start of conditional statement.
+#   %F        - Use this part of the statement if the window has focus.
+#   %{+u wb}  - underlined, white foreground, blue background
+#  %?         - End conditional (if not focused, text remaind blue on blue).
+#    %L=      - truncation/padding point.  With the 'L' qualifier, basically
+#               just acts as a reference point.  Further truncation/padding is
+#               done relative to here, not the beginning of the string
+#    %-Lw     - window list up to but not including the current window (-),
+#               show window flags (L)
+#    %45>     - truncation/padding marker; place this point about 45% of the
+#               way into the display area (45)
+#    %{+b by} - add bold (still underlined from before), blue foreground,
+#               yellow background
+#      %n     - number of the current window
+#      %f     - flags for current window
+#      %t     - title of current window
+#    %{-}     - undo last color change (so now we're back to underlined white
+#               on blue)  (technically, this is a pop; a second invocation
+#               would drop things back to unadorned blue on cyan)
+#    %+Lw     - window list from the next window on (-), show window flags (L)
+#    %-0<     - truncation/padding point.  Place this point zero spaces (0)
+#               from the right margin (-).
+
+
+
+ # #--------------------------------------------------------------------
+ # setenv LC_CTYPE en_US.UTF-8
+ # defutf8 on
+ # utf8 on
+
+ # # Control K (Default is Control-A)
+ # escape ^Pp 
+
+ # activity "%"
+ # # Make activity messages yellow on black
+ # sorendition =s Yk
+ # #shelltitle 'zsh'
+ # msgwait 2
+ # autodetach            on
+ # defmonitor            on
+ # crlf                  off
+ # deflogin              on
+ # hardcopy_append       on
+ # multiuser             off
+
+ # startup_message       off
+ # vbell                 off
+
+ # defscrollback         10000
+ # silencewait           15
+
+ # # print wackier status messages
+ # nethack on
+
+ # # restore window contents after using (e.g.) vi
+ # altscreen on
+
+ # bufferfile            $HOME/.screen_exchange
+ # # Keep dead windows till I kill them with a 9 iron.
+ # #zombie cr
+
+ # # If a window goes unresponsive, don't block the whole session waiting for it.
+ # nonblock on
+
+ # # Emulate a logout msg
+ # pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+ # termcapinfo xterm*|rxvt-* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+ # termcapinfo xterm*|rxvt-* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+ # termcapinfo xterm*|rxvt-* ti@:te=\E[3J
+ # termcapinfo xterm*|rxvt-* hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+ # termcapinfo xterm*|rxvt-* hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
+ # # terminfo and termcap for nice 256 color terminal
+ # # # allow bold colors - necessary for some reason
+ # attrcolor b ".I"
+
+ # # Evil evil keybindings. Do Not Want!
+ # bind ^\
+ # bind \\
+ # bind ^h
+ # bind h
+ # bind ^Q
+ # bind q
+ # bind ^S
+ # bind s
+
+ # # for launching some of the stuff i use most
+ # # bind m screen -t 'mail' mutt
+ # # bind v screen -t 'vim' vim
+ # # bind i screen -t 'irssi' irssi
+ # # bind z screen -t 'zsh' zsh
+ # # bind t screen -t 'htop' htop
+ # # bind g screen -t 'gila' ssh gila
+ # # bind h screen -t 'miker' ssh miker
+ # # bind q screen -t 'quad' ssh quad
+ # # bind w screen -t 'web' ssh web
+ # # bind y screen -t 'ncmpc' ncmpc -c
+ # # bind s screen -t 'root' sudo -s
+ # # bind ; screen -t 'megan' ssh megan
+ # # binding the F1 - F8 keys to the first 8 screens, F11 = previous | F12 = next
+ # #bindkey -k k1 select 0
+ # #bindkey -k k2 select 1
+ # #bindkey -k k3 select 2
+ # #bindkey -k k4 select 3
+ # #bindkey -k k5 select 4
+ # #bindkey -k k6 select 5
+ # #bindkey -k k7 select 6
+ # #bindkey -k k8 select 7
+ # # bindkey -k F2 next
+ # # bindkey -k F1 prev
+ # bindkey -k k7 next
+ # bindkey -k k8 prev
+
+ # # Launch some default programs
+ # screen /bin/bash
+ # #screen mutt
+ # #screen zsh
+ # #screen sudo -s
+ # #screen ssh gila
+ # #screen mutt
+
+ # shell   /bin/zsh
+
+ # hardstatus on
+ # #hardstatus alwayslastline "%{=b kW}[ %{= Y}$USER @ %H %{b W}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{b W}][%{= Y} %m/%d/%y %{Y}%C %{b W}]"
+ # #hardstatus alwayslastline "%{= kc}%H (system load: %l)%-21=%{= .m}%D %d.%m.%Y %0c"
+ # #hardstatus alwayslastline "%3n %t%? (%u)%?%?: %h%?"
+ # hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%< "
+
+ # # Double-check to force the focus to irssi after boot
+ # focus
+ # select 0
+
+ # # erase background with current bg color
+ # defbce "on"
+
+ # # disable Ctrl-S/Ctrl-Q "flow control"
+ # defflow off
+
+
+# --------------------------------------------------------------------
+
+# #
+# # disable the startup splash message that screen displays on startup
+# startup_message off
+# # create a status line at the bottom of the screen.  this will show the titles and locations of
+# # all screen windows you have open at any given time
+# hardstatus alwayslastline "%{= dR} %-Lw%50>%{= dG}%n%f* %{= dW}%t%{= dR}%+Lw%<"
+# # bind some function keys (k1 == F1, etc) for fast navigation through screen windows
+# #
+# #
+# # use F8 to turn the status bar off at the bottom of the screen
+# #bindkey -k k8 hardstatus alwayslastline
+# # use F9 to turn the status bar on the bottom back on
+# #bindkey -k k9 hardstatus alwaysignore
+# # the next 2 lines are set up to use F1 and F2 to move one screen forward or backward (respectively) through your screen session.
+# bindkey -k k7 prev
+# bindkey -k k8 next
+# # This changes the default control character (normally ^a) to something else
+# # (i do this to ease the use of nested screens so command characters dont conflict with each other)
+# escape "^Ff"
+# # set the ssh-agent on my workstation to forward my ssh key through my screen windows
+# . .keychain/-sh
+# # this will log screen errors to a daily log under the speficied directory
+# logfile /home//logs/screen_%y-%m-%d_%0c
+# # the following lines are just to open and title several screen windows that i use throughout the day
+# screen -t home  /bin/bash
+# screen -t local /bin/bash
+# screen -t local /bin/bash
+# screen -t local /bin/bash
+# screen -t local /bin/bash
+# screen -t local /bin/bash
+# screen -t local /bin/bash
+# # these last 2 lines are to set the focus on startup (which screen window we look at when screen finishes starting)
+# focus
+# select 0
+#--------------------------------------------------------------------------------------------
+

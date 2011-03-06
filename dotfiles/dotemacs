@@ -1,0 +1,1229 @@
+;; Red Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Load Path
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/env")
+(require 'smooth-scrolling)
+(require 'psvn)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; File backing up  behavior
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; save back up files in a different location
+(setq backup-directory-alist '(("" . "~/.emacs-backups")))
+;; (setq backup-directory-alist '((“.” . “~/.emacs_backups”)))
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; turn on font-lock mode
+(global-font-lock-mode t)
+
+;; enable visual feedback on selections
+(setq-default transient-mark-mode t)
+
+;; frankly don't know what this meansl
+(setq font-lock-maximum-decoration t)
+
+;; always end a file with a newline
+(setq require-final-newline t)
+
+;; stop at the end of the file, not just add lines
+(setq next-line-add-newlines nil)
+
+;; enable wheelmouse support by default
+(when window-system
+ (mwheel-install)
+;; use extended compound-text coding for X clipboard
+ (set-selection-coding-system 'compound-text-with-extensions))
+
+;; enable font coloring
+(global-font-lock-mode 1)
+
+;; Truncate long lines rather than wrapping
+(setq-default truncate-lines t)
+
+;; Save it to the desktop, so that I get back the old_state with which I start
+(desktop-save-mode t)
+
+;; highlight matching parenthesis
+(show-paren-mode t)
+(setq show-paren-style 'parenthesis)
+(setq blink-matching-paren t)
+
+;; used to disable the dirty dirty tool bar
+(tool-bar-mode -1)
+
+;; used to disable the menu bar.
+(menu-bar-mode -1)
+
+;; disable the scroll bar
+(scroll-bar-mode -1)
+;;display column number on modeline
+(column-number-mode t)
+
+;;display line number on modeline
+(setq line-number-mode t)
+
+;;inhibit startup message
+(setq inhibit-startup-message t)
+
+;;type "y"/"n" instead of "yes"/"no"
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; permenantly force emacs to indent with spaces and never with TABS
+(setq-default indent-tabs-mode nil);
+
+;;match parenthesis if % is placed on a parenthesis
+(defun match-paren (arg)
+ (interactive "p")
+ (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+  ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+        (t (self-insert-command (or arg 1)))))
+(global-set-key "%" 'match-paren)
+
+;;setbackground and foreground and cursor colours
+(set-background-color "black")
+(set-foreground-color "white")
+(set-cursor-color "red")
+
+;;let the cursor not blink. Amen!
+(blink-cursor-mode -1)
+
+;;auto revert files when they change om disk
+(global-auto-revert-mode 1)
+
+;;auto save files-save-mode 1)
+;;(setq auto-save-interval 300) ;;saves after typing 50 chars
+
+;; recentf stuff
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+
+;; toggle truncation with ctrl-t
+(define-key global-map "\C-t"
+ (function
+  (lambda ()
+    (interactive)
+    (setq truncate-lines (not truncate-lines))
+    (redraw-display))))
+
+;; have a smarter buffer switch capabilities.
+(iswitchb-mode t)
+
+;;go to last edit point
+(load-file "~/env/goto-last-change.el")
+(require 'goto-last-change)
+(global-set-key [(meta p)(u)] 'goto-last-change)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Keybindings. Shortcuts really
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq suggest-key-bindings t)
+(global-set-key [delete] 'delete-char)
+(global-set-key [kp-delete] 'delete-char)
+;;(global-set-key "\C-h" 'backward-delete-char)o
+(global-set-key "\C-x\ ?" 'help)
+(global-set-key "\C-l" 'goto-line)
+(global-set-key "\C-x\ f" 'find-file-other-window)
+(global-set-key [(control tab)] 'other-window) ;; shortcut to jump to other window
+(global-set-key [(control o)] 'other-window) ;; shortcut to jump to other window
+(global-set-key [(control shift tab)] 'other-window) ;; shortcut to jump to other window
+;;(global-set-key [C-tab] 'other-window) ;; shortcut to jump to other window
+;;shortcuts for compilation
+(global-set-key [(control shift b)] 'compile);
+(global-set-key [(control \;)] 'recompile);
+(global-set-key [(meta left)] 'next-buffer);
+(global-set-key [(meta right)] 'previous-buffer);
+(global-set-key [(meta s)] 'save-buffer)
+(global-set-key [(meta r)] 'revert-buffer)
+;(global-set-key [(control x)] 'save-some-buffers);
+;;(global-set-key [(control shift c)] 'recompile);
+;;(put 'upcase-region 'disabled nil)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; translates ANSI colors into text-properties, for eshell
+;; (Autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; perl hooks
+(setq perl-indent-level 2)
+
+;; font management
+(defun sacha/increase-font-size ()
+  (interactive)
+  (set-face-attribute 'default
+                      nil
+                      :height
+                      (ceiling (* 1.10
+                                  (face-attribute 'default :height)))))
+(defun sacha/decrease-font-size ()
+  (interactive)
+  (set-face-attribute 'default
+                      nil
+                      :height
+                      (floor (* 0.9
+                                  (face-attribute 'default :height)))))
+(global-set-key (kbd "C-=") 'sacha/increase-font-size)
+(global-set-key (kbd "C--") 'sacha/decrease-font-size)
+
+
+(if (eq system-type 'windows-nt)
+  (set-default-font "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1"))
+
+
+ (if (eq window-system 'x)
+   (set-default-font "     -adobe-courier-medium-r-*-*-*-160-*-*-*-*-iso8859-1"))
+
+;; (if (eq window-system 'x)
+;;   (set-default-font "Inconsolata-11"))
+
+
+
+;; truncate the shell buffer to a certain maximum no of lines
+;;(add-hook 'comint-output-filter-functions
+;;                   'comint-truncate-buffer)
+;;(setq comint-buffer-maximum-size 70)
+
+;; c-stuff below
+;;allow only case-sensitive search in c-mode
+;; (add-hook 'c-mode-hook
+;;        '(function (lambda () (setq case-fold-search t))
+;;                   ))
+
+;; (add-hook 'c++-mode-hook
+;;        '(function (lambda () (setq case-fold-search t))
+;;                   ))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; The following code helps in opening files with tags
+;; in read-only mode.
+(defun find-tag-readonly (&rest a)
+ (interactive)
+ (call-interactively `find-tag a)
+ (if (eq nil buffer-read-only) (setq buffer-read-only t))  )
+
+(defun find-tag-readonly-next (&rest a)
+ (interactive)
+ (call-interactively `tags-loop-continue a)
+ (if (eq nil buffer-read-only) (setq buffer-read-only t))  )
+
+(global-set-key [(control meta \.)] 'find-tag-readonly)
+(global-set-key [(control meta \,)] 'find-tag-readonly-next)
+
+;;shortcuts for tempo-templates.
+(global-set-key [(control shift d)] 'tempo-template-c-debug)
+(global-set-key [(control \')] 'tempo-template-c-func-comment)
+(global-set-key [(control \*)] 'tempo-template-c-block-comment)
+(global-set-key [(control \/)] 'tempo-template-c-todo-comment)
+(global-set-key [(control p)] 'tempo-template-c++-print)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/apps/emacsex/semantic")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Better scrolling
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq
+  scroll-margin 0                  
+  scroll-conservatively 100000
+  scroll-preserve-screen-position 1)
+
+;;originally from http://emacs-fu.blogspot.com/2009/12/scrolling.html
+;; The scroll-margin. This determines when scrolling should start by
+;; setting it to 0, emacs will start to scroll whenever you are
+;; entering the top or bottom line of the window. You can also this
+;; to, say, 5 to let scrolling start whenever you're getting closer
+;; than 5 lines from top or bottom Then, scroll-conservatively
+;; determines how far the cursor is allowed to be distanced from the
+;; center of the screen when scrolling start. The default sets this
+;; to 0, which means that whenever you start scrolling, the cursor
+;; jumps to the center of the screen. I find that quite annoying, so
+;; I set it to some big number (the 'effective maximum' for that is
+;; lines-in-window / 2, but you can put any bigger number there to
+;; avoid the jumpiness) scroll-preserve-screen-position tries to
+;; maintain the current screen position when you scroll using
+;; Page-Up/Page-Down. I like that.  There are also the variables
+;; scroll-up-aggressively and scroll-down-aggressively. Normally,
+;; they determine how far emacs will scroll (up and down,
+;; respectively) when it does so. However, they don't make any
+;; difference with a big scroll-conservatively like I am
+;; using. Still, if you want to play with it, their values are
+;; fractions between 0.0 and 1.0 (inclusive) a value of 1 means that
+;; it will move a full screen when scrolling starts, a value of 0.0
+;; causes a move of only one single line.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; setting up paths
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(when (string-equal system-type "windows-nt")
+  (progn
+    ;; am using cygwin
+    (setenv "PATH"
+            (concat
+             "/usr/local/bin" ":"
+             "/usr/bin" ":"
+             "/bin" ":"
+             "/usr/X11R6/bin" ":"
+             "/cygdrive/c/Windows/Program Files (x86)/PHP/" ":"
+
+             "/cygdrive/c/Windows/system32" ":"
+             "/cygdrive/c/Windows" ":"
+             "/cygdrive/c/Windows/System32/Wbem" ":"
+             "/cygdrive/c/Windows/system32/WindowsPowerShell/v1.0"
+             ) )
+    (setq exec-path
+          '(
+            "C:/cygwin/bin/"
+            "C:/Program Files (x86)/Emacs/emacs/bin/"
+            "C:/Program Files (x86)/PHP/"
+            "C:/Windows/system32/"
+            "C:/Windows/"
+            "C:/Windows/System32/Wbem/"
+            "C:/Windows/system32/WindowsPowerShell/v1.0/" )
+          ) 
+    ) 
+)
+
+(when (string-equal system-type "darwin")
+  (progn
+    (setenv "PATH"
+            (concat
+             "/opt/local/lib/postgresql84/bin" ":"
+             "/opt/local/bin" ":"
+             "/opt/local/sbin" ":"
+             (getenv "PATH")
+             )
+            )
+    (setq exec-path (append exec-path '("/opt/local/lib/postgresql84/bin")))
+    
+    )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; commenting behavior
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;improve commenting behavior of emacs
+;; Original idea from
+;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
+(defun comment-dwim-line (&optional arg)
+  "Replacement for the comment-dwim command.
+        If no region is selected and current line is not blank and we are not at the end of the line,
+        then comment current line.
+        Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
+
+ (global-set-key "\M-;" 'comment-dwim-line) 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; appearance
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; set mode line to show full path of current file
+;; (setq-default mode-line-format
+;;    (list '((buffer-file-name " %f"
+;;               (dired-directory
+;;                dired-directory
+;;                 (revert-buffer-function " %b"
+;;                ("%b - Dir:  " default-directory))))))) 
+
+;; format title bar to show full path of current file
+(setq-default frame-title-format
+   (list '((buffer-file-name " %f"
+             (dired-directory
+              dired-directory
+              (revert-buffer-function " %b"
+              ("%b - Dir:  " default-directory))))))) 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ecb
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (add-to-list 'load-path "~/apps/emacsex/eieio")
+;; (add-to-list 'load-path "~/apps/emacsex/speedbar")
+;; (add-to-list 'load-path "~/apps/emacsex/semantic")
+;; (setq semantic-load-turn-everything-on t)
+;; (require 'semantic-load)
+;; (add-to-list 'load-path "~/apps/emacsex/ecb-2.32")
+;; (require 'ecb)
+;; (require 'ecb-autoloads)
+;; (setq ecb-layout-name "left9")
+;; ;(setq ecb-compile-window-height 5)
+;; (setq ecb-tip-of-the-day nil)
+;; (global-set-key [(control meta m)] 'ecb-goto-window-methods)
+;; (global-set-key [(control n)] 'ecb-nav-goto-next)
+;; (global-set-key [(control b)] 'ecb-nav-goto-previous)
+;(ecb-activate)
+
+;; new ecb stuff..not old
+;; (add-to-list 'load-path "~/emacs/ecb-2.40")
+;; (load-file "~/emacs/ecb-2.40/ecb.el")
+;; (require 'ecb)
+;; (require 'ecb-autoloads)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; version control
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; version control CVS
+(setq vc-default-back-end 'CVS)
+(autoload 'cvs-add "cvs-add" "CVS add" t)
+(autoload 'cvs-commit "cvs-commit" "CVS commit" t)
+(autoload 'cvs-diff "cvs-diff" "CVS diff" t)
+
+;(load-file "~/vc-svn.el")
+;;(add-to-list 'vc-handled-backends 'SVN)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (setq load-path (cons "/opt/local/share/emacs/site-lisp/slime" load-path))
+;; (require 'slime-autoloads)
+;; (setq slime-lisp-implementations
+;;      `((sbcl ("/opt/local/bin/sbcl"))
+;;        (clisp ("/opt/local/bin/clisp"))))
+;; (add-hook 'lisp-mode-hook
+;;            (lambda ()
+;;              (cond ((not (featurep 'slime))
+;;                     (require 'slime) 
+;;                     (normal-mode)))))
+;; (eval-after-load "slime"
+;;    '(slime-setup '(slime-fancy slime-banner)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; erlang
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;; (setq load-path (cons  "/opt/local/lib/erlang/lib/tools-2.6.4/emacs"
+      ;; load-path))
+      ;; (setq erlang-root-dir "/opt/local/lib/erlang")
+      ;; (setq exec-path (cons "/opt/local/lib/erlang/bin" exec-path))
+      ;; (require 'erlang-start)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; mac os
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq mac-command-modifier 'meta)
+(setq exec-path (append exec-path '("/Users/vkatta/apps/mysql/bin")))
+(setq exec-path (append '("/opt/subversion/bin") exec-path))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;C/C++ TEMPO STUFF;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;tempo-mode for Faster Coding in C/C++
+;; This is a way to hook tempo into cc-mode
+
+(defvar c-tempo-tags nil
+ "Tempo tags for C mode")
+(defvar c++-tempo-tags nil
+ "Tempo tags for C++ mode")
+
+;;; C-Mode Templates and C++-Mode Templates (uses C-Mode Templates also)
+(require 'tempo)
+(setq tempo-interactive t)
+
+(add-hook 'c-mode-hook
+         '(lambda ()
+            (local-set-key [f11] 'tempo-complete-tag)
+            (tempo-use-tag-list 'c-tempo-tags)
+            ))
+(add-hook 'c++-mode-hook
+         '(lambda ()
+            (local-set-key [f11] 'tempo-complete-tag)
+            (tempo-use-tag-list 'c-tempo-tags)
+            (tempo-use-tag-list 'c++-tempo-tags)
+            ))
+
+;;; Preprocessor Templates (appended to c-tempo-tags)
+;;; For faster Codifn
+(tempo-define-template "c-include"
+                      '("include <" r ".h>" > n
+                        )
+                      "include"
+                      "Insert a #include <> statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-ifdef"
+                      '("ifdef " (p "ifdef-clause: " clause) > n> p n
+                        "#else /* !(" (s clause) ") */" n> p n
+                        "#endif /* " (s clause)" */" n>
+                        )
+                      "ifdef"
+                      "Insert a #ifdef #else #endif statement"
+                      'c-tempo-tags)
+
+
+;; (tempo-define-template "c-debug"
+;;                     '("#if __DEBUG__" (p "ifdef-clause: " clause) > n> p n
+;;                       "#endif /* " (s clause)" */" n>
+;;                       )
+;;                     "debug"
+;;                     "Insert a debug statement"
+;;                     'c-tempo-tags)
+
+;;by varun katta
+(tempo-define-template "c-debug"
+                      '("#if __DEBUG__"  >  n>
+                        "DEBUG(\"\");" > n
+                        "#endif" n>
+                        )
+                      "debug"
+                      "Insert a debug statement"
+                      'c-tempo-tags)
+
+
+(tempo-define-template "c-ifndef"
+                      '("ifndef " (p "ifndef-clause: " clause) > n
+                        "#define " (s clause) n> p n
+                        "#endif /* " (s clause)" */" n>
+                        )
+                      "ifndef"
+                      "Insert a #ifndef #define #endif statement"
+                      'c-tempo-tags)
+;;; C-Mode Templates
+
+(tempo-define-template "c-if"
+                      '(> "if (" (p "if-clause: " clause) ")" n>
+                          "{" > n>
+                          > r n
+                          "}" > n>
+                          )
+                      "if"
+                      "Insert a C if statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-else"
+                      '(> "else" n>
+                          "{" > n>
+                          > r n
+                          "}" > n>
+                          )
+                      "else"
+                      "Insert a C else statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-if-else"
+                      '(> "if (" (p "if-clause: " clause) ")"  n>
+                          "{" > n
+                          > r n
+                          "}" > n
+                          "else" > n
+                          "{" > n>
+                          > r n
+                          "}" > n>
+                          )
+                      "ifelse"
+                      "Insert a C if else statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-while"
+                      '(> "while (" (p "while-clause: " clause) ")" >  n>
+                          "{" > n
+                          > r n
+                          "}" > n>
+                          )
+                      "while"
+                      "Insert a C while statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-for"
+                      '(> "for (" (p "for-clause: " clause) ")" >  n>
+                          "{" > n
+                          > r n
+                          "}" > n>
+                          )
+                      "for"
+                      "Insert a C for statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-for-i"
+                      '(> "for (" (p "variable: " var) " = 0; " (s var)
+                          " < "(p "upper bound: " ub)"; " (s var) "++)" >  n>
+                          "{" > n
+                          > r n
+                          "}" > n>
+                          )
+                      "fori"
+                      "Insert a C for loop: for(x = 0; x < ..; x++)"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-main"
+                      '(> "int main(int argc, char *argv[])" >  n>
+                          "{" > n>
+                          > r n
+                          > "return 0 ;" n>
+                          > "}" > n>
+                          )
+                      "main"
+                      "Insert a C main statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-if-malloc"
+                      '(> (p "variable: " var) " = ("
+                          (p "type: " type) " *) malloc (sizeof(" (s type)
+                          ") * " (p "nitems: " nitems) ") ;" n>
+                          > "if (" (s var) " == NULL)" n>
+                          > "error_exit (\"" (buffer-name) ": " r ":
+Failed to malloc() " (s var) " \") ;" n>
+                          )
+                      "ifmalloc"
+                      "Insert a C if (malloc...) statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-if-calloc"
+                      '(> (p "variable: " var) " = ("
+                          (p "type: " type) " *) calloc (sizeof(" (s type)
+                          "), " (p "nitems: " nitems) ") ;" n>
+                          > "if (" (s var) " == NULL)" n>
+                          > "error_exit (\"" (buffer-name) ": " r ":
+Failed to calloc() " (s var) " \") ;" n>
+                          )
+                      "ifcalloc"
+                      "Insert a C if (calloc...) statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-switch"
+                      '(> "switch (" (p "switch-condition: " clause) ")" n>
+                          "{" >  n>
+                          "case " (p "first value: ") ":" > n> p n
+                          "break;" > n> p n
+                          "default:" > n> p n
+                          "break;" > n
+                          "}" > n>
+                          )
+                      "switch"
+                      "Insert a C switch statement"
+                      'c-tempo-tags)
+
+(tempo-define-template "c-case"
+                      '(n "case " (p "value: ") ":" > n> p n
+                          "break;" > n> p
+                          )
+                      "case"
+                      "Insert a C case statement"
+                      'c-tempo-tags)
+
+;; by varun katta.
+;; I like java style comments because I am used to it. Also, doxygen
+;;doesn't force me to
+;;change my java-commenting-style and accepts it.
+(tempo-define-template "c-func-comment"
+                      '("/** "  > n
+                        "* This method " (p "description :") > n
+                        "* "  > n
+                        "* @param " (p "name1: ") " " (p  "description: ") > n
+                        "* @param " (p "name2: ") " " (p  "description: ") > n
+                        "* @return " (p  "description: ") > n
+                        "*/"
+                        )
+                      "funComment"
+                      "Insert a comment block before the function statement"
+                      'c-tempo-tags)
+
+;;by Varun Katta
+(tempo-define-template "c-block-comment"
+                      '("/* "  > n
+                        "* " (p "comment :")  > n
+                        "* " (p "comment : ")  > n
+                        "* " (p "comment: ")> n
+                        " */"
+                        )
+                      "c-block-comment"
+                      "Insert a c-style block comment block"
+                      'c-tempo-tags)
+
+;;by Varun Katta
+(tempo-define-template "c++-print"
+                      '("cout <<  "   "\""(p ":" obj)" \""
+                        " << "  (s obj)
+                        ;;"<<" (p ":")  ;;" << " (p ":")
+                        " << endl ;"  > n
+                        )
+                      "c++-print"
+                      "Insert a print statement"
+                      'c-tempo-tags)
+
+;;by Varun Katta
+(tempo-define-template "c-todo-comment"
+                      '("////////////////// TODO //////////////////" > n
+                        "//
+                         //"  > n
+                        "//" (p "comment:") > n
+                        "//
+                         //" > n
+                        " ///////////////////////////////////////////"
+                        )
+                      "c-todo-comment"
+                      "Insert a c-style todo block"
+                      'c-tempo-tags)
+
+
+
+
+;; ;; by Varun Katta
+;; (tempo-define-template "c-func-comment"
+;;                     '("/** "  > n
+;;                       "* This method "  > n
+;;                       "* "  > n
+;;                       "* @param " (p "name: ") " " (p  "description: ") > n
+;;                       "* @param " (p "name: ") " " (p  "description: ") > n
+;;                       "* @return " (p  "description: ") > n
+;;                       "*/"
+;;                       )
+;;                     "funComment"
+;;                     "Insert a comment block before the function statement"
+;;                     'c-tempo-tags)
+
+;; (tempo-define-template "c++-class"
+;;                     '("class " (p "classname: " class) p n "{" n "public:" n>
+
+;;                       (s class) "();"
+;;                       (indent-for-comment) "the default constructor" n>
+
+;;                       (s class)
+;;                       "(const " (s class) "&rhs);"
+;;                       (indent-for-comment) "the copy constructor" n>
+
+;;                       (s class)
+;;                       "& operator=(const " (s class) "&rhs);"
+;;                       (indent-for-comment) "the assignment operator" n>
+
+;;                       n> "// the default address-of operators" n>
+;;                       "// "(s class)
+;;                       "* operator&()             { return this; };" n>
+;;                       "// const "(s class)
+;;                       "* operator&() const { return this; };" n
+
+
+;;                       n > "~" (s class) "();"
+;;                       (indent-for-comment) "the destructor" n n>
+;;                       p n
+;;                       "protected:" n> p n
+;;                       "private:" n> p n
+;;                       "};\t// end of class " (s class) n>
+;;                       )
+;;                     "class"
+;;                     "Insert a class skeleton"
+;;                     'c++-tempo-tags)
+
+;; by Varun Katta
+(tempo-define-template "c++-class"
+                      '("class " (p "classname: " class) p > n>
+                        " {" > n
+                        "public:" > n
+                        "" > n
+                        "protected:" > n
+                        "" > n
+                        "private:" > n
+                        "" > n
+                        "};" > n
+                        )
+                      "class"
+                      "Insert a class skeleton"
+                      'c++-tempo-tags)
+
+
+
+
+
+;;
+;; ----------- YAHOO SPECIFIC CPP INDENTATION RULES ------------
+; Use spaces, not tabs, for the "Tab" key.
+(setq-default indent-tabs-mode nil)
+
+; Basic unit of spaces for each indentation level: 4 spaces.
+(add-hook 'c++-mode-hook '(lambda () (setq c-basic-offset 2)))
+(add-hook 'c-mode-hook '(lambda () (setq c-basic-offset 2))) 
+
+; A case or default label for switch blocks: 2 spaces for the 'case' line
+; and then 2 more spaces for the case's block (total of 4 spaces from 'switch').
+(add-hook 'c++-mode-hook '(lambda () (c-set-offset 'case-label 2)))
+(add-hook 'c++-mode-hook '(lambda () (c-set-offset 'statement-case-intro 2)))
+(add-hook 'c-mode-hook '(lambda () (c-set-offset 'case-label 2)))
+(add-hook 'c-mode-hook '(lambda () (c-set-offset 'statement-case-intro 2)))
+
+; A C++ private/protected/public access label.  This shifts the line
+; back by two spaces when you hit the colon after the word "private",
+; the word "protected", or the word "public" in a class.  Since the
+; number in the parentheses here is negative, the shift is backwards.
+; If you desire more of a backwards shift, increase the number but
+; keep it negative.  If you desire no shift, make it zero.  If for
+; some odd reason you desire a forward (rightward) shift, make the
+; number a positive integer.
+; NOTE: For this to actually work in a .h file (which is a "C" file
+; by default), you must choose C++-mode (M-x c++-mode) for the buffer.
+(add-hook 'c++-mode-hook '(lambda () (c-set-offset 'access-label -2)))
+;;
+
+;; ;;flymake mode
+;; (add-to-list 'load-path "/home/varun/emacs/flymake")
+;; (require 'flymake)
+;; (require 'acceptance-test)
+;; (require 'flymake-utest)
+
+
+
+;; matlab-mode hooks
+
+;; (setq auto-mode-alist
+;;       (append
+;;        '(("\\.m$"  . matlab-mode)
+;; 	  )
+
+;;===========================================================================
+;;	MATLAB
+;;==============================
+;; (autoload 'matlab-mode "~/matlab" "Enter Matlab mode." t)
+;; (autoload 'matlab-shell "~/matlab" "Interactive Matlab mode." t)
+       
+
+;; (defun my-matlab-mode-hook ()
+;;   (setq matlab-function-indent t)	; if you want function bodies indented
+;;   (setq fill-column 76)			; where auto-fill should wrap
+;;     (font-lock-mode 1)
+;;   (turn-on-auto-fill)
+;;   (if (not running-xemacs)
+;;       (matlab-mode-hilit)
+;;     )
+;;   )
+;; (setq matlab-mode-hook 'my-matlab-mode-hook)
+
+;; (defun my-matlab-shell-mode-hook ()
+;;   (setq matlab-function-indent t)	; if you want function bodies indented
+;;   (setq fill-column 76)			; where auto-fill should wrap
+;;   (font-lock-mode 1)
+;;   )
+;; (setq matlab-shell-mode-hook 'my-matlab-shell-mode-hook)
+;;----------------------------------------------------------------------------------END------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+;;;;;;;;
+;; some tutorials
+
+;; C-q C-j to represent new lines in emacs regex searches. Pretty neat stuff.
+;;
+;;;;;;;;
+
+
+;;;;;; Repository - A whole lot of junk ;;;;;;;
+
+;;(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+;;(global-set-key [home] 'beginning-of-buffer)
+;;(global-set-key [end] 'end-of-buffer)
+;;(global-set-key "\C-z" nil)
+
+;; (setq additional-paths '("/home/joe" "/home/joe/misc/lisp"))
+;; (setq load-path (append additional-paths load-path))
+
+;; ;;;;;;;;;;;;;;;;;
+;; ;; APPEARANCE
+;; ;;;;;;;;;;;;;;;;;
+;; (setq font-lock-maximum-decoration t)
+;; (setq visible-bell t)
+;; (setq require-final-newline t)
+;; (setq resize-minibuffer-frame t)
+;; (setq column-number-mode t)
+;; (setq-default transient-mark-mode t)
+;; (setq next-line-add-newlines nil)
+;; (setq blink-matching-paren nil)
+;; (global-font-lock-mode 1 t)
+;; (blink-cursor-mode -1)
+;; (tool-bar-mode -1)
+;; (tooltip-mode -1)
+
+;; ;;Customized syntax highlighting colors
+;; (set-default-font "-misc-fixed-medium-r-normal-*-*-200-*-*-c-*-koi8-r")
+;; (set-foreground-color "#dbdbdb")
+;; (set-background-color "#000000")
+;; (set-cursor-color "#ff0000")
+;; (custom-set-variables '(load-home-init-file t t))
+
+;; (if (> (display-color-cells) 20)
+;;     (custom-set-faces
+;;      '(font-lock-builtin-face ((t (:foreground "deepskyblue"))))
+;;      '(font-lock-comment-face ((t (:foreground "gray60"))))
+;;      '(font-lock-doc-face ((t (:foreground "darkkhaki"))))
+;;      '(font-lock-keyword-face ((t (:foreground "magenta"))))
+;;      '(font-lock-function-name-face ((t (:foreground "green"
+;;:background "seagreen"))))
+;;      '(font-lock-string-face ((t (:foreground "gold"))))
+;;      '(font-lock-type-face ((t (:foreground "cyan" :background
+;;"slateblue"))))
+;;      '(font-lock-variable-name-face ((t (:foreground "yellow"))))
+
+;;      '(modeline ((t (:foreground "plum1" :background "navy"))))
+;;      '(region ((t (:background "sienna"))))
+;;      '(highlight ((t (:foreground "black" :background "darkseagreen2"))))
+
+;;      '(diff-added-face ((t (:foreground "green"))))
+;;      '(diff-changed-face ((t (:foreground "yellow"))))
+;;      '(diff-header-face ((t (:foreground "cyan"))))
+;;      '(diff-hunk-header-face ((t (:foreground "magenta"))))
+;;      '(diff-removed-face ((t (:foreground "red")))))
+;; )
+
+;; ;;;;;;;;;;;;;;;;;
+;; ;; KEYS
+;; ;;;;;;;;;;;;;;;;;
+
+;; (setq suggest-key-bindings t)
+;; (global-set-key [delete] 'delete-char)
+;; (global-set-key [kp-delete] 'delete-char)
+;; (global-set-key "\C-h" 'backward-delete-char)
+;; (global-set-key "\C-x\ ?" 'help)
+;; (global-set-key "\C-c\ l" 'goto-line)
+;; (global-set-key "\C-x\ f" 'find-file-other-window)
+;; (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+;; (global-set-key [home] 'beginning-of-buffer)
+;; (global-set-key [end] 'end-of-buffer)
+;; (global-set-key "\C-z" nil)
+
+;; ;;;;;;;;;;;;;;;;;
+;; ;; MISC
+;; ;;;;;;;;;;;;;;;;;
+
+;; ;; go right to an empty buffer
+;; (setq inhibit-startup-message t)
+
+;; ;; translates ANSI colors into text-properties, for eshell
+;; (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; ;; cvs stuff
+;; (setq vc-default-back-end 'CVS)
+;; (autoload 'cvs-add "cvs-add" "CVS add" t)
+;; (autoload 'cvs-commit "cvs-commit" "CVS commit" t)
+;; (autoload 'cvs-diff "cvs-diff" "CVS diff" t)
+
+;; ;; recentf stuff
+;; (require 'recentf)
+;; (recentf-mode 1)
+;; (setq recentf-max-menu-items 25)
+
+;; ;; mode stuff
+;; (setq auto-mode-alist (cons '("\\.php$" . php-mode) auto-mode-alist))
+;; (autoload 'ruby-mode "ruby-mode" nil t)
+;; (setq auto-mode-alist (cons '("\\.rb$" . ruby-mode) auto-mode-alist))
+
+;; ;; autorevert stuff
+;; (autoload 'auto-revert-mode "autorevert" nil t)
+;; (autoload 'turn-on-auto-revert-mode "autorevert" nil nil)
+;; (autoload 'global-auto-revert-mode "autorevert" nil t)
+
+;; (global-auto-revert-mode 1)
+
+;; (defalias 'yes-or-no-p 'y-or-n-p)
+;; (setq auto-save-interval 50)
+;; (setq list-matching-lines-default-context-lines 1) ;; for M-x occur
+
+;; ;; counting functions
+;; (defalias 'lc 'count-lines-page)
+
+;; (defun wc ()
+;;   "Count the words in the current buffer, show the result in the minibuffer"
+;; (interactive)          ; *** This is the line that you need to add
+;; (save-excursion (save-restriction
+;; (widen)
+;;       (goto-char (point-min))
+;;       (let ((count 0))
+;;       (while (forward-word 1)
+;;      (setq count(1+ count)))
+;;       (message "There are %d words in the buffer" count)))))
+
+;; ;; normally disabled by default
+;; (put 'downcase-region 'disabled nil)
+
+;; ;; Chris Millward's .emacs
+;; ;; last revised
+;; ;; 2005-03-05-10:40
+
+;; ; mouse scrolling (works on XEmacs as well)
+;; (autoload 'mwheel-install "mwheel" "Enable wheely mouse")
+;; (mwheel-install)
+
+
+;; ;; slime Lisp editing mode
+;; (add-to-list 'load-path "~/lib/slime-1.0")
+;; (require 'slime)
+;; (slime-autodoc-mode)
+;; (slime-setup)
+;; (setq inferior-lisp-program "lisp")
+;;  (add-hook 'lisp-mode-hook (lambda () (slime-mode t)
+;;                             (local-set-key "\r" 'newline-and-indent)
+;;                             (setq lisp-indent-function
+;;'common-lisp-indent-function)
+;;                             (setq indent-tabs-mode nil)))
+;; (setq auto-mode-alist (cons '("\\.lp$" . lisp-mode)
+;;                             auto-mode-alist))
+
+;; ;;; uncomment this line to disable loading of "default.el" at startup
+;; ;; (setq inhibit-default-init t)
+
+;; (setq load-path (cons "~/lib/emacs" load-path))
+
+;; ;; turn on font-lock mode
+;; (global-font-lock-mode t)
+
+;; ;; Color theme
+;; ;(require 'color-theme)
+;; ;(color-theme-gnome2)
+
+;; ;; For GNU Emacs
+
+;; ;; enable visual feedback on selections
+;; (setq transient-mark-mode t)
+
+;; ;; --- Begin Perl editing section:
+;; (autoload 'perl-mode "cperl-mode" "alternate mode for editing Perl
+;programs" t)
+;; ;; End Perl editing section.
+
+;; ;; --- Begin HTML editing section:
+;; ;; I require html helper mode because the hhm-config.el code seems to
+;; ;; cause an error if I have both autoloaded.
+;; (require 'html-helper-mode "html-helper-mode.el")
+;; ;;(autoload 'html-helper-mode "hhm-config.el")
+;; (setq auto-mode-alist (cons '("\\.html$" . html-helper-mode)
+;;auto-mode-alist))
+;; (setq auto-mode-alist (cons '("\\.asp$" . html-helper-mode)
+;;auto-mode-alist))
+;; (setq auto-mode-alist (cons '("\\.phtml$" . html-helper-mode)
+;;auto-mode-alist))
+;; ;; --- End HTML editing section.
+
+;; ;; using Tidy in Emacs
+;; (global-set-key "\C-xt" 'tidy-region)
+;; (setq shell-command-default-error-buffer "tidy-errors") ; define error buffer
+;; (defun tidy-region ()
+;;   "Run Tidy HTML parser on current region."
+;;   (interactive)
+;;   (let ((start (mark))
+;;         (end (point))
+;;         (command "/usr/local/bin/tidy -config
+;/home/cmillward/lib/tidyconfig.txt -asxhtml"))
+;;         (shell-command-on-region start end command t t
+;;              shell-command-default-error-buffer)))
+
+;; (global-set-key "\M-g" 'goto-line)
+;; (custom-set-variables
+;;   ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+;;   ;; Your init file should contain only one such instance.
+;;  '(load-home-init-file t t)
+;;  '(tex-dvi-view-command "dvi"))
+
+
+;; ;; set time to show in corner
+;; (setq display-time-day-and-date t)
+;; (display-time)
+
+;; ;; =====================================================================
+;; ;; =====================================================================
+
+;; ;; When I yank a piece of code ( known as paste in Windows lingo )
+;; ;; into an existing function, I like to have it indent itself to the
+;; ;; proper level automatically. This simple macro runs yank ( C-y )
+;; ;; followed by an indent current function. ( C-c C-q )
+;; (global-set-key "\C-cy" 'do-smart-yank)
+
+;; (fset 'do-smart-yank
+;;    "\C-y\C-c\C-q")
+
+;; ;; Put the following forms in your .emacs to enable autoloading of JavaScript
+;; ;; mode, and auto-recognition of ".js" files.
+
+;;   (autoload 'javascript-mode "javascript-mode" "JavaScript mode" t)
+;;   (setq auto-mode-alist (append '(("\\.js$" . javascript-mode))
+;;                                    auto-mode-alist))
+
+;;   (autoload 'python-mode "python-mode" "Python mode" t)
+;;   (setq auto-mode-alist (append '(("\\.py$" . python-mode))
+;;                                    auto-mode-alist))
+
+;; ;; Copy Line Command
+
+;; (defun copy-line (n)
+;;     "Copy N lines at point to the kill-ring."
+;;     (interactive "p")
+;;     (kill-ring-save (line-beginning-position)
+;;(line-beginning-position (1+ n))))
+
+;; ;; (global-set-key "\C-ck" 'copy-line)
+
+
+;; ;; Copies line and appends buffer name to the front of it
+;; ;; used in checking the Charniak/Gomez parsers
+
+;; (defun copy-line-with-filename (n)
+;;     "Copy N lines at point to the kill-ring."
+;;     (interactive "p")
+;;     (kill-ring-save (line-beginning-position)
+;;(line-beginning-position (1+ n)))
+;;     (kill-append (concat (buffer-name) ": ") '1)
+;; )
+
+;; (defun cmillward-add-perl-string (n)
+;;   "Put stuff around string"
+;;   (interactive "p")
+;;   (concat "my $input<<END;\n" (car kill-ring))
+;;   (kill-append "\nEND" '1)
+;; )
+
+;;  (global-set-key "\C-cc" 'cmillward-add-perl-string)
+
+;;  (global-set-key "\C-ck" 'copy-line-with-filename)
+
+;; (require 'line-num "line-num.el")
+
+;; ;; from Ftrain http://www.ftrain.com/util_emacs_hints.html
+;; (defun insert-time ()
+;;   (interactive)
+;;   (insert (format-time-string "%Y-%m-%d-%R")))
+
+;; ;; enable yank to work between programs in linux
+;; (defun cmillward-paste-toggle-x ()
+;;   (interactive)
+;;   (setq x-select-enable-clipboard t)
+;;   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+;; )
+
+;; ;; session management code
+;; ;; http://www.emacswiki.org/cgi-bin/wiki/DeskTop
+;; ;; Emacs desktop
+;; (require 'desktop)
+;; (desktop-load-default)
+;; (setq desktop-globals-to-save (append '(minibuffer-history
+;;command-history file-name-history extended-command-history)
+;;                                             desktop-globals-to-save))
+;; (setq history-length 250)
+;; (desktop-read)
+;; (setq desktop-enable t)
+
+;; ;; planner.el setup
+;; ;; opg1.ucsd.edu/~jklymak/PlannerMode.html
+
+;; (add-to-list 'load-path "/home/cmillward/lib/emacs/emacs-wiki")
+;; (add-to-list 'load-path "/home/cmillward/lib/emacs/planner")
+;; (add-to-list 'load-path "/home/cmillward/lib/emacs/remember")
+;; (require 'planner)
+
+;; (setq planner-carry-tasks-forward t)
+
+;; (require 'planner-id)
+;; (define-key global-map [?\C-x ?\C-t] 'planner-create-task-from-buffer)
+;; (define-key global-map [?\C-x ?\C-n] 'remember)
+
+;; (require 'remember);
+;; ;; remember-planner - a must have...
+;; (require 'remember-planner)
+;; (setq remember-handler-functions '(remember-planner-append))
+;; (setq remember-annotation-functions planner-annotation-functions)
+
+;; ;(require 'planner-gnus)
+;; ;(planner-gnus-insinuate)
+;; ;(require 'planner-bbdb);
+
+;; ;;setting up diary mode with planner
+;;   (defun planner-diary-add-entry (date time text)
+;;     "Prompt for a diary entry to add to `diary-file'.  Will run
+;;     planner-annotations to make hyper links"
+;;     (interactive (list (planner-read-date)
+;;                             (read-string "Time: ")
+;;                      (read-string "Diary entry: ")))
+;;     (save-excursion
+;;       (save-window-excursion
+;;         (make-diary-entry
+;;          (concat
+;;           (let ((cal-date (planner-filename-to-calendar-date date)))
+;;             (if european-calendar-style
+;;                 (format "%d/%d/%d"
+;;                         (elt cal-date 1)
+;;                         (elt cal-date 0)
+;;                         (elt cal-date 2))
+;;               (format "%d/%d/%d"
+;;                       (elt cal-date 0)
+;;                       (elt cal-date 1)
+;;                       (elt cal-date 2))))
+;;           " " time " " text " "
+;;           (run-hook-with-args-until-success
+;;            'planner-annotation-functions))))))
+
+;;    (define-key global-map [?\C-x ?\C-d] 'planner-diary-add-entry)
+
+;; (require 'planner-diary)
+;; (setq planner-diary-use-diary t)
+;; (planner-insinuate-diary)
+;; (planner-insinuate-calendar)
+;; (setq planner-diary-number-of-days 7)
+;; (setq planner-diary-number-of-diary-entries 7)
+;; (setq planner-diary-file diary-file)
+
+;; (add-to-list 'load-path "/home/cmillward/lib/emacs/flymake")
+;; (require 'flymake)
+
+
+;; (require 'perldoc)
+;; (require 'htmlize)
+
+;; ;; .emacs
+
+;; ;;; uncomment this line to disable loading of "default.el" at startup
+;; ;; (setq inhibit-default-init t)
+
+;; ;; turn on font-lock mode
+;; (global-font-lock-mode t)
+
+;; ;; enable visual feedback on selections
+;; (setq transient-mark-mode t)
+;;(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ ;;'(ecb-options-version "2.32"))
+;;(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ ;;)
+;;(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+;; '(c-basic-offset 2))
+;;(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ ;;)
+
+;;xref stuff. Not using it. IDEish behaviour of emacs
+;;(setq exec-path (cons "/home/varun/xref" exec-path))
+;; (setq load-path (cons "/home/varun//xref/emacs" load-path))
+;; (load "xrefactory")

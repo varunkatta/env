@@ -1,0 +1,619 @@
+export PATH="/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql84/bin:$PATH"
+
+### History related stuff
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+# Save and reload the history after each command finishes
+#export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+
+# Completion {{{1
+# /etc/bash_completion automatically sources ~/.bash_completion if it exists
+if [ -r /etc/bash_completion ]; then
+    . /etc/bash_completion
+else
+    complete -A shopt shopt
+    complete -A helptopic help
+    complete -a unalias
+    complete -A binding bind
+    complete -d cd
+    complete -c command exec type man info which
+fi
+
+# Aliases {{{1
+# use colors if possible, otherwise append sigils to filename
+[ "$TERM" != "dumb" ] && alias ls='ls -G' || alias ls='ls -F'
+alias E=exit
+alias e=$EDITOR
+alias l=$PAGER
+
+# clear history and shred file; only secure on ext2 fs
+alias hc='history -c; shred -uz $HISTFILE'
+
+alias hg='history | grep'
+
+# (i)nteractive; prompt before overwrite
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+alias d='dirs -v'   # (v)erbose
+
+# no error if existing, make (p)arent directories as needed
+alias mkdir='mkdir -p -v'
+
+#alias d="date +%A\ %m\ %d\ %Y\ %I:%M\ %p\ %Z"
+
+alias df='df -h --sync'         # (h)uman readable format (e.g., 1K 234M 2G), sync first
+alias du='du -h --max-depth=0'  # don't recurse into subdirectories
+alias g='echo $COLUMNS\x$LINES' # show terminal geometry; also see tput(1)
+alias h='history | $PAGER'      # page through history
+alias j='jobs'                  # show jobs; shell builtin
+
+# sort service listing by:
+alias lsa='ls -lur'         # atime
+alias lsd='ls -ltr'         # mtime
+alias lst='ls -lcr'         # ctime
+alias lsz='ls -lSr'         # size
+alias lse='ls -lXB'         # alphabetically
+alias lsh='ls -Al'          # all
+alias lsg='ls | grep -i'    # grep
+alias lsm='ls -al | $PAGER' # page through
+alias lsr='ls -lR'          # list recursively
+
+alias gv='gv -widgetless'   # spartan style
+
+# columnized listing of mounted filesystems
+alias mount='mount | column -t 2>/dev/null' 
+
+alias path='echo -e ${PATH//:/\\n}' # print path components, one per line
+alias psr='ps -U root -u root u'    # root process listing
+alias s='screen -RaA'               # reattach/create, all capabilities, adapt size
+alias reboot='su - -c reboot'
+alias pstree='pstree -aGp'          # args, vt100 chars, pid
+alias mc='mc -b'                    # b/w monochrome
+[ -z "${DISPLAY:-}" ] && alias emacs='emacs -nw'
+alias mute='amixer sset 'Master' mute >/dev/null'
+alias unmute='amixer sset 'Master' unmute >/dev/null'
+
+alias c='clear'
+alias cls='clear'
+alias l='ls -lart'
+alias ll='ls -lart'
+alias r='reset'
+
+case "$TERM" in
+xterm*|rxvt*|screen|screen*|xterm-color)
+        PS1=`echo -ne "${USER}@${HOSTNAME}: ${PWD/$HOME/~ }"`
+ #   PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    ;;
+*)
+    ;;
+esac
+
+
+#company specific stuff and aliases
+#project specific aliases
+alias fq='cd /Users/varun/work/svn/sandbox/fq/cafebots'
+alias cb='cd /Users/varun/work/svn/sandbox/cafebots'
+
+#exports
+export luke =
+export dev  =
+export dev2 =
+export prod =
+
+alias mountmac='sudo mount -t vboxsf machome /home/varun/m'
+
+#start vnm
+alias vmstart='VBoxHeadless -s ubuntu-varun'
+
+alias vmstop='VBoxManage  controlvm ubuntu-varun poweroff'
+alias vmpause='VBoxManage  controlvm ubuntu-varun pause'
+alias vmsave='VBoxManage  controlvm ubuntu-varun save'
+alias vmsave='VBoxManage  controlvm ubuntu-varun savestate'
+alias vmresume='VBoxManage controlvm ubuntu-varun resume'
+#stop vm
+
+# # Initialization {{{1
+# [[ $- != *i* ]] && return
+
+# # Prompt {{{1
+# prompt() {
+#     # Foreground colors
+#     # ANSI X3.64-1979
+#     local sgr30='\[\033[30m\]'  # black
+#     local sgr31='\[\033[31m\]'  # red
+#     local sgr32='\[\033[32m\]'  # green
+#     local sgr34='\[\033[34m\]'  # blue
+
+#     # Background colors
+#     local sgr40='\[\033[40m\]'  # black
+#     local sgr47='\[\033[47m\]'  # white
+
+#     # Color attributes
+#     local sgr1='\[\033[1m\]'    # bold
+#     local sgr7='\[\033[7m\]'    # reverse
+#     local sgr0='\[\033[0m\]'    # reset
+
+#     # Cursor movement
+#     local decsc='\[\033[s\]'    # save
+#     local decrc='\[\033[u\]'    # restore
+#     local cuu='\[\033[1A\]'     # up
+#     local cud='\[\033[1B\]'     # down
+#     local cuf='\[\033[1C\]'     # forward
+#     local cub='\[\033[1D\]'     # backward
+#     local cup='\[\033[H\]'      # position
+#     local ed='\[\033[2J'        # erase in display
+#     local el='\[\033[K\]'       # erase in line
+
+#     # Character attributes
+#     # ANSI X3.41-1974
+#     local decdwl="\033#6"       # Double width line
+
+#     local bar_begin="$decsc$cup$el"
+#     local bar_end="$el$decrc$cuu$cud"
+#     local bar_color="$sgr7"
+#     local bar_info='\w'
+    
+#     PROMPT_COMMAND='history -a'
+#     PS1=''
+#     PS2='>> '
+#     PS3='#? '
+#     PS4='+ '
+
+#     case $TERM in
+#         linux )
+#             bar_color="$sgr47$sgr30"
+#             # locale's date and time
+#             bar_info+='\[\033[$((${COLUMNS}-32))G\]\D{%c}'
+#             ;;
+#         xterm*|rxvt*|aterm|Eterm|kterm|gnome* )
+#             # xterm title
+#             PROMPT_COMMAND+=";echo -ne \"\033]0;${USER}@${HOSTNAME%%.*}"
+#             PROMPT_COMMAND+=":${PWD/$HOME/~}\007\""
+#             PS1='> '
+#             PS2='» '        # (0xBB) right-pointing double angle quotation mark
+#             PS4=$decdwl     # use double-width glyphs during execution trace
+#             ;;
+#         screen )
+#             PROMPT_COMMAND+=";echo -n -e \"\033k\033\134\""
+#             #trap 'echo -ne "\ek${BASH_COMMAND%%\ *}\e\\"' DEBUG
+#             ;;
+#         # dumb = gvim
+#         # eterm = emacs
+#         dumb|eterm*|* )
+#             PS1='\u@\h \w \$ '
+#             ;;
+#     esac
+    
+#     if [ $UID -eq 0 ]; then
+#         # explicitly set suid prompt overriding any previous settings
+#         PS1="$sgr1$sgr31\u@\h$sgr34 \w \$$sgr0 "
+#     else
+#         # set the default prompt string unless it is non-empty
+#        : ${PS1:="$bar_begin$bar_color$bar_info$bar_end$sgr0> "}
+#     fi
+# }
+# # Options {{{1
+# shopt -s cdspell cdable_vars checkhash checkwinsize cmdhist extglob \
+#     histappend histreedit histverify no_empty_cmd_completion
+# shopt -u mailwarn
+
+# set -o notify -o noclobber -o ignoreeof -o nounset #-o xtrace
+
+# if [ -r $HOME/.dir_colors ]; then
+#         eval $(dircolors $HOME/.dir_colors)
+# else if [ -r /etc/dir_COLORS ]; then
+#         eval $(dircolors /etc/DIR_COLORS)
+#     fi
+# fi
+
+# # Environment {{{1
+
+# # disable linux console blanking
+# [ "$TERM" = "linux" ] && setterm -blank 0
+
+# setterm -blength 0  # set the bell duration in milliseconds
+# mesg n              # disallow write access to terminal
+# umask 077           # (base 8) 777 & ~077 = 700 = u=rwx,g=,o=
+# # ulimit settings are per-process
+# ulimit -S -c 0      # core file size
+# ulimit -S -f 1024   # open files
+# ulimit -S -u 256    # max user processes
+# ulimit -S -s 8192   # stack size
+# stty -ixon          # disable flow control
+
+# # Exports {{{1
+# if [ -z "${DISPLAY:-}" ]; then
+#   BROWSER='lynx'
+#   EDITOR='vim'
+# else
+#   BROWSER='firefox'
+#   EDITOR='gvim'
+# fi
+
+# VISUAL=$EDITOR
+
+# #unset LC_CTYPE LC_ALL
+# #: ${LANG:=en_US.UTF-8}
+
+# # readline initialization file
+# INPUTRC=$HOME/.inputrc
+
+# # removes duplicate paths
+# # NOTE: symlinks aren't dereferenced (e.g., using `readlink`) as they may
+# # exist for compatibility reasons
+# pathremove() {
+#     local IFS=':'
+#     local newpath
+#     local i
+
+#     for i in ${!2}; do
+#         if [ "$i" != "$1" ]; then
+#             newpath=${newpath:+$newpath:}$i
+#         fi
+#     done
+#     export $2="$newpath"
+# }
+
+# # adds a colon separated path to a variable and creates if it doesn't already
+# # exist
+# pathadd() {
+#     local IFS=':'
+#     local oldpath
+#     local i
+
+#     for i in $1; do
+#         if [ -d "$i" ]; then
+#             if [ -z "${!2:-}" ]; then
+#                 export $2=""
+#             fi
+#             pathremove $i $2
+#             if [ "${3:-}" = "before" ]; then
+#                 export $2="$i:${!2:+${!2}}"
+#             else
+#                 export $2="${!2:+${!2}:}$i"
+#             fi
+#         else
+#             echo "$i is not a directory" >&2
+#         fi
+#     done
+# }
+
+# pathadd /bin:/usr/bin:/usr/local/bin PATH
+
+# if [ $EUID -eq 0 ]; then
+#     pathadd /sbin:/usr/sbin:/usr/local/sbin PATH
+# else
+#     pathadd $HOME/bin PATH before
+#     pathadd $HOME/games/bin:/opt/bin:. PATH
+# fi
+
+# # FIXME: temporary solution as system-wide section n pages keep showing up first
+# MANSECT=1:1p:8:2:3:3p:4:5:6:7:9:0p:tcl:n:l:p:o:1x:2x:3x:4x:5x:6x:7x:8x
+
+# # mail file for notification
+# MAIL=/var/spool/mail/$USER
+
+# # disable mail check
+# MAILCHECK=${MAIL_CHECK=0}
+
+# PAGER=less
+
+# # HISTSIZE=${HISTFILESIZE=5000}
+# # HISTFILE=~/.bash_history
+# # HISTCONTROL=ignoredups
+# # HISTIGNORE="[	]*:[bf]g:&:ls:pwd:exit:clear"
+
+# NNTPSERVER=freenews.netfront.net
+# #http_proxy=http://127.0.0.1:8118/
+# #HTTP_PROXY=$http_proxy
+
+# LESS="-X -R -M --shift 5 -Q --hilite-search --ignore-case -w --jump-target=.5"
+# LESSOPEN="|/usr/bin/lesspipe.sh %s"
+# LESSHISTFILE=/dev/null
+# LESSCOLOR=yes
+
+# GREP_COLOR="1" # highlight match bold
+# GREP_OPTIONS="--color=auto --mmap --directories=recurse"
+
+
+# CVS_RSH=ssh
+# CVSROOT=$HOME/svn
+# CVSEDITOR=emacs
+
+# # verbose, save or restore the original name and time stamp
+# GZIP="-8v --name"
+
+# # root shells timeout after 3 minutes
+# #[ $UID -eq 0 ] && TMOUT=180 || TMOUT=0
+
+# # FIXME: maybe all of these uid should be consolidated
+# if [ $EUID -ne 0 ]; then
+#     pathadd $HOME/perl/lib/perl5/site_perl/5.8.8 PERLLIB
+#     pathadd $HOME/perl/lib/perl5/site_perl/5.8.8/i686-linux PERLLIB
+# fi
+
+# pathadd /opt/google-earth GOOGLEEARTH_DATA_PATH
+
+# export LANG \
+# BROWSER EDITOR DISPLAY VISUAL \
+# PERLLIB JAVA_HOME PATH GOOGLEEARTH_DATA_PATH \
+# MANSECT \
+# MAIL MAILCHECK MAIL_CHECK \
+# INPUTRC \
+# PS1 PS2 PS3 PS4 \
+# HISTSIZE HISTFILESIZE HISTCONTROL HISTIGNORE \
+# HOSTNAME NNTPSERVER HTTP_PROXY \
+# LESS LESSOPEN LESSHISTFILE LESSCOLOR \
+# GREP_COLOR GREP_OPTIONS \
+# CVS_RSH CVSROOT CVSEDITOR \
+# GZIP \
+# TMOUT \
+
+# # Completion {{{1
+# # /etc/bash_completion automatically sources ~/.bash_completion if it exists
+# if [ -r /etc/bash_completion ]; then
+#     . /etc/bash_completion
+# else
+#     complete -A shopt shopt
+#     complete -A helptopic help
+#     complete -a unalias
+#     complete -A binding bind
+#     complete -d cd
+#     complete -c command exec type man info which
+# fi
+
+# # Aliases {{{1
+# # use colors if possible, otherwise append sigils to filename
+# [ "$TERM" != "dumb" ] && alias ls='ls --color' || alias ls='ls -F'
+# alias E=exit
+# alias e=$EDITOR
+# alias l=$PAGER
+
+# # clear history and shred file; only secure on ext2 fs
+# alias hc='history -c; shred -uz $HISTFILE'
+
+# alias hg='history | grep'
+
+# # (i)nteractive; prompt before overwrite
+# alias cp='cp -i'
+# alias mv='mv -i'
+# alias rm='rm -i'
+# alias d='dirs -v'   # (v)erbose
+
+# # no error if existing, make (p)arent directories as needed
+# alias mkdir='mkdir -p -v'
+
+# #alias d="date +%A\ %m\ %d\ %Y\ %I:%M\ %p\ %Z"
+
+# alias df='df -h --sync'         # (h)uman readable format (e.g., 1K 234M 2G), sync first
+# alias du='du -h --max-depth=0'  # don't recurse into subdirectories
+# alias g='echo $COLUMNS\x$LINES' # show terminal geometry; also see tput(1)
+# alias h='history | $PAGER'      # page through history
+# alias j='jobs'                  # show jobs; shell builtin
+
+# # sort service listing by:
+# alias lsa='ls -lur'         # atime
+# alias lsd='ls -ltr'         # mtime
+# alias lst='ls -lcr'         # ctime
+# alias lsz='ls -lSr'         # size
+# alias lse='ls -lXB'         # alphabetically
+# alias lsh='ls -Al'          # all
+# alias lsg='ls | grep -i'    # grep
+# alias lsm='ls -al | $PAGER' # page through
+# alias lsr='ls -lR'          # list recursively
+
+# alias gv='gv -widgetless'   # spartan style
+
+# # columnized listing of mounted filesystems
+# alias mount='mount | column -t 2>/dev/null' 
+
+# alias path='echo -e ${PATH//:/\\n}' # print path components, one per line
+# alias psr='ps -U root -u root u'    # root process listing
+# alias s='screen -RaA'               # reattach/create, all capabilities, adapt size
+# alias reboot='su - -c reboot'
+# alias pstree='pstree -aGp'          # args, vt100 chars, pid
+# alias mc='mc -b'                    # b/w monochrome
+# [ -z "${DISPLAY:-}" ] && alias emacs='emacs -nw'
+# alias mute='amixer sset 'Master' mute >/dev/null'
+# alias unmute='amixer sset 'Master' unmute >/dev/null'
+
+# alias c='clear'
+# alias cls='clear'
+# alias l='ls -lart'
+# alias ll='ls -lart'
+
+
+# # Functions {{{1
+# isdigit() {
+#     local r
+
+#     [[ "${1:-}" =~ ^-?[[:digit:]]+$ ]]
+#     r=$?
+#     echo $r
+#     return $r
+# }
+
+# xisdigit() {
+#     local r
+
+#     [[ $(isdigit ${1:-}) -eq 0 && ${1:-} -ge 0 ]]
+#     r=$?
+#     echo $r
+#     return $r
+# }
+
+# vman() {
+#     man $* | col -b | view -c 'set ft=man nomod nolist nonumber' \
+#     -c 'nmap q :q' - ;
+# }
+
+# xterm_font() {
+#     if [ -z "${@:-}" ]; then
+#         echo "usage: $FUNCNAME " >&2
+#         return 1
+#     fi
+#     echo -e "\033]50;${@}\007"
+# }
+
+# xterm_title() {
+#     if [ -z "${1:-}" ]; then
+#         echo "usage: $FUNCNAME  " >&2
+#         return 1
+#     fi
+#     echo -ne "\033[3;${1};${2};t"
+# }
+
+# xterm_columns() {
+#     if [[ $(xisdigit $1) -eq 1 ]]; then
+#         echo "usage: $FUNCNAME " >&2
+#         return 1
+#     fi
+#     echo -ne "\033[8;;$1;t"
+# }
+
+# xterm_rows() {
+#     if [[ $(xisdigit $1) -eq 1 ]]; then
+#         echo "usage: $FUNCNAME " >&2
+#         return 1
+#     fi
+#     echo -ne "\033[8;$1;;t"
+# }
+
+# xterm_resize() {
+#     if [[ $(xisdigit $1) -eq 1 || $(xisdigit $2) -eq 1 ]]; then
+#         echo "usage: $FUNCNAME  " >&2
+#         return 1
+#     fi
+#     echo -ne "\033[8;${2};${1};t"
+# }
+
+# xterm_maximize() {
+#     echo -ne "\033[3;0;0;t\033[8;0;0t"
+# }
+
+# # TODO: expand '$VAR', '~', and '.'
+# cd() {
+#     if [ "${@:-}" ]; then
+#         if [ "${@:-}" != "${DIRSTACK[0]}" ]; then
+#             pushd "$@"
+#         fi
+#     else
+#         builtin cd
+#     fi
+# } >/dev/null
+
+# cd-() {
+#     popd "$@" >/dev/null
+# }
+
+# cdd() {
+#     for ((i=0; i<${#DIRSTACK[@]}-1; i++)); do
+#         if [ "${DIRSTACK[$i]}" = "${1:-}" ]; then
+#             popd +$i >/dev/null
+#         fi
+#     done
+# }
+
+# repeat() {
+#     if [[ $(xisdigit $1) -eq 1 || -z "${2:-}" ]]; then
+#         echo "usage: $FUNCNAME  " >&2
+#         return 1
+#     fi
+#     local n=$1
+#     shift
+#     while ((n--)); do
+#         ${*}
+#     done
+# }
+
+# findcmd() {
+#     #find ${PATH//:/ } -type f -perm /+x -iname "*${*:-*}*" -printf "%f\n"
+#     for dir in ${PATH//:/ }; do
+#         cd "$dir" && for file in *; do
+#             [[ "$file" =~ "$*" ]] && test -x "$file" && echo "$file"
+#         done
+#     done
+# }
+
+# rand() {
+#     local RAND_MAX=32767
+#     if [ ${1:-} ]; then
+#         if [[ $(xisdigit $1) -eq 1 ]] || 
+#             [ $1 -lt 2 -o $1 -gt $RAND_MAX ]; then
+#             echo "usage: $FUNCNAME [2..$RAND_MAX]" >&2
+#             echo "generate integer on the interval [0,\$1)" >&2
+#             return 1
+#         fi
+#     fi
+#     echo $(( $RANDOM / ( $RAND_MAX / ${1:-$RAND_MAX} + 1 ) ))
+# }
+
+# slurp() {
+#     local IFS=$'\n'
+#     export A$$="$(<${1:-/dev/null})"
+# }
+
+# spit() {
+#     eval local A='$'{A$$:-}
+#     echo -n "$A"
+# }
+
+# _fifo() {
+#     local f=$HOME/.fifo
+#     [ ! -p $f ] && mkfifo $f
+#     exec 9<>$f
+#     trap "exec 9<&-" EXIT
+# }
+
+# _w() {
+#     [ ! -L /dev/fd/9 ] && return
+#     echo $* >&9
+# }
+
+# _r() {
+#     [ ! -L /dev/fd/9 ] && return
+#     read -t${1:-1} <&9
+#     echo "${REPLY:-}"
+# }
+
+# psg() {
+#     ps axo pid,command | while read l; do
+#         grep "$1"
+#     done
+# }
+
+# nh() {
+#     nohup "$@" &>/dev/null &
+# }
+
+# mb() {
+#     for x in "$@"; do
+#         nh mutt -s "$x backup" -a "$x" backup <$(date +%e)\>/")"
+# }
+
+# mp() {
+#     if [ $# -lt 1 ]; then
+#         mplayer --help
+#         return 1
+#     fi
+#     nh mplayer "$@"
+# }
+
+# which() {
+#     (alias; declare -f) | /usr/bin/which --tty-only --read-alias \
+#     --read-functions --show-tilde --show-dot $@
+# } 2>/dev/null
+
+# #mp() {
+#     #mplayer -geometry 100%:0% "$@" /dev/null &
+# #}
+
+# #}}}
+
+# prompt
+
+# # vim: set fenc:utf-8 tw=78 ts=4 sw=4 et fdm=marker:
