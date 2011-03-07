@@ -6,7 +6,7 @@
 # Sarunas Vancevicius original: http://www.redbrick.dcu.ie/~svan/configs/screenrc
 # Mike Perry original:  http://fscked.org/writings/225notes/unix/.screenrc
 
-shell /bin/bash
+shell /bin/zsh
 
 autodetach         on             
 crlf               off             
