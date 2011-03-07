@@ -4,11 +4,12 @@
 ;; Load Path
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/env/emacs")
+(add-to-list 'load-path "~/env/emacs/magit")
 (require 'smooth-scrolling)
 (require 'psvn)
 (require 'goto-last-change)
 (require 'yasnippet-bundle)
-
+(require 'magit)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -304,10 +305,12 @@
              "/opt/local/lib/postgresql84/bin" ":"
              "/opt/local/bin" ":"
              "/opt/local/sbin" ":"
+             "/usr/local/git/bin" ":"
              (getenv "PATH")
              )
             )
     (setq exec-path (append exec-path '("/opt/local/lib/postgresql84/bin")))
+    (setq exec-path (append exec-path '("/usr/local/git/bin")))
     
     )
 )
