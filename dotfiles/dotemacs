@@ -5,12 +5,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/env/emacs")
 (add-to-list 'load-path "~/env/emacs/magit")
+(add-to-list 'load-path "~/env/emacs/cedet/common")
 (require 'smooth-scrolling)
 (require 'psvn)
 (require 'goto-last-change)
 (require 'yasnippet-bundle)
 (require 'magit)
+;;cedet stuff
+(require 'cedet)
+(require 'semantic-ia)
+(global-ede-mode 1)                      ; Enable the Project management system
+(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
+(global-srecode-minor-mode 1)            ; Enable template insertion menu
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; File backing up  behavior

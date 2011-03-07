@@ -2,7 +2,7 @@
 
 # This file can be found at http://jinome.stanford.edu/stat366/unix/.screenrc
 # Modified to play well with emacs, by moving Ctrl-A to Ctrl-P 
-# Modification of original files by Sven Guckes, Sarunas Vancevicius, and Mike Perry
+  # Modification of original files by Sven Guckes, Sarunas Vancevicius, and Mike Perry
 # Sarunas Vancevicius original: http://www.redbrick.dcu.ie/~svan/configs/screenrc
 # Mike Perry original:  http://fscked.org/writings/225notes/unix/.screenrc
 
