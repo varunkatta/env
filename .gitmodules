@@ -1,3 +1,6 @@
 [submodule "submodules/magit"]
 	path = submodules/magit
 	url = https://github.com/philjackson/magit.git
+[submodule "submodules/on-my-zsh"]
+	path = submodules/on-my-zsh
+	url = git@github.com:varunkatta/oh-my-zsh.git
