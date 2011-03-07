@@ -4,3 +4,6 @@
 [submodule "submodules/on-my-zsh"]
 	path = submodules/on-my-zsh
 	url = git@github.com:varunkatta/oh-my-zsh.git
+[submodule "submodules/cedet"]
+	path = submodules/cedet
+	url = https://github.com/emacsmirror/cedet.git
