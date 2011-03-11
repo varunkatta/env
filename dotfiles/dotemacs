@@ -6,6 +6,7 @@
 (add-to-list 'load-path "~/env/emacs")
 (add-to-list 'load-path "~/env/emacs/magit")
 (add-to-list 'load-path "~/env/emacs/cedet/common")
+(add-to-list 'load-path "~/env/emacs/auto-complete")
 (require 'smooth-scrolling)
 (require 'psvn)
 (require 'goto-last-change)
@@ -18,8 +19,18 @@
 (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
 (global-srecode-minor-mode 1)            ; Enable template insertion menu
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Custom loads
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;(load-file "~/env/emacs/plugins/cedet.el")
+;; (load-file "~/env/emacs/plugins/katta-electric.el")
+(load-file "~/env/emacs/plugins/katta-autopair.el")
+(load-file "~/env/emacs/plugins/katta-auto-complete.el")
+(load-file "~/env/emacs/plugins/katta-windows.el")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; File backing up  behavior

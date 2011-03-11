@@ -7,3 +7,6 @@
 [submodule "submodules/cedet"]
 	path = submodules/cedet
 	url = https://github.com/emacsmirror/cedet.git
+[submodule "submodules/ecb"]
+	path = submodules/ecb
+	url = https://github.com/emacsmirror/ecb.git
