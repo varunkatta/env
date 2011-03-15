@@ -71,19 +71,18 @@
 ;;
 ;;
 
-;;; Require
-(global-auto-complete-mode t)
-(add-to-list 'ac-dictionary-directories "~/env/emacs/auto-complete/dict")
-(require 'auto-complete-config)
-(ac-config-default)
 
 (require 'auto-complete)
 (require 'auto-complete-extension nil t) ;optional
 (require 'auto-complete-yasnippet nil t) ;optional
 (require 'auto-complete-semantic nil t)  ;optional
 (require 'auto-complete-gtags nil t)     ;optional
-
+(require 'auto-complete-python nil t)     ;optional
 ;;; Code:
+
+(add-to-list 'ac-dictionary-directories "~/env/emacs/auto-complete/dict")
+(require 'auto-complete-config)
+(ac-config-default)
 
 ;; Generic setup.
 (global-auto-complete-mode t)           ;enable global-mode
@@ -147,7 +146,6 @@
                                 (add-to-list 'ac-sources 'ac-source-haskell)))
 
 (provide 'init-auto-complete)
-
 
 (define-key ac-completing-map "\e" 'ac-stop)
 

@@ -7,6 +7,7 @@
 (add-to-list 'load-path "~/env/emacs/magit")
 (add-to-list 'load-path "~/env/emacs/cedet/common")
 (add-to-list 'load-path "~/env/emacs/auto-complete")
+(add-to-list 'load-path "~/env/emacs/pymacs")
 (require 'smooth-scrolling)
 (require 'psvn)
 (require 'goto-last-change)
@@ -20,6 +21,8 @@
 (global-srecode-minor-mode 1)            ; Enable template insertion menu
 
 
+(require 'ido)
+(setq ido-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -28,10 +31,9 @@
 ;;(load-file "~/env/emacs/plugins/cedet.el")
 ;; (load-file "~/env/emacs/plugins/katta-electric.el")
 (load-file "~/env/emacs/plugins/katta-autopair.el")
-(load-file "~/env/emacs/plugins/katta-auto-complete.el")
 (load-file "~/env/emacs/plugins/katta-windows.el")
-;; (load-file "~/env/emacs/plugins/katta-python.el")
-
+(load-file "~/env/emacs/plugins/katta-auto-complete.el")
+(load-file "~/env/emacs/plugins/katta-python.el") 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -139,7 +141,7 @@
     (setq truncate-lines (not truncate-lines))
     (redraw-display))))
 
-;; have a smarter buffer switch capabilities.
+;; have xfa smarter buffer switch capabilities.
 (iswitchb-mode t)
 
 ;;go to last edit point
