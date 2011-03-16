@@ -7,8 +7,8 @@
 
 ;; (global-set-key (kbd "M-=") 'hs-hide-all)
 ;; (global-set-key (kbd "M--") 'hs-show-all)
-(global-set-key [M-=] 'hs-hide-all)
-(global-set-key [M--]'hs-show-all)
+(global-set-key [(meta =)] 'hs-hide-all)
+(global-set-key [(meta -)] 'hs-show-all)
 (global-set-key [f1] 'hs-hide-level)
 (global-set-key [f2] 'hs-hide-block)
 (global-set-key [f3] 'hs-show-block)
