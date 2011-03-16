@@ -148,6 +148,11 @@
 (provide 'init-auto-complete)
 
 (define-key ac-completing-map "\e" 'ac-stop)
+(defun ac-rope-interference-breaker ()
+  (ac-stop)
+  (dabbrev-expand)
+)
+(global-set-key [M-/] 'ac-rope-interference-breaker)
 
 ;;; init-auto-complete.el ends here
 
