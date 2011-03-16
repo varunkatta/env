@@ -1,4 +1,3 @@
-
 (require 'python)
 ;; (require 'auto-complete)
 (require 'pymacs)

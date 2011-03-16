@@ -37,6 +37,7 @@
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
 
+
 ;;; Commentary:
 ;;
 ;; Configuration for auto-complete mode
@@ -73,11 +74,7 @@
 
 
 (require 'auto-complete)
-(require 'auto-complete-extension nil t) ;optional
-(require 'auto-complete-yasnippet nil t) ;optional
-(require 'auto-complete-semantic nil t)  ;optional
-(require 'auto-complete-gtags nil t)     ;optional
-(require 'auto-complete-python nil t)     ;optional
+
 ;;; Code:
 
 (add-to-list 'ac-dictionary-directories "~/env/emacs/auto-complete/dict")
@@ -145,14 +142,19 @@
 (add-hook 'haskell-mode-hook '(lambda ()
                                 (add-to-list 'ac-sources 'ac-source-haskell)))
 
-(provide 'init-auto-complete)
-
 (define-key ac-completing-map "\e" 'ac-stop)
 (defun ac-rope-interference-breaker ()
   (ac-stop)
   (dabbrev-expand)
 )
 (global-set-key [M-/] 'ac-rope-interference-breaker)
+
+(provide 'init-auto-complete)
+
+
+
+
+
 
 ;;; init-auto-complete.el ends here
 
