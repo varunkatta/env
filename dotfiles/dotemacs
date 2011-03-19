@@ -35,9 +35,9 @@
 (load-file "~/env/emacs/plugins/katta-hide-show.el") 
 (load-file "~/env/emacs/plugins/katta-autopair.el")
 (load-file "~/env/emacs/plugins/katta-windows.el")
-(load-file "~/env/emacs/plugins/katta-auto-complete.el")
-(load-file "~/env/emacs/plugins/katta-python.el") 
 
+(load-file "~/env/emacs/plugins/katta-python.el.bak") 
+(load-file "~/env/emacs/plugins/katta-auto-complete.el")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
