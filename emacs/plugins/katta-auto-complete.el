@@ -80,10 +80,11 @@
 (add-to-list 'ac-dictionary-directories "~/env/emacs/auto-complete/dict")
 (require 'auto-complete-config)
 (ac-config-default)
-
+(ac-set-trigger-key "TAB")
+;; (setq ac-auto-start nil)
 ;; Generic setup.
 (global-auto-complete-mode t)           ;enable global-mode
-(setq ac-auto-start t)                  ;automatically start
+;; (setq ac-auto-start t)                  ;automatically start
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
 
@@ -101,10 +102,15 @@
                         org-mode))
 ;; (add-to-list 'ac-trigger-commands 'org-self-insert-command) ; if you want enable auto-complete at org-mode, uncomment this line
 
+(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
+(print ac-source-ropemacs)
+(print ac-sources)
+(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
 ;; The sources for common all mode.
 (custom-set-variables
  '(ac-sources
    '(
+     ac-source-ropemacs
      ac-source-yasnippet ;this source need file `auto-complete-yasnippet.el'
      ;; ac-source-semantic    ;this source need file `auto-complete-semantic.el'
      ac-source-imenu
@@ -112,7 +118,14 @@
      ac-source-words-in-buffer
      ac-source-files-in-current-dir
      ac-source-filename
+     
+     ;; ac-pythons-source
      )))
+
+(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
+(print ac-source-ropemacs)
+(print ac-sources)
+(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (hook (list
@@ -142,6 +155,9 @@
 (add-hook 'haskell-mode-hook '(lambda ()
                                 (add-to-list 'ac-sources 'ac-source-haskell)))
 
+(add-hook 'python-mode-hook '(lambda ()
+                                (add-to-list 'ac-sources 'ac-source-ropemacs)))
+
 (define-key ac-completing-map "\e" 'ac-stop)
 (defun ac-rope-interference-breaker ()
   (ac-stop)
@@ -164,7 +180,7 @@
 ;; (require 'auto-complete-config)
 ;; (ac-config-default)
 
-;; ;; (ac-set-trigger-key "TAB")
+;; ;; 
 ;; (setq ac-auto-start 3)
 ;; ;; (setq ac-dwim t)
 

@@ -38,6 +38,10 @@
 
 (load-file "~/env/emacs/plugins/katta-python.el.bak") 
 (load-file "~/env/emacs/plugins/katta-auto-complete.el")
+(require 'init-auto-complete)
+(print '@@@@)
+(print ac-sources)
+(print '@@@@)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
