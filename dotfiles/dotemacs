@@ -20,7 +20,6 @@
 (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
 (global-srecode-minor-mode 1)            ; Enable template insertion menu
 
-
 (require 'ido)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -37,11 +36,12 @@
 (load-file "~/env/emacs/plugins/katta-windows.el")
 
 (load-file "~/env/emacs/plugins/katta-python.el.bak") 
+;; (require 'auto-complete-yasnippet)
 (load-file "~/env/emacs/plugins/katta-auto-complete.el")
 (require 'init-auto-complete)
-(print '@@@@)
-(print ac-sources)
-(print '@@@@)
+;; (print '@@@@)
+;; (print ac-sources)
+;; (print '@@@@)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -54,6 +54,14 @@
   kept-new-versions 6
   kept-old-versions 2
   version-control t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Realtime windows configuration management
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(winner-mode 1)
+;; C-c <left>|<right> to cycle various windows configurations
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; turn on font-lock mode

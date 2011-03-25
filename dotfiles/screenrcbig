@@ -222,8 +222,7 @@ escape ^pp
 # emerge strokes the %h not the %t          :)
   hardstatus on
 ################# | hardstatus |             <padded right>  load avg
-  hardstatus alwayslastline "%0=%{kB}| %{kw}%h %{kB}|%=%{kR}Load: %l%100="
-
+hardstatus alwayslastline "%{= dR} %-Lw%50>%{= dG}%n%f* %{= dW}%t%{= dR}%+Lw%<"
 
 #
 # ===============================

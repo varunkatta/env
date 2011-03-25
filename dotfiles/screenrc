@@ -27,7 +27,6 @@ defutf8 on
 defscrollback         10000            # default: 100
 silencewait           15              # default: 30
 
-
 #Change keybindings for convenience
 bindkey -k k7 prev
 bindkey -k k8 next

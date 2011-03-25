@@ -81,10 +81,10 @@
 (require 'auto-complete-config)
 (ac-config-default)
 (ac-set-trigger-key "TAB")
-;; (setq ac-auto-start nil)
+(setq ac-auto-start nil)
 ;; Generic setup.
 (global-auto-complete-mode t)           ;enable global-mode
-;; (setq ac-auto-start t)                  ;automatically start
+;;(setq ac-auto-start t)                  ;automatically start
 (setq ac-dwim t)                        ;Do what i mean
 (setq ac-override-local-map nil)        ;don't override local map
 
@@ -102,10 +102,10 @@
                         org-mode))
 ;; (add-to-list 'ac-trigger-commands 'org-self-insert-command) ; if you want enable auto-complete at org-mode, uncomment this line
 
-(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
-(print ac-source-ropemacs)
-(print ac-sources)
-(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
+;; (print '^^^^^^^^^^^^^^^^^^^^^^^^^)
+;; (print ac-source-ropemacs)
+;; (print ac-sources)
+;; (print '^^^^^^^^^^^^^^^^^^^^^^^^^)
 ;; The sources for common all mode.
 (custom-set-variables
  '(ac-sources
@@ -122,10 +122,10 @@
      ;; ac-pythons-source
      )))
 
-(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
-(print ac-source-ropemacs)
-(print ac-sources)
-(print '^^^^^^^^^^^^^^^^^^^^^^^^^)
+;; (print '^^^^^^^^^^^^^^^^^^^^^^^^^)
+;; (print ac-source-ropemacs)
+;; (print ac-sources)
+;; (print '^^^^^^^^^^^^^^^^^^^^^^^^^)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (hook (list
