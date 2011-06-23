@@ -128,7 +128,7 @@
  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
   ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
-(global-set-key "%" 'match-paren)
+(global-set-key "^" 'match-paren)
 
 ;;setbackground and foreground and cursor colours
 (set-background-color "black")
@@ -983,8 +983,9 @@
   ;; If there is more than one, they won't work right.
  '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
  '(ido-everywhere t)
-;;  '(python-mode-hook (quote (ropemacs-mode hs-minor-mode wisent-python-default-setup ido-mode))))
-;; (custom-set-faces
+ '(split-height-threshold 1000)
+ '(split-width-threshold 20000))
+(custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
