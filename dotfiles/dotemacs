@@ -34,14 +34,12 @@
 (load-file "~/env/emacs/plugins/katta-hide-show.el") 
 (load-file "~/env/emacs/plugins/katta-autopair.el")
 (load-file "~/env/emacs/plugins/katta-windows.el")
-
-(load-file "~/env/emacs/plugins/katta-python.el.bak") 
+;;(load-file "~/env/emacs/plugins/katta-python.el.bak") 
 ;; (require 'auto-complete-yasnippet)
 (load-file "~/env/emacs/plugins/katta-auto-complete.el")
 (require 'init-auto-complete)
-;; (print '@@@@)
-;; (print ac-sources)
-;; (print '@@@@)
+
+(load-file "~/env/emacs/plugins/katta-ediff.el")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -170,7 +168,7 @@
 (setq suggest-key-bindings t)
 (global-set-key [delete] 'delete-char)
 (global-set-key [kp-delete] 'delete-char)
-;;(global-set-key "\C-h" 'backward-delete-char)o
+;;(global-set-key "\C-h" 'backward-delete-char)
 (global-set-key "\C-x\ ?" 'help)
 (global-set-key "\C-l" 'goto-line)
 (global-set-key "\C-x\ f" 'find-file-other-window)
@@ -193,6 +191,8 @@
 (global-set-key [f8] 'previous-buffer);
 (global-set-key [(meta s)] 'save-buffer)
 (global-set-key [(meta r)] 'revert-buffer)
+(global-set-key [(control n)] 'svn-status-update)
+(global-set-key [(meta n)] 'svn-status)
 ;(global-set-key [(control x)] 'save-some-buffers);
 ;;(global-set-key [(control shift c)] 'recompile);
 ;;(put 'upcase-region 'disabled nil)
@@ -426,10 +426,12 @@
 ;(ecb-activate)
 
 ;; new ecb stuff..not old
-;; (add-to-list 'load-path "~/emacs/ecb-2.40")
+(add-to-list 'load-path "~/env/emacs/ecb")
 ;; (load-file "~/emacs/ecb-2.40/ecb.el")
-;; (require 'ecb)
-;; (require 'ecb-autoloads)
+(require 'ecb)
+(require 'ecb-autoloads)
+(setq ecb-layout-name "left-analyse")
+(ecb-activate)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -494,11 +496,6 @@
  "Tempo tags for C mode")
 (defvar c++-tempo-tags nil
  "Tempo tags for C++ mode")
-
-
-
-
-
 
 ;;
 ;; ----------- YAHOO SPECIFIC CPP INDENTATION RULES ------------
@@ -982,6 +979,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
+ '(ecb-layout-window-sizes nil)
  '(ido-everywhere t)
  '(split-height-threshold 1000)
  '(split-width-threshold 20000))
