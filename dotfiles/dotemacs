@@ -8,6 +8,7 @@
 (add-to-list 'load-path "~/env/emacs/cedet/common")
 (add-to-list 'load-path "~/env/emacs/auto-complete")
 (add-to-list 'load-path "~/env/emacs/pymacs")
+;better scrolling
 (require 'smooth-scrolling)
 (require 'psvn)
 (require 'goto-last-change)
@@ -24,6 +25,11 @@
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
+
+;;iciciles mode which is mutuall exclusive with ido mode
+;; (add-to-list 'load-path "~/env/emacs/icicles")
+;; (require 'icicles)
+;; (icy-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -40,6 +46,9 @@
 (require 'init-auto-complete)
 
 (load-file "~/env/emacs/plugins/katta-ediff.el")
+
+;; better grep
+(load-file "~/env/emacs/plugins/ack.el")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -354,11 +363,13 @@
              "/opt/local/bin" ":"
              "/opt/local/sbin" ":"
              "/usr/local/git/bin" ":"
+             "/Users/varun/env/bin" ":"
              (getenv "PATH")
              )
             )
     (setq exec-path (append exec-path '("/opt/local/lib/postgresql84/bin")))
     (setq exec-path (append exec-path '("/usr/local/git/bin")))
+    (setq exec-path (append exec-path '("/Users/varun/env/bin")))
     
     )
 )
@@ -430,7 +441,7 @@
 ;; (load-file "~/emacs/ecb-2.40/ecb.el")
 (require 'ecb)
 (require 'ecb-autoloads)
-(setq ecb-layout-name "left-analyse")
+(setq ecb-layout-name "left6")
 (ecb-activate)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
