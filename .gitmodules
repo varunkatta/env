@@ -10,3 +10,6 @@
 [submodule "submodules/ecb"]
 	path = submodules/ecb
 	url = https://github.com/emacsmirror/ecb.git
+[submodule "submodules/icicles"]
+	path = submodules/icicles
+	url = git://github.com/emacsmirror/icicles.git
