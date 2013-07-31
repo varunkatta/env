@@ -422,12 +422,12 @@
 ;(ecb-activate)
 
 ;; new ecb stuff..not old
-(add-to-list 'load-path "~/env/emacs/ecb")
-;; (load-file "~/emacs/ecb-2.40/ecb.el")
-(require 'ecb)
-(require 'ecb-autoloads)
-(setq ecb-layout-name "left6")
-(ecb-activate)
+;; (add-to-list 'load-path "~/env/emacs/ecb")
+;; ;; (load-file "~/emacs/ecb-2.40/ecb.el")
+;; (require 'ecb)
+;; (require 'ecb-autoloads)
+;; (setq ecb-layout-name "left6")
+;; (ecb-activate)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -969,16 +969,16 @@
 ;;(setq exec-path (cons "/home/varun/xref" exec-path))
 ;; (setq load-path (cons "/home/varun//xref/emacs" load-path))
 ;; (load "xrefactory")
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
- '(ecb-layout-window-sizes nil)
- '(ido-everywhere t)
- '(split-height-threshold 1000)
- '(split-width-threshold 20000))
+;; (custom-set-variables
+;;   ;; custom-set-variables was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  '(ac-sources (quote (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
+;;  '(ecb-layout-window-sizes nil)
+;;  '(ido-everywhere t)
+;;  '(split-height-threshold 1000)
+;;  '(split-width-threshold 20000))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
