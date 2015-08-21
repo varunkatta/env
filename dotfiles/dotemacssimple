@@ -34,6 +34,13 @@
 
 ;; better grep
 (load-file "~/env/emacs/plugins/ack.el")
+
+;; rpm spec mode
+(autoload 'rpm-spec-mode "~/env/emacs/plugins/rpm-spec-mode.el" "RPM spec mode." t)
+(setq auto-mode-alist (append '(("\\.spec" . rpm-spec-mode))
+                              auto-mode-alist))
+;; apply shell mode to .zsh files 
+(add-to-list 'auto-mode-alist '("\\.zsh$" . shell-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
