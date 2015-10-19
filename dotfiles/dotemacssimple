@@ -162,6 +162,10 @@
 ;;go to last edit point
 (global-set-key [(meta p)(u)] 'goto-last-change)
 
+;; shell mode
+(setq sh-basic-offset 2)
+(setq sh-indentation 2)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keybindings. Shortcuts really
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
