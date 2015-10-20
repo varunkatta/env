@@ -14,6 +14,10 @@
 (require 'goto-last-change)
 (require 'yasnippet-bundle)
 
+;; git support
+(require 'git)
+(require 'git-blame)
+
 (setq ido-everywhere t)
 (ido-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
