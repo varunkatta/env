@@ -1,13 +1,30 @@
 ;; Red Hat Linux default .emacs initialization file  ; -*- mode: emacs-lisp -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Load Path
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Load Paths
 (add-to-list 'load-path "~/env/emacs")
 (add-to-list 'load-path "~/env/emacs/auto-complete")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; general
+
+;; set theme
+(load-theme 'material t)
+;; (load-theme 'darcula  t)
+;; (set-cursor-color "red")
+
+;; ido preferences
+(setq ido-everywhere t)
+(ido-mode 1)
 
 ;;better scrolling
 (require 'smooth-scrolling)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; version control
 
 ;; svn support
 (require 'psvn)
@@ -20,14 +37,12 @@
 
 ;; mercurial support
 (require 'mercurial)
-
-(setq ido-everywhere t)
-(ido-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom loads
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (load-file "~/env/emacs/plugins/katta-hide-show.el") 
 (load-file "~/env/emacs/plugins/katta-autopair.el")
 (load-file "~/env/emacs/plugins/katta-windows.el")
@@ -49,6 +64,7 @@
 ;; apply shell mode to .zsh files 
 (add-to-list 'auto-mode-alist '("\\.zsh$" . shell-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; File backing up  behavior
@@ -136,10 +152,10 @@
         (t (self-insert-command (or arg 1)))))
 (global-set-key "^" 'match-paren)
 
-;;setbackground and foreground and cursor colours
-(set-background-color "black")
-(set-foreground-color "white")
-(set-cursor-color "red")
+;; Look and feel - setbackground and foreground and cursor colours
+;; (set-background-color "black")
+;; (set-foreground-color "white")
+
 
 ;;let the cursor not blink. Amen!
 (blink-cursor-mode -1)
@@ -998,8 +1014,47 @@
 ;;  '(split-height-threshold 1000)
 ;;  '(split-width-threshold 20000))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ac-sources
+   (quote
+    (ac-source-ropemacs ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#ffffff" "#f36c60" "#8bc34a" "#fff59d" "#4dd0e1" "#b39ddb" "#81d4fa" "#263238"))
+ '(custom-safe-themes
+   (quote
+    ("97f9438943105a17eeca9f1a1c4c946765e364957749e83047d6ee337b5c0a73" "4c028a90479b9ad4cbb26ae7dc306dded07718749fe7e4159621a8aebac40213" default)))
+ '(fci-rule-color "#37474f")
+ '(hl-sexp-background-color "#1c1f26")
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#f36c60")
+     (40 . "#ff9800")
+     (60 . "#fff59d")
+     (80 . "#8bc34a")
+     (100 . "#81d4fa")
+     (120 . "#4dd0e1")
+     (140 . "#b39ddb")
+     (160 . "#f36c60")
+     (180 . "#ff9800")
+     (200 . "#fff59d")
+     (220 . "#8bc34a")
+     (240 . "#81d4fa")
+     (260 . "#4dd0e1")
+     (280 . "#b39ddb")
+     (300 . "#f36c60")
+     (320 . "#ff9800")
+     (340 . "#fff59d")
+     (360 . "#8bc34a"))))
+ '(vc-annotate-very-old-color nil))
