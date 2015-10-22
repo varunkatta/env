@@ -9,9 +9,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; general
 
+;; Look and feel
 ;; set theme
-(load-theme 'material t)
-;; (load-theme 'darcula  t)
+;; (require 'material)
+;; (require 'darcula-theme)
 ;; (set-cursor-color "red")
 
 ;; ido preferences
@@ -20,6 +21,16 @@
 
 ;;better scrolling
 (require 'smooth-scrolling)
+
+;; show line numbers
+(require 'linum)
+(setq global-linum-mode t)
+
+;; real auto save
+(require 'real-auto-save)
+(add-hook 'prog-mode-hook 'real-auto-save-mode)
+;; Auto save interval is 10 seconds by default.
+(setq real-auto-save-interval 3) ;; in seconds
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -73,9 +84,9 @@
 (setq backup-directory-alist '(("" . "~/.emacs-backups")))
 ;; (setq backup-directory-alist '((“.” . “~/.emacs_backups”)))
 (setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -103,9 +114,9 @@
 
 ;; enable wheelmouse support by default
 (when window-system
- (mwheel-install)
-;; use extended compound-text coding for X clipboard
- (set-selection-coding-system 'compound-text-with-extensions))
+  (mwheel-install)
+  ;; use extended compound-text coding for X clipboard
+  (set-selection-coding-system 'compound-text-with-extensions))
 
 ;; enable font coloring
 (global-font-lock-mode 1)
@@ -146,9 +157,9 @@
 
 ;;match parenthesis if % is placed on a parenthesis
 (defun match-paren (arg)
- (interactive "p")
- (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-  ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+        ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
         (t (self-insert-command (or arg 1)))))
 (global-set-key "^" 'match-paren)
 
@@ -173,11 +184,11 @@
 
 ;; toggle truncation with ctrl-t
 (define-key global-map "\C-t"
- (function
-  (lambda ()
-    (interactive)
-    (setq truncate-lines (not truncate-lines))
-    (redraw-display))))
+  (function
+   (lambda ()
+     (interactive)
+     (setq truncate-lines (not truncate-lines))
+     (redraw-display))))
 
 ;; have xfa smarter buffer switch capabilities.
 (iswitchb-mode t)
@@ -221,7 +232,7 @@
 (global-set-key [(meta r)] 'revert-buffer)
 (global-set-key [(control n)] 'svn-status-update)
 (global-set-key [(meta n)] 'svn-status)
-;(global-set-key [(control x)] 'save-some-buffers);
+                                        ;(global-set-key [(control x)] 'save-some-buffers);
 ;;(global-set-key [(control shift c)] 'recompile);
 ;;(put 'upcase-region 'disabled nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -248,17 +259,17 @@
                       nil
                       :height
                       (floor (* 0.9
-                                  (face-attribute 'default :height)))))
+                                (face-attribute 'default :height)))))
 (global-set-key (kbd "C-=") 'sacha/increase-font-size)
 (global-set-key (kbd "C--") 'sacha/decrease-font-size)
 
 
 (if (eq system-type 'windows-nt)
-  (set-default-font "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1"))
+    (set-default-font "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1"))
 
 
- (if (eq window-system 'x)
-   (set-default-font "     -adobe-courier-medium-r-*-*-*-160-*-*-*-*-iso8859-1"))
+(if (eq window-system 'x)
+    (set-default-font "     -adobe-courier-medium-r-*-*-*-160-*-*-*-*-iso8859-1"))
 
 ;; (if (eq window-system 'x)
 ;;   (set-default-font "Inconsolata-11"))
@@ -284,14 +295,14 @@
 ;; The following code helps in opening files with tags
 ;; in read-only mode.
 (defun find-tag-readonly (&rest a)
- (interactive)
- (call-interactively `find-tag a)
- (if (eq nil buffer-read-only) (setq buffer-read-only t))  )
+  (interactive)
+  (call-interactively `find-tag a)
+  (if (eq nil buffer-read-only) (setq buffer-read-only t))  )
 
 (defun find-tag-readonly-next (&rest a)
- (interactive)
- (call-interactively `tags-loop-continue a)
- (if (eq nil buffer-read-only) (setq buffer-read-only t))  )
+  (interactive)
+  (call-interactively `tags-loop-continue a)
+  (if (eq nil buffer-read-only) (setq buffer-read-only t))  )
 
 (global-set-key [(control meta \.)] 'find-tag-readonly)
 (global-set-key [(control meta \,)] 'find-tag-readonly-next)
@@ -310,9 +321,9 @@
 ;; Better scrolling
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq
-  scroll-margin 0                  
-  scroll-conservatively 100000
-  scroll-preserve-screen-position 1)
+ scroll-margin 0                  
+ scroll-conservatively 100000
+ scroll-preserve-screen-position 1)
 
 ;;originally from http://emacs-fu.blogspot.com/2009/12/scrolling.html
 ;; The scroll-margin. This determines when scrolling should start by
@@ -372,7 +383,7 @@
             "C:/Windows/system32/WindowsPowerShell/v1.0/" )
           ) 
     ) 
-)
+  )
 
 (when (string-equal system-type "darwin")
   (progn
@@ -391,7 +402,7 @@
     (setq exec-path (append exec-path '("/Users/varun/env/bin")))
     
     )
-)
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -411,14 +422,14 @@
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
 
- (global-set-key "\M-;" 'comment-dwim-line) 
+(global-set-key "\M-;" 'comment-dwim-line) 
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; appearance
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; set mode line to show full path of current file
+                                        ; set mode line to show full path of current file
 ;; (setq-default mode-line-format
 ;;    (list '((buffer-file-name " %f"
 ;;               (dired-directory
@@ -428,11 +439,11 @@
 
 ;; format title bar to show full path of current file
 (setq-default frame-title-format
-   (list '((buffer-file-name " %f"
-             (dired-directory
-              dired-directory
-              (revert-buffer-function " %b"
-              ("%b - Dir:  " default-directory))))))) 
+              (list '((buffer-file-name " %f"
+                                        (dired-directory
+                                         dired-directory
+                                         (revert-buffer-function " %b"
+                                                                 ("%b - Dir:  " default-directory))))))) 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -453,7 +464,7 @@
 ;; (global-set-key [(control meta m)] 'ecb-goto-window-methods)
 ;; (global-set-key [(control n)] 'ecb-nav-goto-next)
 ;; (global-set-key [(control b)] 'ecb-nav-goto-previous)
-;(ecb-activate)
+                                        ;(ecb-activate)
 
 ;; new ecb stuff..not old
 ;; (add-to-list 'load-path "~/env/emacs/ecb")
@@ -474,7 +485,7 @@
 (autoload 'cvs-commit "cvs-commit" "CVS commit" t)
 (autoload 'cvs-diff "cvs-diff" "CVS diff" t)
 
-;(load-file "~/vc-svn.el")
+                                        ;(load-file "~/vc-svn.el")
 ;;(add-to-list 'vc-handled-backends 'SVN)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -500,11 +511,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; erlang
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-      ;; (setq load-path (cons  "/opt/local/lib/erlang/lib/tools-2.6.4/emacs"
-      ;; load-path))
-      ;; (setq erlang-root-dir "/opt/local/lib/erlang")
-      ;; (setq exec-path (cons "/opt/local/lib/erlang/bin" exec-path))
-      ;; (require 'erlang-start)
+;; (setq load-path (cons  "/opt/local/lib/erlang/lib/tools-2.6.4/emacs"
+;; load-path))
+;; (setq erlang-root-dir "/opt/local/lib/erlang")
+;; (setq exec-path (cons "/opt/local/lib/erlang/bin" exec-path))
+;; (require 'erlang-start)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -523,36 +534,36 @@
 ;; This is a way to hook tempo into cc-mode
 
 (defvar c-tempo-tags nil
- "Tempo tags for C mode")
+  "Tempo tags for C mode")
 (defvar c++-tempo-tags nil
- "Tempo tags for C++ mode")
+  "Tempo tags for C++ mode")
 
 ;;
 ;; ----------- YAHOO SPECIFIC CPP INDENTATION RULES ------------
-; Use spaces, not tabs, for the "Tab" key.
+                                        ; Use spaces, not tabs, for the "Tab" key.
 (setq-default indent-tabs-mode nil)
 
-; Basic unit of spaces for each indentation level: 4 spaces.
+                                        ; Basic unit of spaces for each indentation level: 4 spaces.
 (add-hook 'c++-mode-hook '(lambda () (setq c-basic-offset 2)))
 (add-hook 'c-mode-hook '(lambda () (setq c-basic-offset 2))) 
 
-; A case or default label for switch blocks: 2 spaces for the 'case' line
-; and then 2 more spaces for the case's block (total of 4 spaces from 'switch').
+                                        ; A case or default label for switch blocks: 2 spaces for the 'case' line
+                                        ; and then 2 more spaces for the case's block (total of 4 spaces from 'switch').
 (add-hook 'c++-mode-hook '(lambda () (c-set-offset 'case-label 2)))
 (add-hook 'c++-mode-hook '(lambda () (c-set-offset 'statement-case-intro 2)))
 (add-hook 'c-mode-hook '(lambda () (c-set-offset 'case-label 2)))
 (add-hook 'c-mode-hook '(lambda () (c-set-offset 'statement-case-intro 2)))
 
-; A C++ private/protected/public access label.  This shifts the line
-; back by two spaces when you hit the colon after the word "private",
-; the word "protected", or the word "public" in a class.  Since the
-; number in the parentheses here is negative, the shift is backwards.
-; If you desire more of a backwards shift, increase the number but
-; keep it negative.  If you desire no shift, make it zero.  If for
-; some odd reason you desire a forward (rightward) shift, make the
-; number a positive integer.
-; NOTE: For this to actually work in a .h file (which is a "C" file
-; by default), you must choose C++-mode (M-x c++-mode) for the buffer.
+                                        ; A C++ private/protected/public access label.  This shifts the line
+                                        ; back by two spaces when you hit the colon after the word "private",
+                                        ; the word "protected", or the word "public" in a class.  Since the
+                                        ; number in the parentheses here is negative, the shift is backwards.
+                                        ; If you desire more of a backwards shift, increase the number but
+                                        ; keep it negative.  If you desire no shift, make it zero.  If for
+                                        ; some odd reason you desire a forward (rightward) shift, make the
+                                        ; number a positive integer.
+                                        ; NOTE: For this to actually work in a .h file (which is a "C" file
+                                        ; by default), you must choose C++-mode (M-x c++-mode) for the buffer.
 (add-hook 'c++-mode-hook '(lambda () (c-set-offset 'access-label -2)))
 ;;
 
@@ -576,7 +587,7 @@
 ;;==============================
 ;; (autoload 'matlab-mode "~/matlab" "Enter Matlab mode." t)
 ;; (autoload 'matlab-shell "~/matlab" "Interactive Matlab mode." t)
-       
+
 
 ;; (defun my-matlab-mode-hook ()
 ;;   (setq matlab-function-indent t)	; if you want function bodies indented
@@ -775,7 +786,7 @@
 
 ;; ;; --- Begin Perl editing section:
 ;; (autoload 'perl-mode "cperl-mode" "alternate mode for editing Perl
-;programs" t)
+                                        ;programs" t)
 ;; ;; End Perl editing section.
 
 ;; ;; --- Begin HTML editing section:
@@ -800,7 +811,7 @@
 ;;   (let ((start (mark))
 ;;         (end (point))
 ;;         (command "/usr/local/bin/tidy -config
-;/home/cmillward/lib/tidyconfig.txt -asxhtml"))
+                                        ;/home/cmillward/lib/tidyconfig.txt -asxhtml"))
 ;;         (shell-command-on-region start end command t t
 ;;              shell-command-default-error-buffer)))
 
@@ -975,29 +986,29 @@
 ;; ;; enable visual feedback on selections
 ;; (setq transient-mark-mode t)
 ;;(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- ;;'(ecb-options-version "2.32"))
+;; custom-set-variables was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+;;'(ecb-options-version "2.32"))
 ;;(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- ;;)
+;; custom-set-faces was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+;;)
 ;;(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+;; custom-set-variables was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
 ;; '(c-basic-offset 2))
 ;;(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- ;;)
+;; custom-set-faces was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+;;)
 
 ;;xref stuff. Not using it. IDEish behaviour of emacs
 ;;(setq exec-path (cons "/home/varun/xref" exec-path))
