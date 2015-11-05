@@ -73,7 +73,7 @@
 (setq auto-mode-alist (append '(("\\.spec" . rpm-spec-mode))
                               auto-mode-alist))
 ;; apply shell mode to .zsh files 
-(add-to-list 'auto-mode-alist '("\\.zsh$" . shell-mode))
+(add-to-list 'auto-mode-alist '("\\.zsh$" . shell-script-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
