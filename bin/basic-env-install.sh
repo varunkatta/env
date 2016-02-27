@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 cd $HOME
 sudo yum -y install zsh git vim
 git clone git://github.com/varunkatta/oh-my-zsh.git .oh-my-zsh
