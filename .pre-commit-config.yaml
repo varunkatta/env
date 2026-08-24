@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: bootstrap-policy
+        name: bootstrap policy
+        entry: ./bootstrap/validate.sh
+        language: system
+        pass_filenames: false
+        files: ^(bootstrap/|\.pre-commit-config\.yaml$)

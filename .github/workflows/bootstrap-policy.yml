@@ -1,0 +1,32 @@
+name: Bootstrap policy
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate bootstrap policy
+        run: ./bootstrap/validate.sh
+      - name: Protect legacy configuration on pull requests
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          changed_files="$(git diff --name-only "$BASE_SHA" HEAD)"
+          if printf '%s\n' "$changed_files" | grep -Eq '^(bin/|tools/|dotfiles/|emacs/)'; then
+            case "$PR_TITLE" in
+              "[legacy-migration]"*) ;;
+              *)
+                echo "Legacy configuration requires a [legacy-migration] PR title."
+                exit 1
+                ;;
+            esac
+          fi

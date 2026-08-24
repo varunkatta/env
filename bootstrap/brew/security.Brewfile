@@ -1,0 +1,5 @@
+brew "age"
+brew "sops"
+brew "trivy"
+brew "syft"
+brew "grype"

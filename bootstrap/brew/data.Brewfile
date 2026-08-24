@@ -1,0 +1,11 @@
+# Client libraries and local analysis tools; no database servers here.
+brew "duckdb"
+brew "sqlite"
+brew "libpq"
+brew "graphviz"
+brew "ffmpeg"
+brew "imagemagick"
+brew "poppler"
+brew "tesseract"
+brew "protobuf"
+brew "buf"
