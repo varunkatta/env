@@ -5,6 +5,18 @@ times. It talks only to the locally installed Codex app-server using the account
 ChatGPT Desktop. It does not scrape a browser, save credentials, send prompts, or consume/reset
 credits.
 
+## What it shows
+
+The menu-bar label is `Codex <remaining>%`. It represents the remaining capacity in the primary
+Codex window returned by the account. Click the label to see every available account limit window,
+including secondary windows where the account provides them, reset times, plan type, available
+credits, reset-credit count, and any individual spend-control limit.
+
+Use **Refresh Now** to request the current account snapshot immediately; otherwise the app refreshes
+every 60 seconds. **Copy Summary** puts a short plain-text snapshot on the clipboard. The app only
+reports usage; it has no action to purchase credits, redeem a reset, change a plan, or start Codex
+work.
+
 ## Run
 
 ```bash
@@ -33,6 +45,33 @@ open dist/CodexUsageMenu.app
 ```
 
 The bundle is an agent-only app (`LSUIElement`), so it appears in the menu bar without a Dock icon.
+The app remains visible while its process runs. Quit it from **Quit Codex Usage Menu** in its menu.
+
+## Requirements
+
+- macOS 13 or later with Xcode Command Line Tools (for `swift build`);
+- ChatGPT Desktop installed at `/Applications/ChatGPT.app`;
+- an active Codex sign-in in ChatGPT Desktop.
+
+The app dynamically reads the usage windows that the signed-in account makes available. A plan may
+have one window, multiple rolling windows, credit information, or none of those fields. The app
+shows only what the local Codex client returns and does not invent missing numbers.
+
+## Troubleshooting
+
+| Symptom | Check |
+| --- | --- |
+| `Codex !` in the menu bar | Open ChatGPT Desktop, confirm its Codex sign-in, then choose **Refresh Now**. |
+| App does not appear | Run the bundle commands above from a Terminal and check that `open dist/CodexUsageMenu.app` succeeds. |
+| Build fails after moving the project | Delete only the generated `.build/` directory and rerun `./scripts/build-app-bundle.sh`. |
+| Values differ from an older screenshot | Usage windows and reset times are live account values; refresh the menu or check Codex Settings → Usage for the first-party view. |
+
+## Compatibility note
+
+The first version uses the read-only `account/rateLimits/read` method exposed by the locally
+installed Codex app-server. This avoids browser/session scraping but is coupled to the installed
+Codex client. If a future ChatGPT Desktop update changes that protocol, rebuild the app and update
+the bridge only after verifying the new local protocol remains read-only.
 
 ## Data boundary
 
