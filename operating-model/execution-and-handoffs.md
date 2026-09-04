@@ -60,6 +60,25 @@ Never terminate or restart a valid long-running process merely to create the
 appearance of movement. Recovery changes ownership or instructions only when
 the durable evidence shows that normal progress has stopped.
 
+## Integration-readiness sweep
+
+The integration owner must own the complete delivery topology. Before sending a task to review,
+opening or rerunning a PR, or declaring it ready to integrate, verify the following against the
+actual Git worktrees and the proposed integration/PR merge ref:
+
+1. each packet's owner, verifier, integration owner, allowed/forbidden paths and acceptance
+   commands are complete;
+2. each declared base is the real shared ancestor of its registered branch/worktree and descends
+   from the accepted baseline;
+3. the verifier branch is rooted at that clean base and contains only verifier-owned paths, never
+   implementation ancestry; and
+4. full task validation plus both implementation and verifier scope gates pass.
+
+The integration owner does not delegate this reconciliation away or treat a first CI failure as
+someone else's infrastructure problem. Reproduce it locally against the merge ref, identify whether
+it is topology, code, workflow, or external service, and immediately assign the smallest bounded
+repair. A task is not ready merely because its implementation test suite and a reviewer report pass.
+
 ## Learning loop
 
 At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
