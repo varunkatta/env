@@ -8,6 +8,9 @@ It also keeps reusable, non-project-specific collaboration guidance in
 technical work is planned, reviewed, handed off, and communicated without
 placing personal operating preferences in an application repository.
 
+[`CLAUDE.md`](CLAUDE.md) and [`AGENTS.md`](AGENTS.md) are thin entry points for
+Claude and Codex. Both load the same canonical operating model.
+
 ## Philosophy
 
 The bootstrap is deliberately small, declarative, and additive.
