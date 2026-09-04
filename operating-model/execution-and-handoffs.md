@@ -33,6 +33,10 @@ For an active workstream, report:
   work, blocked, or stalled;
 - for a blocker: the exact boundary and the smallest safe next action.
 
+State the delivery level explicitly: implementation checkpoint, independent-review disposition,
+CI/PR state, and protected-branch integration are separate facts. A local or branch-level pass is
+not an integration claim.
+
 ## Delegated-work recovery rule
 
 The coordinator owns the agents it launches or assigns in a project environment.
@@ -55,6 +59,17 @@ Monitoring must therefore lead to action, not only narration.
 Never terminate or restart a valid long-running process merely to create the
 appearance of movement. Recovery changes ownership or instructions only when
 the durable evidence shows that normal progress has stopped.
+
+## Learning loop
+
+At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
+persist—an operating-model candidate with the observed evidence, proposed rule, and expected
+benefit. Mark it as a provisional inference. Add it to the durable shared operating model only
+after explicit user approval, then record the confirmed decision and commit it.
+
+For a new cross-cutting operator/API interface, first establish one canonical contract, then map
+each staged implementation task to its owned commands, dependencies, capability boundary, and
+acceptance gate. Tasks must link back to that contract rather than define competing variants.
 
 ## Handoff minimum
 

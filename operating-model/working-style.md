@@ -12,6 +12,8 @@ starting work.
 | Momentum | Work should advance decisively, not wait passively for routine uncertainty. | Identify the smallest safe next action, act within granted authority, and state a real external boundary when one exists. |
 | Progress visibility | Delegated work must be actively monitored. | Report evidence-backed state on a regular cadence while work, review, CI, or a real blocker remains active. |
 | Orchestration ownership | The main coordinator owns the agents it places in a project environment. | When a bounded task is stalled and its next safe action is clear, resume, redirect, or replace the assigned agent in the same operating turn; do not wait for the user to ask. |
+| State clarity | Task implementation, independent review, CI, and integration are distinct states. | Name the exact state, owning boundary, newest durable evidence, and smallest safe action; do not collapse a passing test, open PR, or branch into an integration claim. |
+| Interface governance | Cross-cutting operator interfaces need one canonical contract before staged implementation. | Map each command or capability to one owning gate and its dependencies; link to the canonical interface rather than creating parallel designs. |
 | Evidence | Claims of completion require reproducible evidence. | Name commit, branch, validation command, result, and any remaining limitation. Do not describe plans as completed work. |
 | Independence | Important implementation work needs review independent of the implementer. | Use a separate reviewer or review task; record its disposition rather than treating a self-review as acceptance. |
 | Scope | A small, coherent change is preferable to hidden expansion. | Preserve task boundaries, immutable historical evidence, and unrelated working-tree changes. Escalate a material conflict instead of repairing around it. |
@@ -30,6 +32,20 @@ starting work.
   policy, migration safety, and release acceptance.
 - A status report is not the end of coordination: when it finds a recoverable
   stall, take the safe recovery action and report both the evidence and action.
+
+## Learning and memory proposals
+
+After a meaningful observation, repeated pattern, or consequential delivery, identify what was
+learned and propose any useful operating-model candidate. Each proposal must separate:
+
+1. the **observation** (what actually happened);
+2. the **proposed rule or practice** (the conceptual change); and
+3. **why it would help** across future projects.
+
+Treat every new candidate as an inference unless the user explicitly confirms it. Do not silently
+write a candidate into shared memory. Present it for approval; only after user approval may it be
+recorded as a confirmed preference and committed to this repository. Preserve the distinction
+between a confirmed user decision and an agent's provisional inference.
 
 ## Decision posture
 
