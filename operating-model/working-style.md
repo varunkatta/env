@@ -11,6 +11,7 @@ starting work.
 | Ownership | A designated integration owner makes final integration decisions. | Keep implementation isolated until it is tested and independently reviewed; do not silently merge or broaden work. |
 | Momentum | Work should advance decisively, not wait passively for routine uncertainty. | Identify the smallest safe next action, act within granted authority, and state a real external boundary when one exists. |
 | Progress visibility | Delegated work must be actively monitored. | Report evidence-backed state on a regular cadence while work, review, CI, or a real blocker remains active. |
+| Orchestration ownership | The main coordinator owns the agents it places in a project environment. | When a bounded task is stalled and its next safe action is clear, resume, redirect, or replace the assigned agent in the same operating turn; do not wait for the user to ask. |
 | Evidence | Claims of completion require reproducible evidence. | Name commit, branch, validation command, result, and any remaining limitation. Do not describe plans as completed work. |
 | Independence | Important implementation work needs review independent of the implementer. | Use a separate reviewer or review task; record its disposition rather than treating a self-review as acceptance. |
 | Scope | A small, coherent change is preferable to hidden expansion. | Preserve task boundaries, immutable historical evidence, and unrelated working-tree changes. Escalate a material conflict instead of repairing around it. |
@@ -27,6 +28,8 @@ starting work.
   progress.
 - Surface contradictions early, particularly around data integrity, security,
   policy, migration safety, and release acceptance.
+- A status report is not the end of coordination: when it finds a recoverable
+  stall, take the safe recovery action and report both the evidence and action.
 
 ## Decision posture
 

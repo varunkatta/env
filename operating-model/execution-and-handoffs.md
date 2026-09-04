@@ -8,9 +8,12 @@
    integration owner. Preserve unrelated local changes.
 3. **Execute.** Make the smallest coherent implementation change and validate
    it against the real project state.
-4. **Monitor.** If work is delegated, check its durable progress, CI, or
-   blocker regularly. A running agent without a recent artifact, test result,
-   or concrete diagnosis needs attention.
+4. **Monitor and recover.** If work is delegated, check its durable progress,
+   CI, or blocker regularly. A running agent without a recent artifact, test
+   result, or concrete diagnosis needs attention. A stopped or stalled agent is
+   the coordinator's responsibility: when its existing task remains bounded,
+   its isolated worktree is safe, and its next action is clear, resume or
+   redirect it immediately rather than waiting for the user to prompt.
 5. **Review.** Obtain independent review when the task or project requires it.
    Treat review conditions as work, not commentary.
 6. **Checkpoint.** Commit a clean, tested unit with a handoff that says exactly
@@ -29,6 +32,29 @@ For an active workstream, report:
 - classification: making progress, ready for review/integration, awaiting valid
   work, blocked, or stalled;
 - for a blocker: the exact boundary and the smallest safe next action.
+
+## Delegated-work recovery rule
+
+The coordinator owns the agents it launches or assigns in a project environment.
+Monitoring must therefore lead to action, not only narration.
+
+1. On a stalled or interrupted task, inspect the worktree, latest commit,
+   task packet, active process, and linked review/CI state.
+2. If a real boundary exists—missing authority, a forbidden path, an unsafe
+   migration, unavailable external actor, or material architecture decision—do
+   not work around it. Record the evidence and surface the narrowest decision
+   required.
+3. If there is no such boundary, issue the existing owner a concrete recovery
+   instruction in the same turn: exact remaining condition, allowed paths,
+   acceptance command, commit/handoff requirement, and reviewer/integration
+   next step. Reassign only when the existing owner cannot continue safely.
+4. Do not require a second user prompt to resume a recoverable bounded task.
+   Report the recovery action, then continue the monitoring cadence until it
+   reaches review, integration, or a genuine blocker.
+
+Never terminate or restart a valid long-running process merely to create the
+appearance of movement. Recovery changes ownership or instructions only when
+the durable evidence shows that normal progress has stopped.
 
 ## Handoff minimum
 
