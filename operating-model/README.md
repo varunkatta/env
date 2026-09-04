@@ -5,6 +5,13 @@ planned, executed, reviewed, and handed off. It is deliberately separate from
 any product repository: a project should consume the relevant operating
 context, not become the sole record of it.
 
+## Agent entry points
+
+The knowledge here is intentionally agent-agnostic. The top-level
+[`CLAUDE.md`](../CLAUDE.md) and [`AGENTS.md`](../AGENTS.md) files are thin
+loaders for Claude and Codex respectively. They point to this same canonical
+material and must never become separate preference stores.
+
 ## Purpose
 
 Use these documents to help a collaborator or coding agent work effectively
