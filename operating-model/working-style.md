@@ -12,6 +12,7 @@ starting work.
 | Momentum | Work should advance decisively, not wait passively for routine uncertainty. | Identify the smallest safe next action, act within granted authority, and state a real external boundary when one exists. |
 | Progress visibility | Delegated work must be actively monitored. | Report evidence-backed state on a regular cadence while work, review, CI, or a real blocker remains active. |
 | Orchestration ownership | The main coordinator owns the agents it places in a project environment. | When a bounded task is stalled and its next safe action is clear, resume, redirect, or replace the assigned agent in the same operating turn; do not wait for the user to ask. |
+| Integration readiness ownership | One named integration owner is accountable for the whole task topology, not only merge mechanics. | Before review, PR creation, CI rerun, or integration, reconcile each packet's declared base/branch/worktree with the real Git topology and run the full readiness sweep. A CI failure is never assumed to be infrastructure until reproduced. |
 | State clarity | Task implementation, independent review, CI, and integration are distinct states. | Name the exact state, owning boundary, newest durable evidence, and smallest safe action; do not collapse a passing test, open PR, or branch into an integration claim. |
 | Interface governance | Cross-cutting operator interfaces need one canonical contract before staged implementation. | Map each command or capability to one owning gate and its dependencies; link to the canonical interface rather than creating parallel designs. |
 | Evidence | Claims of completion require reproducible evidence. | Name commit, branch, validation command, result, and any remaining limitation. Do not describe plans as completed work. |
@@ -46,6 +47,24 @@ Treat every new candidate as an inference unless the user explicitly confirms it
 write a candidate into shared memory. Present it for approval; only after user approval may it be
 recorded as a confirmed preference and committed to this repository. Preserve the distinction
 between a confirmed user decision and an agent's provisional inference.
+
+## Integration-topology preflight
+
+The integration owner must run and record this preflight before declaring a task ready for review,
+CI, or integration:
+
+1. Confirm every implementation and verifier packet has one named owner, linked verifier,
+   integration owner, exact allowed/forbidden paths, and required acceptance commands.
+2. Confirm the declared base is the actual shared ancestor of the registered branch/worktree and
+   descends from the accepted baseline; do not substitute a later activation commit merely because
+   it contains the packet.
+3. Confirm a verifier branch starts from that clean shared base, not from the implementation
+   branch. It may inspect a candidate SHA, but its own diff may contain only its packet and report.
+4. Run the full task/lease validator and each implementation and verifier branch-diff gate against
+   the exact integration/PR merge ref, not just a local happy-path command.
+5. Treat any failure as an owned integration-readiness defect until a local reproduction identifies
+   a true external boundary. Assign the smallest bounded repair immediately; do not label it a CI
+   issue by assumption.
 
 ## Decision posture
 
