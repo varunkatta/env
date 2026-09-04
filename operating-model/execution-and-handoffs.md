@@ -79,6 +79,22 @@ someone else's infrastructure problem. Reproduce it locally against the merge re
 it is topology, code, workflow, or external service, and immediately assign the smallest bounded
 repair. A task is not ready merely because its implementation test suite and a reviewer report pass.
 
+## PR review-conversation loop
+
+Automated checks and review threads are separate delivery obligations. At review completion, on a
+CI state change, and immediately before integration, inspect every unresolved PR comment.
+
+1. **Actionable finding:** assign or make the smallest in-scope repair, rerun the affected check,
+   and link the result in the thread.
+2. **Incorrect or stale finding:** reply with a reproducible fact—such as the exact target path,
+   command result, or commit—and resolve it. Do not add misleading code or documentation solely to
+   placate a false positive.
+3. **Architecture or external-authority finding:** keep the thread unresolved, record the exact
+   decision boundary, and continue other safe work.
+
+A green CI suite, auto-merge setting, or pending approval never substitutes for this loop. Status
+updates must report review-thread disposition separately from checks and mergeability.
+
 ## Learning loop
 
 At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
