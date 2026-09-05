@@ -116,6 +116,11 @@ After every push and CI state transition, inspect both checks and review threads
 an owned recovery loop until repaired, explicitly dispositioned, or stopped by a real decision
 boundary.
 
+When a prerequisite PR or repair merges, immediately launch the already-defined next leased action
+(independent review, integration, rerun, or dependent task) in the first writable operating turn.
+Do not wait for another user prompt merely because a preceding status interval could only observe
+state.
+
 ## Learning loop
 
 At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
