@@ -144,10 +144,13 @@ next ordinary turn rediscover it.
 
 ## Learning loop
 
-At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
-persist—an operating-model candidate with the observed evidence, proposed rule, and expected
-benefit. Mark it as a provisional inference. Add it to the durable shared operating model only
-after explicit user approval, then record the confirmed decision and commit it.
+At the end of meaningful work or when a repeated operating pattern appears, proactively
+propose—not silently persist—an operating-model candidate with the observed evidence, proposed
+rule, and expected benefit. Agents may use available interaction and project history to identify a
+careful cross-project generalization, but must not turn a single request into a standing rule. Mark
+it as a provisional inference and ask whether the user wants it adopted. Add it to the durable
+shared operating model only after explicit user approval, then record the confirmed decision and
+commit it.
 
 For a new cross-cutting operator/API interface, first establish one canonical contract, then map
 each staged implementation task to its owned commands, dependencies, capability boundary, and
