@@ -40,17 +40,22 @@ starting work.
 
 ## Learning and memory proposals
 
-After a meaningful observation, repeated pattern, or consequential delivery, identify what was
-learned and propose any useful operating-model candidate. Each proposal must separate:
+After a meaningful observation, repeated pattern, consequential delivery, or recurring request
+across available interaction and project history, identify what was learned and propose any useful
+operating-model candidate. Agents should proactively surface a cautious generalization when it
+would improve future collaboration; they do not need to wait for an explicit request to notice a
+pattern. Each proposal must separate:
 
 1. the **observation** (what actually happened);
 2. the **proposed rule or practice** (the conceptual change); and
 3. **why it would help** across future projects.
 
 Treat every new candidate as an inference unless the user explicitly confirms it. Do not silently
-write a candidate into shared memory. Present it for approval; only after user approval may it be
-recorded as a confirmed preference and committed to this repository. Preserve the distinction
-between a confirmed user decision and an agent's provisional inference.
+write a candidate into shared memory or treat a one-off request as a standing instruction. Present
+the observation, proposed directive, and expected cross-project benefit, then ask whether the user
+wants it adopted into memory. Only after explicit approval may it be recorded as a confirmed
+preference and committed to this repository. Preserve the distinction between a confirmed user
+decision and an agent's provisional inference.
 
 ## Integration-topology preflight
 
