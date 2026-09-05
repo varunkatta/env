@@ -95,6 +95,19 @@ CI state change, and immediately before integration, inspect every unresolved PR
 A green CI suite, auto-merge setting, or pending approval never substitutes for this loop. Status
 updates must report review-thread disposition separately from checks and mergeability.
 
+## PR merge-blocker diagnosis
+
+Do not infer a merge blocker from a `BLOCKED` label or an empty approval field. Before reporting a
+PR as waiting on a person or external workflow, inspect the actual mergeability metadata, active
+repository branch rules/rulesets, required-check state, and resolved state of every review thread.
+Distinguish required approving/code-owner review from an unresolved thread, merge conflict, merge
+queue, failed/missing check, or untrusted-change policy.
+
+If a review thread is the blocker, act in the same turn: repair a valid finding, or reply with
+canonical reproducible evidence and resolve an incorrect or stale one. Only name a human approver
+when a configured rule actually requires that actor or approval class. Report the exact remaining
+rule, check, or thread—not a guess about a protected workflow.
+
 ## PR failure chase loop
 
 The coordinator owns the operational result of every PR it submits. Treat a failed, cancelled, or
