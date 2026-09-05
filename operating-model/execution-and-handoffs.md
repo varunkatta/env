@@ -121,6 +121,15 @@ When a prerequisite PR or repair merges, immediately launch the already-defined 
 Do not wait for another user prompt merely because a preceding status interval could only observe
 state.
 
+### Lesson: observation is not release
+
+The coordinator must distinguish a status fact from an execution transition. Seeing an activation
+merge, a check turn green, or a reviewer become available does not itself advance delivery. For
+every active dependency, keep the next safe, leased action explicit. When the condition becomes
+true, dispatch that action in the first writable turn and record the dispatch. If a status-only
+interval cannot mutate a worktree, it must carry the queued action forward rather than letting the
+next ordinary turn rediscover it.
+
 ## Learning loop
 
 At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
