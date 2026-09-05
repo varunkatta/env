@@ -116,6 +116,18 @@ After every push and CI state transition, inspect both checks and review threads
 an owned recovery loop until repaired, explicitly dispositioned, or stopped by a real decision
 boundary.
 
+## Code formatter and linter gate
+
+Before every code commit, discover and run the repository's configured, language-specific formatter
+and linter. Use the project’s own tooling and configuration—for example, its Make targets,
+pre-commit configuration, formatter, or linter—not a generic substitute selected by the agent.
+Both must pass for the changed code; run the broader project quality gate when it is required or
+reasonably available. A lint-only pass is insufficient when the project also has a formatter check.
+
+Treat formatter and linter failures as actionable defects: apply the appropriate tool or the
+smallest equivalent correction, rerun both gates, and include the exact commands/results in the
+commit handoff. Do not commit code while a configured formatting or lint failure is known.
+
 When a prerequisite PR or repair merges, immediately launch the already-defined next leased action
 (independent review, integration, rerun, or dependent task) in the first writable operating turn.
 Do not wait for another user prompt merely because a preceding status interval could only observe
