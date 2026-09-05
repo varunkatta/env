@@ -95,6 +95,27 @@ CI state change, and immediately before integration, inspect every unresolved PR
 A green CI suite, auto-merge setting, or pending approval never substitutes for this loop. Status
 updates must report review-thread disposition separately from checks and mergeability.
 
+## PR failure chase loop
+
+The coordinator owns the operational result of every PR it submits. Treat a failed, cancelled, or
+unexpectedly missing required check as a work item immediately—not as a background condition that
+can linger until the user asks about it.
+
+1. Read the exact failing job log and reproduce the narrowest relevant command against the
+   candidate or proposed merge state.
+2. Classify the failure: in-scope defect, out-of-scope integrated regression, topology/lease
+   defect, flaky or external-service failure, or protected-workflow condition.
+3. Repair in scope immediately. For an out-of-scope but real regression, create or route the
+   smallest bounded compatibility/integration repair; do not weaken the waiting PR's lease or leave
+   it indefinitely red.
+4. Push the repair or record evidence of the true external boundary, rerun/await the affected
+   check, and update linked review threads with the exact result.
+
+After every push and CI state transition, inspect both checks and review threads. A PR is only
+"awaiting checks" while its checks are normally progressing; once a failure is actionable, it is
+an owned recovery loop until repaired, explicitly dispositioned, or stopped by a real decision
+boundary.
+
 ## Learning loop
 
 At the end of meaningful work or when a repeated operating pattern appears, propose—not silently
