@@ -129,6 +129,26 @@ After every push and CI state transition, inspect both checks and review threads
 an owned recovery loop until repaired, explicitly dispositioned, or stopped by a real decision
 boundary.
 
+## External-authorization and momentum rule
+
+An authorization boundary is a delivery state, not a reason to repeat passive monitoring. When a
+specific external mutation—for example publishing a branch, creating a PR, sending a message, or
+using a paid provider—needs authorization beyond the current grant:
+
+1. State the exact destination, action, and payload class once, and request the narrowest required
+   authorization in that same user-facing update.
+2. Mark the action as awaiting authorization. Do not spend later monitoring intervals re-trying or
+   re-describing the same denied action unless the user has responded or the external state has
+   changed.
+3. Immediately continue independent, safe, leased work: validate finished changes, obtain review,
+   prepare a clean branch/PR diff, preserve a checkpoint, or advance another unblocked workstream.
+   An external authorization boundary does not stop the entire execution loop.
+4. Once authorization arrives, perform the queued action in the first writable turn, then resume
+   normal PR, check, and review ownership.
+
+If no independent work remains, report that exact state once and remain quiet until the
+authorization state changes. Repeated notifications without new evidence are not progress.
+
 ## Code formatter and linter gate
 
 Before every code commit, discover and run the repository's configured, language-specific formatter
