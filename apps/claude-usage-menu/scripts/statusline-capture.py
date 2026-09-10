@@ -18,18 +18,25 @@ import time
 
 FEED_DIR = os.path.expanduser("~/.claude/usage-menu")
 FEED_PATH = os.path.join(FEED_DIR, "status.json")
+# Set CLAUDE_USAGE_MENU_DEBUG=1 to record the raw payload for diagnosing a missing quota feed.
+DEBUG_PATH = os.path.join(FEED_DIR, "last-payload.json")
 
 # Windows worth rendering in the status line itself, shortest first.
 INLINE_WINDOWS = (("five_hour", "5h"), ("seven_day", "7d"))
 
 
 def utilization(window):
-    """Windows report either a 0..1 fraction or a 0..100 percentage."""
-    for key in ("utilization", "used_percent", "usedPercent", "percent_used"):
+    """Claude Code documents `used_percentage` (0-100); the rest are accepted defensively.
+
+    Scale is decided by the key name, not the magnitude, so a genuine 0.5 percent reads as
+    half a percent rather than half the allowance.
+    """
+    for key in ("used_percentage", "used_percent", "usedPercent", "percent_used"):
         value = window.get(key)
         if isinstance(value, (int, float)):
-            return value / 100 if value > 1 else value
-    return None
+            return value / 100
+    value = window.get("utilization")
+    return value if isinstance(value, (int, float)) else None
 
 
 def cache(payload):
@@ -82,6 +89,14 @@ def main():
         payload = json.load(sys.stdin)
     except Exception:
         return  # Never let a bad payload break the user's status line.
+
+    if os.environ.get("CLAUDE_USAGE_MENU_DEBUG"):
+        try:
+            os.makedirs(FEED_DIR, exist_ok=True)
+            with open(DEBUG_PATH, "w") as file:
+                json.dump({"keys": sorted(payload.keys()), "payload": payload}, file, indent=2)
+        except Exception:
+            pass
 
     try:
         cache(payload)
