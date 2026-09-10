@@ -91,19 +91,22 @@ struct StatusFeed {
                              sessionId: root["session_id"] as? String)
     }
 
-    // MARK: - Tolerant field lookup
+    // MARK: - Field lookup
     //
-    // The exact spelling inside each window is not contractual, so a few likely keys are tried
-    // and both 0...1 and 0...100 scales are accepted.
+    // Claude Code documents each window as `used_percentage` (0-100) plus `resets_at` (Unix epoch
+    // seconds). The alternatives are accepted defensively. Scale is decided by the key name rather
+    // than the magnitude, so a genuine `used_percentage` of 0.5 reads as half a percent, not half.
 
-    private static let utilizationKeys = ["utilization", "used_percent", "usedPercent", "percent_used"]
+    private static let percentageKeys = ["used_percentage", "used_percent", "usedPercent", "percent_used"]
+    private static let fractionKeys = ["utilization"]
     private static let resetKeys = ["resets_at", "resetsAt", "reset_at", "resetAt"]
 
     private static func utilization(in window: [String: Any]) -> Double? {
-        for key in utilizationKeys {
-            if let value = window[key] as? Double {
-                return value > 1 ? value / 100 : value
-            }
+        for key in percentageKeys {
+            if let value = window[key] as? Double { return value / 100 }
+        }
+        for key in fractionKeys {
+            if let value = window[key] as? Double { return value }
         }
         return nil
     }

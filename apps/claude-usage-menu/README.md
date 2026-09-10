@@ -7,6 +7,9 @@ The app reads only local files. It makes no network requests, reads no credentia
 touches the Keychain. The quota numbers reach it through Claude Code itself: a statusline command
 receives the account's rate limits on every render and caches them to a file the app reads.
 
+Session and context reporting works everywhere. Quota reporting currently works only for sessions
+started from a terminal — see [Known limitation](#known-limitation-the-quota-feed-needs-a-terminal-session).
+
 ## What it shows
 
 The menu-bar label is `Claude <remaining>%` — the remaining capacity in whichever limit window is
@@ -67,17 +70,25 @@ visible inside the session as well as in the menu bar.
 The bundle is an agent-only app (`LSUIElement`), so it appears in the menu bar without a Dock icon.
 It stays visible while its process runs; quit it from **Quit Claude Usage Menu** in its menu.
 
-### First reading
+### Known limitation: the quota feed needs a terminal session
 
-Two things gate the first quota reading:
+**The Claude desktop app does not invoke the statusline command.** Measured on 2026-09-10 against
+five desktop sessions, all started after the statusline was installed and several actively working:
+none ran the hook, and no reading was produced over a full day. The quota feed therefore only
+advances while `claude` is used **from a terminal**.
 
-- Claude Code loads settings at session start, so **sessions already running when the statusline was
-  installed will not feed the app**. New sessions will.
-- The `rate_limits` block only appears once a session has completed a turn, because the limits are
-  learned from an API response. A session that has been opened but not used yet reports nothing.
+If all your work happens in the desktop Code tab, the quota section stays empty. Live sessions and
+context sizes are unaffected — they read transcripts directly and work for desktop sessions.
 
-So the menu shows "No quota reading yet" until one freshly-started session has done one turn. Live
-sessions and context sizes work immediately regardless — they do not depend on the statusline.
+Two further conditions gate the first reading, both from Claude Code's own contract:
+
+- Settings load at session start, so a session already running when the statusline was installed
+  will not feed the app. New sessions will.
+- `rate_limits` is documented as "Only present for subscribers after first API response", so a
+  session opened but not yet used reports nothing.
+
+To diagnose a missing feed, set `CLAUDE_USAGE_MENU_DEBUG=1` for a session and inspect
+`~/.claude/usage-menu/last-payload.json`, which records the raw payload the hook received.
 
 ## Run from source
 
@@ -97,7 +108,7 @@ swift run ClaudeUsageMenu --dump-usage      # the cached quota reading
 
 | Symptom | Check |
 | --- | --- |
-| "No quota reading yet" | See **First reading** above. Confirm with `ClaudeUsageMenu --dump-usage`. |
+| "No quota reading yet" | Usually the desktop-app limitation above. Confirm with `ClaudeUsageMenu --dump-usage`. |
 | Quota reading marked stale | The feed only advances while a session renders its status line. Nothing has been running recently. |
 | Status line shows model and directory but no percentages | That session has not completed a turn yet, so Claude Code has no rate limits to report. |
 | No status line at all | Check the path in `~/.claude/settings.json` is absolute and the script is executable (`chmod +x`). |
