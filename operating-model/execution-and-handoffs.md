@@ -175,6 +175,31 @@ true, dispatch that action in the first writable turn and record the dispatch. I
 interval cannot mutate a worktree, it must carry the queued action forward rather than letting the
 next ordinary turn rediscover it.
 
+## Documentation currency gate
+
+Updating the README that covers the changed code is mandatory before checking anything in — a
+commit, a push, or a PR. A stale README is a blocker on the change, not a follow-up item.
+
+Treat the README as part of the change. Before committing, check every factual claim the change
+could invalidate — counts, tables, CLI flags and defaults, file and directory layouts, section
+names, and any "current state" or "what is implemented" paragraph — and verify each against the
+code with a real command (`--help`, `ls`, the configuration file), not from memory. A change that
+touches one README section still owns the whole file's consistency: look for other sections that
+now contradict it. If the README is already stale for reasons unrelated to the change, repair it
+in the same commit or PR and say so in the handoff.
+
+This applies equally when reviewing or landing delegated work: verify the README before merging,
+and treat a README that describes the previous state as a review finding.
+
+### Lesson: a section rewrite is not a README update
+
+On 2026-09-15 a preview-generator README was found contradicting both itself and the code after
+several merged changes had each added a feature — record-count sizing, declared profiles, a
+parity report, a larger scenario catalog — without touching the sections that described the old
+state. One of those changes had rewritten a single section thoroughly and left the rest stale,
+including a scenario count the rewritten section itself contradicted. The README was read
+end-to-end and each claim checked against a command before the repair was committed.
+
 ## Learning loop
 
 At the end of meaningful work or when a repeated operating pattern appears, proactively
