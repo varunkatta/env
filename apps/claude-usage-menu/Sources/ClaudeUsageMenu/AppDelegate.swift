@@ -4,11 +4,14 @@ import Foundation
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    private let usageAPI = UsageAPI()
     private let statusFeed = StatusFeed()
     private let sessionReader = SessionReader()
 
     private var snapshot: UsageSnapshot?
     private var sessions: [LiveSession] = []
+    /// Why the account read is not in use, shown so a fallback reading is never mistaken for live.
+    private var accountError: String?
     private var lastError: String?
     private var refreshTimer: Timer?
 
@@ -27,32 +30,56 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         refreshTimer?.invalidate()
     }
 
-    /// Everything on display is a local file read, so the whole view is rebuilt whenever the menu
-    /// is opened and it is always current on screen.
+    /// The local parts are rebuilt whenever the menu opens so they are current on screen; the
+    /// account read is left to the timer because it is a network round trip.
     func menuWillOpen(_ menu: NSMenu) {
-        refresh()
-    }
-
-    // MARK: - Refresh
-
-    private func refresh() {
         sessions = sessionReader.liveSessions()
-        do {
-            snapshot = try statusFeed.read()
-            lastError = nil
-        } catch {
-            lastError = error.localizedDescription
-        }
+        if snapshot?.source != .account { applyLocalFeed() }
         updateTitle()
         rebuildMenu()
     }
 
+    // MARK: - Refresh
+
+    /// Sources are layered: the account read is live whenever the stored sign-in is usable; the
+    /// statusline feed stands in when it is not; and when neither is fresh the label drops the
+    /// number rather than show a dead one.
+    private func refresh() {
+        sessions = sessionReader.liveSessions()
+        applyLocalFeed()
+        updateTitle()
+        rebuildMenu()
+
+        Task {
+            do {
+                snapshot = try await usageAPI.fetch()
+                accountError = nil
+                lastError = nil
+            } catch {
+                accountError = error.localizedDescription
+                applyLocalFeed()
+            }
+            updateTitle()
+            rebuildMenu()
+        }
+    }
+
+    private func applyLocalFeed() {
+        do {
+            snapshot = try statusFeed.read()
+            lastError = nil
+        } catch {
+            snapshot = nil
+            lastError = error.localizedDescription
+        }
+    }
+
     private func updateTitle() {
-        guard let snapshot, let headline = snapshot.headline else {
-            statusItem.button?.title = "Claude !"
+        guard let snapshot, let headline = snapshot.headline, !snapshot.isStale else {
+            statusItem.button?.title = "Claude"
             return
         }
-        statusItem.button?.title = "Claude \(headline.remainingPercent)%\(snapshot.isStale ? "?" : "")"
+        statusItem.button?.title = "Claude \(headline.remainingPercent)%"
     }
 
     // MARK: - Menu
@@ -76,21 +103,32 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func addQuotaSection(to menu: NSMenu) {
+        addHeader("Subscription usage", to: menu)
+
         guard let snapshot else {
-            addHeader("Subscription usage", to: menu)
             addDisabled(lastError ?? "Loading…", to: menu)
+            if let accountError { addDisabled("Account: \(accountError)", to: menu) }
             return
         }
 
-        addHeader("Subscription usage", to: menu)
         for window in snapshot.windows {
             addDisabled("\(bar(window.utilization))  \(window.title): \(window.remainingPercent)% left", to: menu)
             if let resetsAt = window.resetsAt {
                 addDisabled("       resets \(relative(resetsAt))", to: menu)
             }
         }
-        // The feed only advances while a session renders its status line, so age is worth stating.
-        addDisabled("Read \(relative(snapshot.capturedAt))\(snapshot.isStale ? " — stale" : ""), via statusline", to: menu)
+
+        if !snapshot.breakdown.isEmpty {
+            let shares = snapshot.breakdown.map { "\($0.name) \($0.percent)%" }.joined(separator: " · ")
+            addDisabled("7d usage by surface: \(shares)", to: menu)
+        }
+
+        // Only the account read is live; anything else is a snapshot whose age matters.
+        let age = snapshot.source == .account ? "Live" : "Read \(relative(snapshot.capturedAt))"
+        addDisabled("\(age)\(snapshot.isStale ? " — stale" : ""), via \(snapshot.source.label)", to: menu)
+        if snapshot.source != .account, let accountError {
+            addDisabled("Account: \(accountError)", to: menu)
+        }
     }
 
     private func addSessionSection(to menu: NSMenu) {
