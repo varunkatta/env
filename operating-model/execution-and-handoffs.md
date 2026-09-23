@@ -60,6 +60,25 @@ Never terminate or restart a valid long-running process merely to create the
 appearance of movement. Recovery changes ownership or instructions only when
 the durable evidence shows that normal progress has stopped.
 
+## Mechanical batch delegation
+
+Once a plan is approved, a long mechanical run — bulk branch deletions, note-and-PR chores, repeated
+structural edits — is not executed inside the interactive session. Write a self-contained handoff
+file in the project's handoffs location and have a background agent execute it against that file;
+the orchestrating session reports the result when the agent returns.
+
+1. Record the approved plan, exact scope, allowed/forbidden paths, and acceptance command in the
+   handoff file before dispatch.
+2. Launch a background agent against that handoff rather than running the batch in the
+   orchestrating session's own tool calls.
+3. On completion, verify the agent's evidence against the handoff's acceptance command before
+   reporting the batch as done.
+
+The interactive session is for deciding and approving; the handoff file is the record of what was
+actually authorized to run. This is one instance of the broader cost-aware delegation preference in
+`working-style.md` → Confirmed preferences: route work to the cheapest capable executor and keep the
+orchestrating session for judgment, not labour.
+
 ## Integration-readiness sweep
 
 The integration owner must own the complete delivery topology. Before sending a task to review,

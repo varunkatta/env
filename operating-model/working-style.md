@@ -26,6 +26,8 @@ starting work.
 | Scope | A small, coherent change is preferable to hidden expansion. | Preserve task boundaries, immutable historical evidence, and unrelated working-tree changes. Escalate a material conflict instead of repairing around it. |
 | Documentation | Plans, constraints, and architectural decisions should survive sessions and agent changes. | Commit durable plans, handoffs, and acceptance criteria before dependent implementation. |
 | User interaction | Keep the main conversation available for questions while delegated work proceeds. | Provide short, direct updates; do not go quiet during long-running work. |
+| Cost-aware delegation | The orchestrating session is the most expensive place for work to happen; it should not do bounded implementation itself when a cheaper model can do it at equal quality. | Before anything larger than a one-line answer, ask who should do the work, with a recommendation (a mid-tier model for drafting and code reading, the smallest model for mechanical edits, link checks, bulk renames); run it through a subagent with an explicit model or a written handoff to another session, not the orchestrating session's own tool calls. See `execution-and-handoffs.md` → Mechanical batch delegation. |
+| Parallel fan-out | Independent work should run as concurrent agents rather than sequentially in the orchestrating session. | Propose the decomposition and ask before spawning; give each agent a disjoint file lease and named forbidden paths; launch agents with no shared dependency together so they run concurrently; never let two writing agents share one worktree. A user waiver to skip asking ("go all the way, don't ask") covers only that task. |
 
 ## Communication standard
 
