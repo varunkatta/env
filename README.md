@@ -3,6 +3,14 @@
 This repository contains personal command-line utilities, dotfiles, editor
 configuration, and a reproducible macOS development bootstrap.
 
+It also keeps reusable, non-project-specific collaboration guidance in
+[`operating-model/`](operating-model/README.md). That material captures how
+technical work is planned, reviewed, handed off, and communicated without
+placing personal operating preferences in an application repository.
+
+[`CLAUDE.md`](CLAUDE.md) and [`AGENTS.md`](AGENTS.md) are thin entry points for
+Claude and Codex. Both load the same canonical operating model.
+
 ## Philosophy
 
 The bootstrap is deliberately small, declarative, and additive.
