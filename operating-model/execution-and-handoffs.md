@@ -256,3 +256,20 @@ Escalate rather than improvise when work encounters:
 
 The escalation should include evidence and a proposed safe decision, not only a
 description of the problem.
+
+## Scratch files and agent worktrees
+
+- **Where:** only in the session scratchpad directory the harness gives you (for example
+  `/private/tmp/claude-<uid>/<project>/<session>/scratchpad/`), in **your own subfolder** named for your task and
+  role (e.g. `W-0012-doer/`, `PR-171-adversary/`). Your git worktrees for the task live there too.
+- **Never:**
+  - at the scratchpad's root, which is shared by every agent in the session;
+  - inside any repository's working tree (no repo-relative `scratchpad/` folder);
+  - directly in `/tmp`;
+  - in a folder another agent created.
+- **Names:** no generic names at shared locations (`pr-body.md`, `READ-LOG.txt`). Re-read any body file just before
+  `gh pr create` or `gh pr edit`, because another agent may have written a file of the same name.
+- **Cleanup:** when done, remove your own worktrees (`git worktree remove`) and your subfolder's large copies. Never
+  touch another agent's folder or worktree.
+- **Why:** on 2026-09-26 one agent's PR body overwrote another's and was posted to the wrong PR, and agents created
+  untracked `scratchpad/` folders inside the repo, where they could be committed or picked up as skills.
