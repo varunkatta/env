@@ -51,8 +51,8 @@ The report lists: each job taken (id, kind, result, PR and head), anything stopp
 - Never review your own work.
 - Never repair work you reviewed.
 - A reviewer never changes the implementation. It reports; someone else repairs.
-- One actor identity per job. A doer, a reviewer and a repairer use different actors, even when one agent session
-  does all three jobs on different work.
+- One actor identity per job. A reviewer or a repairer never uses the doer's actor, even when one agent session
+  does all three jobs on different work. A doer repairing its own work may keep its own actor.
 - Claims are atomic and the first claim wins. If a claim fails because someone else holds the job, take the next
   eligible job. If it fails on a lock or busy error, wait briefly and retry a bounded number of times.
 
