@@ -163,6 +163,8 @@ transition, then stop.
   and merge rules).
 - A project states its values in one table, titled "Overrides of the env work loop", and links to this file.
 - If a project file and this file disagree on a rule, this file wins. Fix the project file.
+- Projects keep their launch prompts as named, versioned files in the repo, with an index. A launch is one line naming
+  the prompt and its path, plus parameters. The run report names the prompt version it ran.
 
 ## Project-set parameters
 
