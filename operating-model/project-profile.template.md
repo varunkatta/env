@@ -28,6 +28,7 @@ project repository.
 - **CI and release gates:**
 - **Working-tree and worktree conventions:**
 - **Progress-report cadence while active:**
+- **Agent work loop overrides** (see `agent-work-loop.md` → Project-set parameters):
 
 ## System context
 

@@ -7,6 +7,8 @@ technical project, read the shared operating model in this order:
 2. [`operating-model/working-style.md`](operating-model/working-style.md)
 3. [`operating-model/execution-and-handoffs.md`](operating-model/execution-and-handoffs.md)
 4. [`operating-model/decision-log.md`](operating-model/decision-log.md)
+5. [`operating-model/agent-work-loop.md`](operating-model/agent-work-loop.md), when you take work
+   from a shared board (an issue queue such as Beads)
 
 Use [`operating-model/project-profile.template.md`](operating-model/project-profile.template.md)
 when establishing project-specific context. Project repositories remain the
