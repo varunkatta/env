@@ -29,6 +29,7 @@ repository or secure system.
 | --- | --- |
 | [Working style](working-style.md) | Confirmed collaboration preferences and communication expectations. |
 | [Execution and handoffs](execution-and-handoffs.md) | How bounded work, delegation, reviews, checkpoints, and blockers are handled. |
+| [Agent work loop](agent-work-loop.md) | How agents take work from a shared board: what next, when to stop, who reviews and repairs. Projects inherit it and override only its parameters. |
 | [Project profile template](project-profile.template.md) | A reusable starting point for a project-specific operating context. |
 | [Decision log](decision-log.md) | Dated, evidence-based operating decisions and observations. |
 
