@@ -7,6 +7,18 @@ passes between agents.
 Projects inherit this protocol. A project may set the parameters in the table at the end and may add rules; it may
 not change the rules below. See [Inheritance](#5-inheritance).
 
+<!-- toc -->
+**Contents**
+
+- [Terms](#terms)
+- [1. The work loop](#1-the-work-loop)
+- [2. The stop rule](#2-the-stop-rule)
+- [3. Independence](#3-independence)
+- [4. Hand-offs are signals on the board](#4-hand-offs-are-signals-on-the-board)
+- [5. Inheritance](#5-inheritance)
+- [Project-set parameters](#project-set-parameters)
+<!-- /toc -->
+
 ## Terms
 
 | Term | Means |
