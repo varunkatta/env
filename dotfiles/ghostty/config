@@ -1,0 +1,39 @@
+# ~/.config/ghostty/config
+
+# Page Up / Page Down
+keybind = page_up=scroll_page_up
+keybind = page_down=scroll_page_down
+
+# Command + Up/Down: top/bottom of scrollback
+keybind = cmd+up=scroll_to_top
+keybind = cmd+down=scroll_to_bottom
+
+# Shift + Page Up/Down
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
+
+# Clipboard
+copy-on-select = clipboard
+keybind = cmd+c=copy_to_clipboard
+keybind = cmd+v=paste_from_clipboard
+
+# Select all
+keybind = cmd+a=select_all
+
+# Search
+keybind = cmd+f=start_search
+
+# Font size
+keybind = cmd+plus=increase_font_size:1
+keybind = cmd+minus=decrease_font_size:1
+keybind = cmd+zero=reset_font_size
+
+# Clear scrollback
+keybind = cmd+k=clear_screen
+
+# Tabs
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_surface
+
+# Reload config
+keybind = cmd+shift+comma=reload_config
