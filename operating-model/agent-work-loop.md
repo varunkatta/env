@@ -47,8 +47,8 @@ launched in this run:
 | Priority | Take | Condition |
 |---|---|---|
 | 1 | **Its own open repair**: a REVISE on work built in this run | Always first, so its own work doesn't wait |
-| 2 | **A review that is waiting** | Work no sub-agent of this run reviewed or repaired. Prefer work built by another vendor |
-| 3 | **A repair of another agent's work whose doer is gone** | "Gone" is the project's threshold. Never a repair of work this run reviewed |
+| 2 | **A review that is waiting** | Any waiting review: the reviewing sub-agent is fresh and has its own actor. Prefer work built by another vendor |
+| 3 | **A repair of another agent's work whose doer is gone** | "Gone" is the project's threshold. Work built in this run is priority 1, not this |
 | 4 | **A brand-new task** | Only when nothing above is eligible |
 
 Reviews and repairs come before new work because unfinished work is worth more once it is finished. A new task
