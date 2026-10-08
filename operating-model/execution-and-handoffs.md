@@ -269,8 +269,8 @@ description of the problem.
 | Item | Where |
 | --- | --- |
 | Files of any kind | Only under `~/work`, never `~/Desktop`, `~/Documents`, `~/Downloads`, `~/` or a `/tmp` folder you make yourself. The one exception is the scratchpad directory the harness itself provides, below. |
-| Scratch (notes, logs, PR bodies) | The harness's scratchpad directory when it gives one, in **your own subfolder** named for your task and role (e.g. `W-0012-doer/`, `PR-171-adversary/`). When it gives none: `~/work/code/mastrix/wt/<repo>-<task>-notes/`, beside the worktree. |
-| Git worktrees | `~/work/code/mastrix/wt/<repo>-<task>`, fresh from the remote's default branch, one writer per worktree, unless the harness provides the worktree. |
+| Scratch (notes, logs, PR bodies) | The harness's scratchpad directory when it gives one, in **your own subfolder** named for your task and role (e.g. `W-0012-doer/`, `PR-171-adversary/`). When it gives none: `~/work/code/mastrix/worktrees/<repo>-<task>-notes/`, beside the worktree. |
+| Git worktrees | `~/work/code/mastrix/worktrees/<repo>-<task>`, fresh from the remote's default branch, one writer per worktree, unless the harness provides the worktree. |
 
 - **Never:**
   - at the scratchpad's root, which is shared by every agent in the session;
