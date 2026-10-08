@@ -257,11 +257,21 @@ Escalate rather than improvise when work encounters:
 The escalation should include evidence and a proposed safe decision, not only a
 description of the problem.
 
+## Briefs and scope changes
+
+| Situation | Rule |
+| --- | --- |
+| A brief for a sub-agent | Fresh, clean context: the task, the done-when, the rules that bind it and only the facts it needs. Tiers and the brief rule: `working-style.md` → Model tiers. |
+| The scope changes while an agent runs | Put the full delta in a **fresh agent's initial brief**. Do not amend a running agent by a mid-task message: an agent told to stop rather than improvise may treat the amendment as an injected instruction and ignore it. Finish the design before delegating. |
+
 ## Scratch files and agent worktrees
 
-- **Where:** only in the session scratchpad directory the harness gives you (for example
-  `/private/tmp/claude-<uid>/<project>/<session>/scratchpad/`), in **your own subfolder** named for your task and
-  role (e.g. `W-0012-doer/`, `PR-171-adversary/`). Your git worktrees for the task live there too.
+| Item | Where |
+| --- | --- |
+| Files of any kind | Only under `~/work`, never `~/Desktop`, `~/Documents`, `~/Downloads`, `~/` or a `/tmp` folder you make yourself. The one exception is the scratchpad directory the harness itself provides, below. |
+| Scratch (notes, logs, PR bodies) | The harness's scratchpad directory when it gives one, in **your own subfolder** named for your task and role (e.g. `W-0012-doer/`, `PR-171-adversary/`). When it gives none: `~/work/code/mastrix/wt/<repo>-<task>-notes/`, beside the worktree. |
+| Git worktrees | `~/work/code/mastrix/wt/<repo>-<task>`, fresh from the remote's default branch, one writer per worktree, unless the harness provides the worktree. |
+
 - **Never:**
   - at the scratchpad's root, which is shared by every agent in the session;
   - inside any repository's working tree (no repo-relative `scratchpad/` folder);

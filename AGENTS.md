@@ -10,6 +10,8 @@ order:
 4. [`operating-model/decision-log.md`](operating-model/decision-log.md)
 5. [`operating-model/agent-work-loop.md`](operating-model/agent-work-loop.md), when you take work
    from a shared board (an issue queue such as Beads)
+6. [`operating-model/procedures/checkpoint.md`](operating-model/procedures/checkpoint.md), before a context
+   compaction or handoff, and when resuming after one
 
 Use [`operating-model/project-profile.template.md`](operating-model/project-profile.template.md)
 to establish a project profile. The target project’s own guidance, handoff,
