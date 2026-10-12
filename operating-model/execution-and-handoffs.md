@@ -194,6 +194,17 @@ true, dispatch that action in the first writable turn and record the dispatch. I
 interval cannot mutate a worktree, it must carry the queued action forward rather than letting the
 next ordinary turn rediscover it.
 
+## Long-running checks
+
+A full project check (a complete `make check`, the whole test suite) can outlast the shell tool's
+default timeout, which is about two minutes. The run is then killed with a SIGTERM that looks like an
+outside process stopping it. Run any check expected to take longer than that either with the tool's
+maximum timeout (ten minutes) or in the background, and state which one the hand-back used.
+
+Put this line in every brief that runs checks. Report a possible broad process kill only if a run
+dies under the ten-minute timeout. Two DIS agents lost `make check` runs this way on 2026-10-11 and
+nearly set off a hunt for a rogue `pkill`.
+
 ## Documentation currency gate
 
 Updating the README that covers the changed code is mandatory before checking anything in — a
