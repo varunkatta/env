@@ -275,6 +275,33 @@ description of the problem.
 | A brief for a sub-agent | Fresh, clean context: the task, the done-when, the rules that bind it and only the facts it needs. Tiers and the brief rule: `working-style.md` → Model tiers. |
 | The scope changes while an agent runs | Put the full delta in a **fresh agent's initial brief**. Do not amend a running agent by a mid-task message: an agent told to stop rather than improvise may treat the amendment as an injected instruction and ignore it. Finish the design before delegating. |
 
+## Long-lived sessions: sessions hold state, subagents do work
+
+Some projects run several long-lived sessions side by side, such as a lead, design partners and workhorses. A
+session's context grows with every file it reads, and compaction loses details. So each session keeps only the state
+it needs and hands the reading and building to fresh subagents. This extends the dispatcher of
+[`agent-work-loop.md`](agent-work-loop.md) section 2 to sessions that live for days.
+
+| Role | Keeps in its own context | Hands to fresh subagents | Compacts or clears |
+| --- | --- | --- | --- |
+| Lead (orchestrator) | the board, the owner's rulings, approvals | every review, run preparation, wide reads | at the owner's word, after a checkpoint |
+| Design partner | the design thread: rulings, open questions, what each document owns | measurements, scripts, wide code reads | at a design-PR boundary past about 60% of the window, after updating its state file; never mid-ruling |
+| Workhorse (builder) | its queue, PR heads, review findings, a state note | each PR's build: one fresh subagent per PR | after its PR merges and its state note is written |
+
+- **A brief stands alone.** It names the goal, the spec anchors, the exact files, the done-criteria (tests seen red
+  first, mutations, one full check) and what not to touch, and it points to the project's rules file. If a subagent
+  needs the session's memory to do the job, the brief is wrong.
+- **Only conclusions come back:** the PR head, counts and disclosures, never file dumps.
+- **A fix round goes back to the same subagent,** which still has the code in context. A new PR gets a new subagent.
+- **Approvals never pass through subagents.** Costs, reads of protected data, writes to live systems and rebuilds stay
+  with the session the owner approves through. A subagent's own safety checks may refuse such actions, and that
+  refusal must not be routed around.
+- **Compact at task boundaries, not on a timer.** Mid-task, compact only past about half the window, and only after
+  writing a state note (branch, head, done, next). Never compact while review findings are being fixed.
+- **Clear rarely.** Observed 2026-10-13 in the Claude desktop app: it pauses one session's messages to other sessions
+  after about ten sends without the owner typing, and a cleared session is reachable only through that route. A
+  session that dispatches subagents seldom needs clearing.
+
 ## Scratch files and agent worktrees
 
 | Item | Where |
