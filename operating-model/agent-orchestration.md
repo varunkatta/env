@@ -38,6 +38,12 @@ no role that this table covers.
 | Independent reviewer | per the review rule in Model tiers | Checks work at an exact head and reports a verdict | Reviews its own work or edits what it reviews |
 | Inquiry session | standard | Answers questions to build understanding, read-only on the project, artifacts kept locally ([`working-style.md`](working-style.md) → Inquiry sessions) | Edits a project or opens PRs |
 
+**Peer workhorses share one queue.** When a project runs more than one workhorse, a work split by area (for example
+build side and answer side) is a preference, not a boundary. Work is balanced: an open item goes to the first workhorse
+with room, and no workhorse sits idle while another is backlogged. The one limit is the existing fan-out rule: two
+concurrent PRs never share files, so a lease on the files an item touches decides who may take it
+([`working-style.md`](working-style.md) → Parallel fan-out). Owner, 2026-10-14.
+
 ## Long-lived sessions: sessions hold state, subagents do work
 
 Some projects run several long-lived sessions side by side, such as a lead, design partners and workhorses. A
