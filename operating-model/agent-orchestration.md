@@ -18,7 +18,7 @@ One owner per fact. A rule is written in its owner and linked from everywhere el
 | --- | --- |
 | Roles, sessions and subagents, context clearing | This file |
 | The dispatcher, the stop rule, independence, hand-offs on the board | [`agent-work-loop.md`](agent-work-loop.md) |
-| Model tiers, the vendor mapping, premium launches, costs | [`working-style.md`](working-style.md) → Model tiers, Model tier mapping, Launches and costs |
+| Model tiers, the tier-to-model mapping, premium launches, costs | [`working-style.md`](working-style.md) → Model tiers, Model tier mapping, Launches and costs |
 | Bounded work, delegation, reviews, PR loops, checkpoints, documentation gates, scratch files and worktrees | [`execution-and-handoffs.md`](execution-and-handoffs.md) |
 | Communication, theme, editor and other personal preferences | [`working-style.md`](working-style.md) |
 | Why a rule exists, and when it was ruled | [`decision-log.md`](decision-log.md): history, never the rule |
@@ -95,8 +95,7 @@ here, link to the shared rulebook the project defers to, and state only the proj
 
 | A project may bind | Example |
 | --- | --- |
-| Which session holds which role now | The lane table |
-| Which model each tier names | The vendor mapping in `working-style.md` |
+| Which named session holds which role now, and what files or work each owns | The project's lane table |
 | Protected data and forbidden paths | Secrets, sealed or held-out data |
 | Its own parameters and quality gates | Re-check interval, the project's checks |
 
