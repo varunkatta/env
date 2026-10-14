@@ -25,14 +25,18 @@ One owner per fact. A rule is written in its owner and linked from everywhere el
 
 ## Roles
 
-| Role | Does | Never does |
-| --- | --- | --- |
-| Orchestrator (a lead) | Plans, briefs, reviews, rules, routes approvals | Builds or runs what a cheaper tier can do |
-| Design partner | Holds the design thread, rulings and open questions | Dispatches builders or code PRs |
-| Workhorse (builder) | Keeps its queue and state note; one fresh subagent per PR | Asks the owner for approvals itself |
-| Dispatcher and its sub-agents | One clean-context sub-agent per job, then stop ([`agent-work-loop.md`](agent-work-loop.md) section 2) | Reads code or diffs itself |
-| Independent reviewer | Checks work at an exact head and reports a verdict | Reviews its own work or edits what it reviews |
-| Inquiry session | Answers questions to build understanding, read-only on the project, with artifacts kept locally ([`working-style.md`](working-style.md) → Inquiry sessions) | Edits a project or opens PRs |
+The generic lane table: each role, the tier it runs on ([`working-style.md`](working-style.md) → Model tiers) and what it
+does and never does. A project's own lane table binds these roles to its named sessions and to its work splits; it adds
+no role that this table covers.
+
+| Role | Tier | Does | Never does |
+| --- | --- | --- | --- |
+| Orchestrator (a lead) | deep | Plans, briefs, reviews, rules, routes approvals, keeps every change moving | Builds or runs what a cheaper tier can do |
+| Design partner | deep | Holds the design thread, rulings and open questions; hands build items to the orchestrator | Dispatches builders or code PRs |
+| Workhorse (builder) | standard | Keeps its queue and state note; one fresh subagent per PR; mechanical sub-steps go to light | Asks the owner for approvals itself |
+| Dispatcher and its sub-agents | cheapest capable; the sub-agent runs the task's tier | One clean-context sub-agent per job, then stop ([`agent-work-loop.md`](agent-work-loop.md) section 2) | Reads code or diffs itself |
+| Independent reviewer | per the review rule in Model tiers | Checks work at an exact head and reports a verdict | Reviews its own work or edits what it reviews |
+| Inquiry session | standard | Answers questions to build understanding, read-only on the project, artifacts kept locally ([`working-style.md`](working-style.md) → Inquiry sessions) | Edits a project or opens PRs |
 
 ## Long-lived sessions: sessions hold state, subagents do work
 
@@ -95,7 +99,7 @@ here, link to the shared rulebook the project defers to, and state only the proj
 
 | A project may bind | Example |
 | --- | --- |
-| Which named session holds which role now, and what files or work each owns | The project's lane table |
+| Which named session holds each role above, and how its work is split (by files, milestone or kind) | The project's lane table, for example DIS's |
 | Protected data and forbidden paths | Secrets, sealed or held-out data |
 | Its own parameters and quality gates | Re-check interval, the project's checks |
 
