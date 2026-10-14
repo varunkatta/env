@@ -8,6 +8,7 @@ what it hands off, and what a project may bind. It states no model names, no boa
 - [Who owns what](#who-owns-what)
 - [Roles](#roles)
 - [Long-lived sessions: sessions hold state, subagents do work](#long-lived-sessions-sessions-hold-state-subagents-do-work)
+- [Approvals and blockers](#approvals-and-blockers)
 - [What a project binds](#what-a-project-binds)
 
 ## Who owns what
@@ -16,7 +17,7 @@ One owner per fact. A rule is written in its owner and linked from everywhere el
 
 | Topic | Owner |
 | --- | --- |
-| Roles, sessions and subagents, context clearing | This file |
+| Roles, sessions and subagents, context clearing, where approvals happen, raising blockers | This file |
 | The dispatcher, the stop rule, independence, hand-offs on the board | [`agent-work-loop.md`](agent-work-loop.md) |
 | Model tiers, the tier-to-model mapping, premium launches, costs | [`working-style.md`](working-style.md) → Model tiers, Model tier mapping, Launches and costs |
 | Bounded work, delegation, reviews, PR loops, checkpoints, documentation gates, scratch files and worktrees | [`execution-and-handoffs.md`](execution-and-handoffs.md) |
@@ -91,6 +92,17 @@ context, and its state note is how it resumes.
 | Next action | Read the state note, then the project's operating rules. Nothing else carries over. |
 | Never | While a fix round is open, or before the state note is written. |
 | Orchestrator | At each landing it reports, check whether the worker cleared; if not, name the clear as the worker's next step. |
+
+## Approvals and blockers
+
+Approvals stay in the orchestrator's session, and anything stuck on the owner is raised there at once.
+
+| Rule | Detail |
+| --- | --- |
+| **Approvals stay in the orchestrator's session** (owner, 2026-10-14: "I said all approvals should be done through the lead") | The owner is never sent to another session to approve. Costs, reads of protected data, writes to live systems and rebuilds are approved in the orchestrator's session only. |
+| A step a peer's permission layer refuses | The peer reports it to the orchestrator with the exact command. The orchestrator either runs it in its own lane, where the approval prompt reaches the owner, or fixes the peer with a narrow allow rule or permission mode that the owner approves. Nobody routes around the refusal. |
+| **Owner blockers are raised loudly** (owner, 2026-10-14) | Anything waiting on the owner is raised in the orchestrator's session at once, at the top of its reply under "Needs you now": the session, the exact action and what it blocks. It is raised again every hour while stuck. At each monitor re-arm the orchestrator sweeps every session for a waiting state. |
+| No `sed` in any form (owner) | Not for editing and not in a read-only pipe; use the file tools or another command. |
 
 ## What a project binds
 
