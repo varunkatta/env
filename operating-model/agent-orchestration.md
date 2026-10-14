@@ -82,16 +82,24 @@ context, and its state note is how it resumes.
 
 ## What a project binds
 
-A project inherits these rules. Its agent instructions link here and state only its own bindings
+This file is the top-level guidance for every project's agents. A project's agent instructions are a router: they link
+here, link to the shared rulebook the project defers to, and state only the project's own bindings
 ([`agent-work-loop.md`](agent-work-loop.md) section 7 sets the same rule for the work loop).
+
+| Level | Owns | Wins over |
+| --- | --- | --- |
+| The owner's latest word | Everything | Everything below |
+| This operating model | How agents are organised and run, in any project | A project file that restates or contradicts it |
+| A shared rulebook the project names (for example a core repository) | Its engineering, review and landing rules, for the projects that defer to it | This model, on exactly what the rulebook owns, inside those projects |
+| The project's own instructions | Bindings only (below) | Nothing above |
 
 | A project may bind | Example |
 | --- | --- |
 | Which session holds which role now | The lane table |
 | Which model each tier names | The vendor mapping in `working-style.md` |
 | Protected data and forbidden paths | Secrets, sealed or held-out data |
-| Its landing mechanism | A label gate, who merges, size limits |
 | Its own parameters and quality gates | Re-check interval, the project's checks |
 
-A project may not restate these rules or change what they mean. If a project file and this file disagree on a rule
-this file owns, this file wins and the project file is fixed.
+A project may not restate these rules or change what they mean. Where a project defers to a shared rulebook, it links
+the rulebook's rule and does not copy it. If a project file disagrees with the rule's owner, the owner wins and the
+project file is fixed.
