@@ -88,21 +88,8 @@ decision and an agent's provisional inference.
 
 ## Integration-topology preflight
 
-The integration owner must run and record this preflight before declaring a task ready for review,
-CI, or integration:
-
-1. Confirm every implementation and verifier packet has one named owner, linked verifier,
-   integration owner, exact allowed/forbidden paths, and required acceptance commands.
-2. Confirm the declared base is the actual shared ancestor of the registered branch/worktree and
-   descends from the accepted baseline; do not substitute a later activation commit merely because
-   it contains the packet.
-3. Confirm a verifier branch starts from that clean shared base, not from the implementation
-   branch. It may inspect a candidate SHA, but its own diff may contain only its packet and report.
-4. Run the full task/lease validator and each implementation and verifier branch-diff gate against
-   the exact integration/PR merge ref, not just a local happy-path command.
-5. Treat any failure as an owned integration-readiness defect until a local reproduction identifies
-   a true external boundary. Assign the smallest bounded repair immediately; do not label it a CI
-   issue by assumption.
+The integration owner runs the checks of [`execution-and-handoffs.md`](execution-and-handoffs.md) → Integration-readiness
+sweep before declaring a task ready for review, CI or integration.
 
 ## Decision posture
 

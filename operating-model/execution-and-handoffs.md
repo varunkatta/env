@@ -289,51 +289,10 @@ description of the problem.
 | A brief for a sub-agent | Fresh, clean context: the task, the done-when, the rules that bind it and only the facts it needs. Tiers and the brief rule: `working-style.md` → Model tiers. |
 | The scope changes while an agent runs | Put the full delta in a **fresh agent's initial brief**. Do not amend a running agent by a mid-task message: an agent told to stop rather than improvise may treat the amendment as an injected instruction and ignore it. Finish the design before delegating. |
 
-## Long-lived sessions: sessions hold state, subagents do work
+## Long-lived sessions
 
-Some projects run several long-lived sessions side by side, such as a lead, design partners and workhorses. A
-session's context grows with every file it reads, and compaction loses details. So each session keeps only the state
-it needs and hands the reading and building to fresh subagents. This extends the dispatcher of
-[`agent-work-loop.md`](agent-work-loop.md) section 2 to sessions that live for days.
-
-| Role | Keeps in its own context | Hands to fresh subagents | Compacts or clears |
-| --- | --- | --- | --- |
-| Lead (orchestrator) | the board, the owner's rulings, approvals | every review, run preparation, wide reads | at the owner's word, after a checkpoint |
-| Design partner | the design thread: rulings, open questions, what each document owns | measurements, scripts, wide code reads | at a design-PR boundary past about 60% of the window, after updating its state file; never mid-ruling |
-| Workhorse (builder) | its queue, PR heads, review findings, a state note | each PR's build: one fresh subagent per PR | itself, at a landing, once its state note is written (see [Workers self-clear at landings](#workers-self-clear-at-landings)) |
-
-- **A brief stands alone.** It names the goal, the spec anchors, the exact files, the done-criteria (tests seen red
-  first, mutations, one full check) and what not to touch, and it points to the project's rules file. If a subagent
-  needs the session's memory to do the job, the brief is wrong.
-- **The tier follows the task.** Builds and fix rounds use the default (standard) tier; mechanical sub-steps use the
-  lightest tier; the independent review of a behaviour change uses the deep tier. The orchestrator reasons and decides
-  and hands mechanical work down. The table is `working-style.md` → Model tiers; a premium launch still needs the
-  owner's per-launch yes.
-- **Only conclusions come back:** the PR head, counts and disclosures, never file dumps.
-- **A fix round goes back to the same subagent,** which still has the code in context. A new PR gets a new subagent.
-- **Approvals never pass through subagents.** Costs, reads of protected data, writes to live systems and rebuilds stay
-  with the session the owner approves through. A subagent's own safety checks may refuse such actions, and that
-  refusal must not be routed around.
-- **Compact at task boundaries, not on a timer.** Mid-task, compact only past about half the window, and only after
-  writing a state note (branch, head, done, next). Never compact while review findings are being fixed.
-- **A lead or design partner clears rarely;** a worker clears at landings, below. Observed 2026-10-13 in the Claude
-  desktop app: it pauses one session's messages to other sessions after about ten sends without the owner typing, and
-  a cleared session is reachable only through that route. A session that dispatches subagents seldom needs clearing,
-  and a cleared worker is reached through its state note and the orchestrator's board, not through a message.
-
-### Workers self-clear at landings
-
-A worker does not wait to be told to clear. When its PR has landed and no fix round is open, it clears its own
-context, and its state note is how it resumes.
-
-| Step | Rule |
-| --- | --- |
-| When | A worker's PR has landed and the worker has no fix round open. A worker may hold one PR in review while it builds the next, and clears at the first point where neither has an open fix round. |
-| Before | Write the state note: the queue, open PRs with their heads, and pending findings. |
-| Clear | The worker clears its own context. |
-| Next action | Read the state note, then the project's operating rules. Nothing else carries over. |
-| Never | While a fix round is open, or before the state note is written. |
-| Orchestrator | At each landing it reports, check whether the worker cleared; if not, name the clear as the worker's next step. |
+Sessions hold state and subagents do work; workers self-clear at landings. These rules, with the roles table, live in
+[`agent-orchestration.md`](agent-orchestration.md).
 
 ## Scratch files and agent worktrees
 

@@ -28,7 +28,8 @@ repository or secure system.
 | Document | Use |
 | --- | --- |
 | [Working style](working-style.md) | Confirmed collaboration preferences and communication expectations. |
-| [Execution and handoffs](execution-and-handoffs.md) | How bounded work, delegation, reviews, checkpoints, blockers, long-lived sessions (worker self-clears, model tier by task) and documentation batching are handled. |
+| [Agent orchestration](agent-orchestration.md) | Who owns what, the agent roles, how long-lived sessions hold state and subagents do work, and what a project may bind. |
+| [Execution and handoffs](execution-and-handoffs.md) | How bounded work, delegation, reviews, checkpoints, blockers and documentation batching are handled. |
 | [Agent work loop](agent-work-loop.md) | How agents take work from a shared board: a dispatcher launches one clean-context sub-agent per job; what next, when to stop, who reviews and repairs. Projects inherit it and override only its parameters. |
 | [Checkpoint and resume](procedures/checkpoint.md) | A vendor-neutral procedure to record everything before a context compaction or handoff, and to resume from disk afterwards. |
 | [Project profile template](project-profile.template.md) | A reusable starting point for a project-specific operating context. |

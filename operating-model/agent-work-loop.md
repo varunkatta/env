@@ -90,7 +90,7 @@ job goes to a fresh sub-agent, so no job inherits another job's context.
 **Claims.** The dispatcher claims before it launches, so two dispatchers never start the same job.
 
 **Long-lived sessions.** For sessions that live for days (a lead, design partners, workhorses), see
-[`execution-and-handoffs.md`](execution-and-handoffs.md) → Long-lived sessions.
+[`agent-orchestration.md`](agent-orchestration.md) → Long-lived sessions.
 
 ## 3. The stop rule
 
