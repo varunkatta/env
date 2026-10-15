@@ -76,8 +76,10 @@ the orchestrating session reports the result when the agent returns.
 
 The interactive session is for deciding and approving; the handoff file is the record of what was
 actually authorized to run. This is one instance of the broader cost-aware delegation preference in
-`working-style.md` → Confirmed preferences: route work to the cheapest capable executor and keep the
-orchestrating session for judgment, not labour.
+`working-style.md` → Confirmed preferences: route simple mechanical work automatically to the
+cheapest capable executor, state the tier and actual model in the handoff, and keep the orchestrating
+session for judgment. Move to a deeper tier only when concrete complexity or a demonstrated failure
+calls for it.
 
 ## Integration-readiness sweep
 

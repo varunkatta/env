@@ -16,5 +16,6 @@ to establish a project profile. The target project’s own guidance, handoff,
 contracts, and active task packet remain authoritative for project-specific
 work.
 
-Do not duplicate preferences or maintain a Codex-only version of this memory.
-Amend the shared `operating-model/` documents so Claude and Codex stay aligned.
+Read the shared [communication and model-routing preferences](operating-model/working-style.md) before responding or dispatching work, and follow the [execution guidance](operating-model/execution-and-handoffs.md).
+
+Do not duplicate preferences or maintain a Codex-only version of this memory. Amend the shared `operating-model/` documents so Claude and Codex stay aligned.
