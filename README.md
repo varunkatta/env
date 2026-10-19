@@ -1,5 +1,7 @@
 # Personal environment
 
+- [Repository map](#repository-map)
+
 This repository contains personal command-line utilities, dotfiles, editor
 configuration, and a reproducible macOS development bootstrap.
 
@@ -10,6 +12,29 @@ placing personal operating preferences in an application repository.
 
 [`CLAUDE.md`](CLAUDE.md) and [`AGENTS.md`](AGENTS.md) are thin entry points for
 Claude and Codex. Both load the same canonical operating model.
+
+## Repository map
+
+The status column describes how to approach each component. **Maintained** means
+current personal configuration or a documented entry point for ongoing use.
+**Reference only** means historical material to review before use.
+**Local artifacts** means existing work that is separate from environment setup.
+
+| Component | Status | Entry point and purpose |
+| --- | --- | --- |
+| macOS bootstrap | Maintained | [Bootstrap guide](bootstrap/README.md), [package profiles](bootstrap/brew/), and [manual setup](bootstrap/manual/README.md) |
+| Claude usage menu | Maintained | [App guide](apps/claude-usage-menu/README.md): native macOS usage monitor |
+| Codex usage menu | Maintained | [App guide](apps/codex-usage-menu/README.md): native macOS usage monitor |
+| Shared operating model | Maintained | [Operating-model guide](operating-model/README.md): collaboration preferences and procedures, loaded by [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md) |
+| Claude skills | Maintained | [Skills guide](claude/skills/README.md): installation and available skills |
+| Zsh completion cache | Maintained | [Zsh guide](dotfiles/zsh/README.md): install the small completion-cache fragment |
+| Ghostty configuration | Maintained | [Ghostty config](dotfiles/ghostty/config): current personal terminal configuration |
+| Other dotfiles | Reference only | [Shell](dotfiles/bashrc), [Emacs](dotfiles/dotemacs), [simple Emacs](dotfiles/dotemacssimple), [Screen](dotfiles/screenrc), and [large Screen](dotfiles/screenrcbig) configuration; review separately before adoption |
+| Historical utilities and installers | Reference only | [bin/](bin/) and [tools/](tools/): earlier command-line tools and setup scripts |
+| Historical editor configuration | Reference only | [emacs/](emacs/): personal configuration and bundled editor libraries |
+| Mercurial prompt | Reference only | [hg-prompt/](hg-prompt/): historical prompt helper |
+| Submodule metadata | Reference only | [.gitmodules](.gitmodules): declarations pending review; this checkout has no tracked submodule gitlinks |
+| Existing local documents and generation work | Local artifacts | `output/` and `tmp/`: untracked deliverables, generation sources, data, and previews; kept visible for later review |
 
 ## Philosophy
 
@@ -106,8 +131,9 @@ It is also run by the included pre-commit hook and GitHub Actions workflow.
 - The default local-AI profile may contain only Ollama; advanced inference is
   isolated in its own profile.
 - Bootstrap scripts may not use `sudo` or `defaults write`.
-- Pull requests that modify legacy `bin/`, `tools/`, `dotfiles/`, or `emacs/`
-  paths must have a title beginning with `[legacy-migration]`.
+- Pull requests that modify any path under `bin/`, `tools/`, `dotfiles/`, or
+  `emacs/` must have a title beginning with `[legacy-migration]`. This existing
+  workflow rule also applies to maintained configurations in those directories.
 
 To enable the local hook after installing the `core` profile:
 
@@ -150,6 +176,14 @@ uv add mlx mlx-lm
 in `bootstrap/brew/`, and its scripts only select profiles, check the machine,
 or enforce policy.
 
-`bin/`, `tools/`, `dotfiles/`, `emacs/`, and the Git submodules are retained
-as historical personal configuration. The bootstrap does not modify or install
-them. Modernizing that configuration is a separate migration.
+The repository map distinguishes the Zsh fragment and Ghostty configuration
+from the older dotfiles and tools. The bootstrap does not install these configurations;
+follow the component's own instructions where available. Older installers and
+editor settings embed paths such as `~/env`, while current symlink and app-hook
+instructions also depend on this checkout's location. Review those dependencies
+before moving directories or adopting an older configuration.
+
+The declarations in `.gitmodules` need a separate review before any submodule
+setup is recommended. Directory moves and migration of the existing local
+artifacts are deferred; preserve their sources, data, and deliverables during
+that review.
