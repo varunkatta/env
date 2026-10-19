@@ -136,7 +136,7 @@ posts any signal an agent missed. It is a backstop, not a replacement: agents st
 
 **Models**
 
-- The dispatcher uses the cheapest capable model tier: it only reads the board and launches.
+- Route dispatcher work through the shared [model-routing policy](model-routing.md), classifying each task by judgment needed. Use higher capability only when complexity is demonstrated.
 - A sub-agent uses the tier the task asks for. Projects define the tiers (for example light, standard and deep) and
   map them to each vendor's models.
 - A review uses at least the task's tier.

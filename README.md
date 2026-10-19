@@ -25,8 +25,9 @@ current personal configuration or a documented entry point for ongoing use.
 | macOS bootstrap | Maintained | [Bootstrap guide](bootstrap/README.md), [package profiles](bootstrap/brew/), and [manual setup](bootstrap/manual/README.md) |
 | Claude usage menu | Maintained | [App guide](apps/claude-usage-menu/README.md): native macOS usage monitor |
 | Codex usage menu | Maintained | [App guide](apps/codex-usage-menu/README.md): native macOS usage monitor |
-| Shared operating model | Maintained | [Operating-model guide](operating-model/README.md): collaboration preferences and procedures, loaded by [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md) |
-| Claude skills | Maintained | [Skills guide](claude/skills/README.md): installation and available skills |
+| Shared operating model | Maintained | [Operating-model guide](operating-model/README.md): shared collaboration preferences and procedures, loaded by [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md) |
+| Codex model routing | Maintained | [Codex tier mapping](operating-model/codex/model-routing.md): provider details loaded through [AGENTS.md](AGENTS.md) |
+| Claude skills and model routing | Maintained | [Skills guide](claude/skills/README.md) and [Claude tier mapping](operating-model/claude/model-routing.md): provider details loaded through [CLAUDE.md](CLAUDE.md) |
 | Zsh completion cache | Maintained | [Zsh guide](dotfiles/zsh/README.md): install the small completion-cache fragment |
 | Ghostty configuration | Maintained | [Ghostty config](dotfiles/ghostty/config): current personal terminal configuration |
 | Other dotfiles | Reference only | [Shell](dotfiles/bashrc), [Emacs](dotfiles/dotemacs), [simple Emacs](dotfiles/dotemacssimple), [Screen](dotfiles/screenrc), and [large Screen](dotfiles/screenrcbig) configuration; review separately before adoption |

@@ -6,7 +6,9 @@ The lead is the owner's available control surface. It owns the current goal,
 priority, plan, delegation, coordination, evidence review, and recovery of
 stalled work. Keep it available for the owner's input; do not consume it with
 product implementation or routine probes, scripts, tests, or mechanical notes.
-Route that work to the cheapest capable worker and keep the lead active through
+Route execution to the tier specified by the shared
+[model-routing policy](model-routing.md), based on the judgment each subtask
+needs. Keep the lead active through
 monitoring, compact evidence review, and the next safe coordination action.
 
 Carry the owner's current goal and acceptance criteria through every handoff.
@@ -96,11 +98,11 @@ the orchestrating session reports the result when the agent returns.
    reporting the batch as done.
 
 The interactive session is for deciding and approving; the handoff file is the record of what was
-actually authorized to run. This is one instance of the broader cost-aware delegation preference in
-`working-style.md` → Confirmed preferences: route simple mechanical work automatically to the
-cheapest capable executor, state the tier and actual model in the handoff, and keep the orchestrating
-session for judgment. Move to a deeper tier only when concrete complexity or a demonstrated failure
-calls for it.
+actually authorized to run. This is one instance of the shared
+[model-routing policy](model-routing.md): classify the task by judgment needed,
+state the selected tier and actual model in the handoff, and keep the lead for
+thinking, design, planning and review. Escalate only for demonstrated
+complexity, ambiguity or failure.
 
 ## Integration-readiness sweep
 

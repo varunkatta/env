@@ -4,12 +4,18 @@ This is the Codex-discoverable loader for the shared, agent-agnostic operating
 model. Before working in a technical project, read the shared material in this
 order:
 
+Resolve the relative paths below from the directory containing this `AGENTS.md`,
+not from the target repository's working directory.
+
 1. [`operating-model/README.md`](operating-model/README.md)
 2. [`operating-model/working-style.md`](operating-model/working-style.md)
 3. [`operating-model/execution-and-handoffs.md`](operating-model/execution-and-handoffs.md)
 4. [`operating-model/decision-log.md`](operating-model/decision-log.md)
 5. [`operating-model/agent-work-loop.md`](operating-model/agent-work-loop.md), when you take work
    from a shared board (an issue queue such as Beads)
+6. [`operating-model/model-routing.md`](operating-model/model-routing.md) and
+   [`operating-model/codex/model-routing.md`](operating-model/codex/model-routing.md) for Codex
+   model selection
 
 Use [`operating-model/project-profile.template.md`](operating-model/project-profile.template.md)
 to establish a project profile. The target project’s own guidance, handoff,
