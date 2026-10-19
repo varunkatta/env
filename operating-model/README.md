@@ -27,7 +27,7 @@ repository or secure system.
 
 | Document | Use |
 | --- | --- |
-| [Working style](working-style.md) | Confirmed collaboration preferences, clear communication and cost-aware model routing. |
+| [Working style](working-style.md) | Confirmed collaboration preferences, clear communication, cost-aware model routing and the orchestrator's liveness, context and checkpoint duties. |
 | [Execution and handoffs](execution-and-handoffs.md) | How bounded work, delegation, reviews, checkpoints, and blockers are handled. |
 | [Agent work loop](agent-work-loop.md) | How agents take work from a shared board: a dispatcher launches one clean-context sub-agent per job; what next, when to stop, who reviews and repairs. Projects inherit it and override only its parameters. |
 | [Project profile template](project-profile.template.md) | A reusable starting point for a project-specific operating context. |

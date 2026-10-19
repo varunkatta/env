@@ -94,6 +94,22 @@ contracts, or architecture unless the decision owner has explicitly authorized
 the change. If an external approval or protected workflow is required, do not
 bypass it; make the dependency visible and keep all safe parallel work moving.
 
+## Orchestrator duties: liveness, context, checkpoints
+
+Confirmed by the owner on 2026-10-19. A worker that has stopped, or a session that loses its state to a
+compaction, costs the owner hours of progress that nobody reported. The orchestrator therefore owns these
+four duties.
+
+| Duty | What the orchestrator does | Evidence it keeps |
+| --- | --- | --- |
+| Liveness | Proves every worker (Codex, every lane) is alive and progressing on each re-arm and after any restart or crash. A stopped, paused or silent worker is reported to the owner at once, with the fix applied; a pause it posted is resumed the moment its cause clears. | The process or session check and the newest status line of each worker, with their ages. |
+| Context | Sweeps every session's context (the orchestrator's own too). Above 60%: checkpoint, and compact at the next task boundary. Above 80%: checkpoint and compact at once, after any in-flight fix. | The percentage per session at each sweep. |
+| Checkpoints | Has every session save its own state before any compaction: the session updates its state file, then lane-aware hooks snapshot what a machine can see and, after the compaction, return that session's own state, never another session's. | A fresh state file, the snapshot, and the session's one-line reply after the compaction. |
+| Outcome | Measures progress by the owner's visible outcome (for example, "send a query and trace it completely on the UI"), not by merged plumbing, and reports against it on a fixed cadence with screenshots or runs. | The outcome check and its date. |
+
+The hooks must be lane-aware because one shared project setting runs them in every session of the project. A
+hook that always writes and reloads the orchestrator's own state gives each lane the wrong state.
+
 ## Provisional observations
 
 These are useful tendencies, not standing rules, until explicitly confirmed.
