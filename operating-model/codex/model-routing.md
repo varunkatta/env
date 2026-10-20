@@ -9,7 +9,11 @@ below are examples checked on 2026-10-19.
 | Mechanical | Luna | `gpt-6-luna` |
 | Bounded execution | Terra | `gpt-5.6-terra` |
 | Reasoning and planning | Sol | `gpt-6.1-sol` |
-| Deep technical reasoning | Astra | `gpt-6-astra` |
+| Deep technical reasoning | Astra (explicit owner approval required per use) | `gpt-6-astra` |
+
+## Approval boundary
+
+The owner confirmed on 2026-10-20 that Astra requires explicit owner approval for each use. Without that approval, the highest permitted Codex reasoning choice is `gpt-6.1-sol` at high effort. Do not select Astra, a higher model family, or an effort above Sol High without explicit approval. This applies to future launches, relaunches and model or effort overrides. This approval boundary qualifies the tier mapping below; it does not change historical completed reviews.
 
 These tier assignments are the owner's policy, not a claim that the families
 share a release generation. The actual model must be advertised by the
