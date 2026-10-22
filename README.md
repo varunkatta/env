@@ -1,6 +1,12 @@
 # Personal environment
 
 - [Repository map](#repository-map)
+- [Philosophy](#philosophy)
+- [First-time installation](#first-time-installation)
+- [Profiles](#profiles)
+- [Rules enforced by the repository](#rules-enforced-by-the-repository)
+- [Day-to-day usage](#day-to-day-usage)
+- [Repository layout and legacy configuration](#repository-layout-and-legacy-configuration)
 
 This repository contains personal command-line utilities, dotfiles, editor
 configuration, and a reproducible macOS development bootstrap.
@@ -82,6 +88,7 @@ The bootstrap is deliberately small, declarative, and additive.
    ```sh
    ./bootstrap/install.sh native-build local-ai
    ./bootstrap/install.sh data backend containers-orbstack
+   ./bootstrap/install.sh aws
    ```
 
 The installer does not start database services or perform application setup.
@@ -103,6 +110,7 @@ Those remain deliberate, visible actions; see
 | `containers-orbstack` | OrbStack as the container runtime |
 | `containers-docker` | Docker Desktop as the container runtime |
 | `cloud` | Kubernetes, Terraform, and AWS tooling |
+| `aws` | AWS CLI v2 only, for a focused AWS setup |
 | `security` | Encrypted secrets, SBOMs, and vulnerability scanning |
 | `desktop` | VS Code, Ghostty, DBeaver, and a developer font |
 
@@ -114,6 +122,9 @@ Discover the exact profile names at any time:
 
 The two container runtime profiles are alternatives; selecting both is
 rejected.
+
+The `cloud` profile includes the same AWS CLI for backward compatibility. Use
+the independent `aws` profile when AWS is the only cloud capability you need.
 
 ## Rules enforced by the repository
 
@@ -152,6 +163,8 @@ Confirm whether selected profiles match the current machine:
 
 ```sh
 ./bootstrap/doctor.sh core local-ai
+./bootstrap/doctor.sh aws
+aws --version
 ```
 
 For a new Python ML project, keep dependencies project-local:
