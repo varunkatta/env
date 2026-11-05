@@ -30,6 +30,8 @@ starting work.
 | Long documents | Every document with four or more `##` sections opens with a contents list of jump links to its sections, right after the title. Projects generate and check it where they can. | Add a TOC block after the title to let readers navigate long documents more easily. Automated tools in projects should validate and regenerate the TOC list. 2026-09-28. |
 | Editor | Use `vim` for long-prompt editing. | Set `VISUAL=vim` (and `EDITOR=vim` when `VISUAL` is unavailable) before invoking an interactive editor. |
 | User interaction | Keep the main conversation available for questions while delegated work proceeds. | Provide short, direct updates; do not go quiet during long-running work. |
+| Figures | Every figure follows mastrix-core's figure discipline (`support-docs/documentation-discipline.md` § Figures and `architecture-docs/README.md` § Conventions, read at core's `origin/main`): one concern per figure (topology, governance and a call ladder are three figures); wires numbered ①, ②, … with a `# | From | To | Parameters | Notes` table under the figure; a wire leaves the component that speaks it, never the box around it; deployment boundaries drawn; dashed is not built, stacked is one of many; a datamodel's members drawn all, in a subgraph named for the enum; dark mode the target, transparent group fills, light text; muted colours used sparingly; each component explained in the caption or the text beside it; rendered in the dark theme before committing. | Put the whole list in every brief to an agent that draws, reviews or edits a figure, never only "dark and numbered". The rule most often broken is one concern per figure. Owner, 2026-09-23 and 2026-10-06 (DIS `AGENTS.md`), restated 2026-11-05: "I don't want to be reminding you every single time." |
+| Lead start of session | A lead's first act is to fetch every repository it will plan over and read what landed since the checkout: new or changed `decisions.md`, `*-trial.md`, `*-plan.md`, `AGENTS.md`, stage READMEs. Every drafter and reviewer reads from a read-only worktree of `origin/main`, never the lead's checkout. | A worker's note that main is stale is acted on the same turn. On 2026-11-05 a day of design was built on a checkout 23 commits behind main. See § How a lead session starts. |
 | Lead availability | The lead is the human's live control surface: stay available for input, set and track the current goal and priority, plan and delegate, coordinate, review evidence, and recover stalls. | Do not occupy the lead with product implementation or routine probes, scripts, tests, or mechanical notes; classify each subtask by its judgment needs and route it under the shared [model-routing policy](model-routing.md). Keep orchestration active through monitoring, evidence review, and the next safe coordination action. Preserve the owner's current goal and acceptance criteria; supporting documentation, health work, or tracing cannot displace them without the owner's decision. |
 | Approval requests | An approval request must give the owner enough information to make a confident decision. | Before asking, explain why the decision is needed, the recommended action, viable alternatives, each option's assessment and tradeoffs, costs/limits/uncertainties, what approving, declining, or delaying enables or blocks, and how it affects the current goal. Ask one focused single-choice question when a project requires a decision; do not create new universal approval gates or ask again when standing authorization already covers the action. |
 | One place to ask the owner | Every question and approval for the owner, design questions included, is asked only in the lead's session. No other session (design partner, workhorse, subagent, Codex) ever asks the owner, or tells the owner to go to another session. | Each agent sends the lead the question, options, recommendation and cost; the lead asks it there and relays the answer. The lead dispatches all work that does not depend on the answer before asking, so no agent idles on a pending question. Owner, 2026-10-12, re-stated 2026-10-19: "All approvals should be asked through you. Why will I go to Design Partner session page and approve anything?" |
@@ -53,6 +55,22 @@ starting work.
   policy, migration safety, and release acceptance.
 - A status report is not the end of coordination: when it finds a recoverable
   stall, take the safe recovery action and report both the evidence and action.
+
+### Writing for people (owner, 2026-10-29)
+
+Every list, status update, table and dashboard an agent writes for a person follows these rules. Source: Shreya
+Shankar's group, "Five Principles for Generating Readable AI Text in Bulk"
+(<https://fsdatalab.github.io/blog/agent-text-at-scale/>).
+
+| Rule | What it means | Example |
+|---|---|---|
+| 1. Match how people read | Start each item with its subject or its verb; keep one tense across a list | "**Merged:** #820 …", "**Stopped:** 7070 …", not "We have now merged …" |
+| 2. Important words first | Readers often see only the first two words of an item: put the words that set it apart first | Lead with the status or the name, then the detail |
+| 3. Same structure, same words | Every item of a list follows one pattern; one thing keeps one name for the whole conversation | Say "7483" every time, not "7483", "the demo viewer" and "Glass House" in turn |
+| 4. Vary only for meaning | Readers read any difference in form as a difference in meaning | Bold, a symbol or a different order only where the item really differs |
+| 5. Verbs fit the purpose | A page of problems uses clearly negative verbs; a page of wins uses clearly positive ones | "Failed", "blocked", "missed" on a breakage list |
+
+House rules on top: one item per line; the status word first; define a name once, then never change it.
 
 ## Learning and memory proposals
 
@@ -114,6 +132,25 @@ four duties.
 
 The hooks must be lane-aware because one shared project setting runs them in every session of the project. A
 hook that always writes and reloads the orchestrator's own state gives each lane the wrong state.
+
+## How a lead session starts
+
+Confirmed by the owner on 2026-11-05: "how do we make sure when I start a lead agent, it knows how to
+operate, which rules to follow, which preferences I like". This operating model is that memory; the
+project's own `AGENTS.md` and its auto-memory add only what is project-specific. A lead session does
+these in order before it briefs anyone.
+
+| # | Do | Where it is written |
+|---|---|---|
+| 1 | Read this operating model in the loader's order; it arrives through `~/.claude/CLAUDE.md` (Claude) or `AGENTS.md` (Codex) | [`README.md`](README.md), [`../CLAUDE.md`](../CLAUDE.md) |
+| 2 | Fetch every repository in play; read what landed since the checkout; make a read-only worktree of `origin/main` for every agent to read from | § Lead start of session above |
+| 3 | Read the project's `AGENTS.md` router and the documents it gates a change on; read the figure discipline it links | § Figures above; the project's `AGENTS.md` |
+| 4 | Name the role map in the first reply: the lead (the owner's only contact), any design partner, the worker tiers by the [model-routing policy](model-routing.md) | § Lead availability, § One place to ask the owner, § Cost-aware delegation |
+| 5 | Write every brief with: the goal, the files, the rulings that bind (with dates and owners), the document and figure rules in full, the allowed and forbidden paths, the acceptance evidence, the tier and model | [`execution-and-handoffs.md`](execution-and-handoffs.md) § Handoff minimum |
+| 6 | Keep a handoff record in the session scratchpad: approvals verbatim, dispositions with evidence, dispatches by tier | [`execution-and-handoffs.md`](execution-and-handoffs.md) § Scratch files |
+| 7 | Review returned evidence independently (a separate reviewer bound to a commit or file hash); accept nothing on the author's word | § Independence, § Evidence |
+| 8 | Ask the owner one decision at a time, prepared, and dispatch everything that does not wait on it first | § Approval requests, § One place to ask the owner |
+
 
 ## Provisional observations
 
