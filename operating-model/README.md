@@ -27,7 +27,11 @@ repository or secure system.
 
 | Document | Use |
 | --- | --- |
-| [Working style](working-style.md) | Confirmed collaboration preferences and communication expectations. |
+| [Working style](working-style.md) | Confirmed collaboration preferences, clear communication, shared model-routing policy, and the orchestrator's liveness, context and checkpoint duties. |
+| [Working with the owner](working-with-the-owner.md) | A lead's one-page guide to how the owner works: the rules most often broken, how to talk to and ask the owner, running the work, cost, landing, safety, winding down, and what was learned in practice. |
+| [Model routing](model-routing.md) | Provider-neutral four-tier routing policy and links to the Codex and Claude provider mappings. |
+| [Codex model mapping](codex/model-routing.md) | Codex model-family mapping, dated examples, and runtime availability rules. |
+| [Claude model mapping](claude/model-routing.md) | Claude family mapping, effort guidance, and launcher availability limits. |
 | [Execution and handoffs](execution-and-handoffs.md) | How bounded work, delegation, reviews, checkpoints, and blockers are handled. |
 | [Agent work loop](agent-work-loop.md) | How agents take work from a shared board: a dispatcher launches one clean-context sub-agent per job; what next, when to stop, who reviews and repairs. Projects inherit it and override only its parameters. |
 | [Checkpoint and resume](procedures/checkpoint.md) | A vendor-neutral procedure to record everything before a context compaction or handoff, and to resume from disk afterwards. |

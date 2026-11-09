@@ -1,5 +1,28 @@
 # Execution and handoffs
 
+## Lead role and decision requests
+
+The lead is the owner's available control surface. It owns the current goal,
+priority, plan, delegation, coordination, evidence review, and recovery of
+stalled work. Keep it available for the owner's input; do not consume it with
+product implementation or routine probes, scripts, tests, or mechanical notes.
+Route execution to the tier specified by the shared
+[model-routing policy](model-routing.md), based on the judgment each subtask
+needs. Keep the lead active through
+monitoring, compact evidence review, and the next safe coordination action.
+
+Carry the owner's current goal and acceptance criteria through every handoff.
+Supporting documentation, health checks, tracing, and other useful work do not
+change today's priority unless the owner decides to change it.
+
+When a decision is required, prepare the owner to decide before asking. State
+why the decision is necessary, the recommended action, viable alternatives,
+the assessment and tradeoffs of each, costs, limits and uncertainties, what
+approval, decline, or delay enables or blocks, and the effect on the current
+goal. Ask one focused single-choice question where the project requires a
+decision. Respect existing authorization and do not invent universal approval
+gates.
+
 ## Bounded execution loop
 
 1. **Orient.** Read the project handoff, accepted baseline, task packet,
@@ -75,9 +98,11 @@ the orchestrating session reports the result when the agent returns.
    reporting the batch as done.
 
 The interactive session is for deciding and approving; the handoff file is the record of what was
-actually authorized to run. This is one instance of the broader cost-aware delegation preference in
-`working-style.md` → Confirmed preferences: route work to the cheapest capable executor and keep the
-orchestrating session for judgment, not labour.
+actually authorized to run. This is one instance of the shared
+[model-routing policy](model-routing.md): classify the task by judgment needed,
+state the selected tier and actual model in the handoff, and keep the lead for
+thinking, design, planning and review. Escalate only for demonstrated
+complexity, ambiguity or failure.
 
 ## Integration-readiness sweep
 

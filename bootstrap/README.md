@@ -8,6 +8,9 @@ runs `brew bundle install` for the selected profiles.
 ./bootstrap/doctor.sh
 ./bootstrap/install.sh core
 ./bootstrap/install.sh core native-build local-ai
+./bootstrap/install.sh aws
+./bootstrap/doctor.sh aws
+aws --version
 ```
 
 Available profiles:
@@ -25,10 +28,14 @@ Available profiles:
 | `containers-orbstack` | OrbStack container runtime |
 | `containers-docker` | Docker Desktop container runtime |
 | `cloud` | Kubernetes, Terraform, and AWS tools |
+| `aws` | AWS CLI v2 only, for a focused AWS setup |
 | `security` | Secrets, SBOM, and vulnerability tooling |
 | `desktop` | Editor, terminal, database GUI, and font |
 
 `containers-orbstack` and `containers-docker` are mutually exclusive.
+
+The `cloud` profile continues to include `awscli` for backward compatibility.
+Choose `aws` when you need only the AWS CLI.
 
 ## Ownership rules
 
