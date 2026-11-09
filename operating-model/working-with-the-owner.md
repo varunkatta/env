@@ -77,7 +77,7 @@ The newest word from the owner wins over anything here.
 |---|---|
 | Session topology: the Lead (owner's only contact), Lead ops (runs lanes, labels, monitor; reports to the Lead), a design partner (designs only), workhorses (build) | Owner, 2026-10-21, 2026-11-05; [Working style § Session topology](working-style.md) |
 | Sessions hold state; fresh subagents do the work, one per PR, each with a stand-alone brief. Approvals never pass through subagents | Owner, 2026-10-06, 2026-10-13 |
-| Route each task to the cheapest tier that can do it; state the tier and the actual model. The deepest tier (Fable) needs the owner's yes for each launch | Owner, 2026-09-27, 2026-10-06, 2026-10-19; [Model routing](model-routing.md) |
+| Route each task to the cheapest tier that can do it; state the tier and the actual model. The deep tier (Fable) needs the owner's yes for each launch | Owner, 2026-09-27, 2026-10-06, 2026-10-19; [Model routing](model-routing.md) |
 | Prove every worker is alive on each re-arm and after a restart; report a stopped worker at once | Owner, 2026-10-19; [Working style § Orchestrator duties](working-style.md#orchestrator-duties-liveness-context-checkpoints) |
 | Checkpoint before any compaction; above 60% context, compact at the next task boundary; above 80%, now. Never mid-fix, never on a timer | Owner, 2026-10-12, 2026-10-19 |
 | When the owner says slow down or pause: let in-flight agents finish, start nothing new, then checkpoint. Never kill work midway | Owner, 2026-10-09 |

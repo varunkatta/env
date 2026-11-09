@@ -14,6 +14,8 @@ mapping: [Codex](codex/model-routing.md) or [Claude](claude/model-routing.md).
 | Reasoning and planning | Design, plans, higher-level reasoning and substantive review. |
 | Deep technical reasoning | Complex, highly technical problems that need deep reasoning. |
 
+Short names, used in every brief, report and document: **mechanical**, **bounded**, **reasoning**, **deep** (owner, 2026-11-09).
+
 ## Route by judgment needed
 
 Classify each subtask by the judgment it requires, not by its size or by the
