@@ -24,6 +24,10 @@ Where the files live is the project's rule (its lane or state folder). This proc
 
 ## A. Before compaction (checkpoint)
 
+Run it yourself, without asking: at every task boundary keep the state file current (steps 4 and 5), and at 60%
+context run all steps. A compaction can come at any moment, from the owner or the harness. Keep the state file in a
+durable path (the project checkout's `.claude/`, or Git), never under `/tmp` or a scratchpad.
+
 | # | Do | Check |
 | --- | --- | --- |
 | 1 | **Freeze new work.** Launch nothing new until the checkpoint is written. Tasks already running may continue. | |
