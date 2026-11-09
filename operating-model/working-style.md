@@ -144,7 +144,7 @@ these in order before it briefs anyone.
 | # | Do | Where it is written |
 |---|---|---|
 | 0 | Set up the session topology (§ Session topology): a Lead ops session for dispatch and monitoring, a design partner where the work is design, workhorses as needed; the Lead keeps only the owner's conversation and decisions | § Session topology |
-| 1 | Read this operating model in the loader's order; it arrives through `~/.claude/CLAUDE.md` (Claude) or `AGENTS.md` (Codex) | [`README.md`](README.md), [`../CLAUDE.md`](../CLAUDE.md) |
+| 1 | Read this operating model in the loader's order, the [lead playbook](lead-playbook.md) included; it arrives through `~/.claude/CLAUDE.md` (Claude) or `AGENTS.md` (Codex) | [`README.md`](README.md), [`../CLAUDE.md`](../CLAUDE.md), [`lead-playbook.md`](lead-playbook.md) |
 | 2 | Fetch every repository in play; read what landed since the checkout; make a read-only worktree of `origin/main` for every agent to read from | § Lead start of session above |
 | 3 | Read the project's `AGENTS.md` router and the documents it gates a change on; read the figure discipline it links | § Figures above; the project's `AGENTS.md` |
 | 4 | Name the role map in the first reply: the lead (the owner's only contact), any design partner, the worker tiers by the [model-routing policy](model-routing.md) | § Lead availability, § One place to ask the owner, § Cost-aware delegation |

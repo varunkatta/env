@@ -31,6 +31,7 @@ repository or secure system.
 | [Model routing](model-routing.md) | Provider-neutral four-tier routing policy and links to the Codex and Claude provider mappings. |
 | [Codex model mapping](codex/model-routing.md) | Codex model-family mapping, dated examples, and runtime availability rules. |
 | [Claude model mapping](claude/model-routing.md) | Claude family mapping, effort guidance, and launcher availability limits. |
+| [Lead playbook](lead-playbook.md) | For any lead agent: how the owner works with a lead, how to talk to him, plan and deliver, handle data and money, and run sessions; the mistakes he has had to correct. Points to the rules above and writes the new ones in full. |
 | [Execution and handoffs](execution-and-handoffs.md) | How bounded work, delegation, reviews, checkpoints, and blockers are handled. |
 | [Agent work loop](agent-work-loop.md) | How agents take work from a shared board: a dispatcher launches one clean-context sub-agent per job; what next, when to stop, who reviews and repairs. Projects inherit it and override only its parameters. |
 | [Project profile template](project-profile.template.md) | A reusable starting point for a project-specific operating context. |
