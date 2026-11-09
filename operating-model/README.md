@@ -28,6 +28,7 @@ repository or secure system.
 | Document | Use |
 | --- | --- |
 | [Working style](working-style.md) | Confirmed collaboration preferences, clear communication, shared model-routing policy, and the orchestrator's liveness, context and checkpoint duties. |
+| [Working with the owner](working-with-the-owner.md) | A lead's one-page guide to how the owner works: the rules most often broken, how to talk to and ask the owner, running the work, cost, landing, safety, winding down, and what was learned in practice. |
 | [Model routing](model-routing.md) | Provider-neutral four-tier routing policy and links to the Codex and Claude provider mappings. |
 | [Codex model mapping](codex/model-routing.md) | Codex model-family mapping, dated examples, and runtime availability rules. |
 | [Claude model mapping](claude/model-routing.md) | Claude family mapping, effort guidance, and launcher availability limits. |

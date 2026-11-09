@@ -8,7 +8,8 @@ Resolve the relative paths below from the directory containing this `AGENTS.md`,
 not from the target repository's working directory.
 
 1. [`operating-model/README.md`](operating-model/README.md)
-2. [`operating-model/working-style.md`](operating-model/working-style.md)
+2. [`operating-model/working-style.md`](operating-model/working-style.md), and when you lead a
+   project, [`operating-model/working-with-the-owner.md`](operating-model/working-with-the-owner.md)
 3. [`operating-model/execution-and-handoffs.md`](operating-model/execution-and-handoffs.md)
 4. [`operating-model/decision-log.md`](operating-model/decision-log.md)
 5. [`operating-model/lead-playbook.md`](operating-model/lead-playbook.md), when you are a lead
