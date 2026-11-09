@@ -12,11 +12,9 @@ not from the target repository's working directory.
    project, [`operating-model/working-with-the-owner.md`](operating-model/working-with-the-owner.md)
 3. [`operating-model/execution-and-handoffs.md`](operating-model/execution-and-handoffs.md)
 4. [`operating-model/decision-log.md`](operating-model/decision-log.md)
-5. [`operating-model/lead-playbook.md`](operating-model/lead-playbook.md), when you are a lead
-   session for the owner
-6. [`operating-model/agent-work-loop.md`](operating-model/agent-work-loop.md), when you take work
+5. [`operating-model/agent-work-loop.md`](operating-model/agent-work-loop.md), when you take work
    from a shared board (an issue queue such as Beads)
-7. [`operating-model/model-routing.md`](operating-model/model-routing.md) and
+6. [`operating-model/model-routing.md`](operating-model/model-routing.md) and
    [`operating-model/codex/model-routing.md`](operating-model/codex/model-routing.md) for Codex
    model selection
 

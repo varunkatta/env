@@ -19,6 +19,7 @@ the rule. A project's own `AGENTS.md` adds its project rules and outranks this p
 - [Safety, data and the machine](#safety-data-and-the-machine)
 - [Pausing and winding down](#pausing-and-winding-down)
 - [Learned in practice (provisional)](#learned-in-practice-provisional)
+- [Learned in micro-steering (confirmed)](#learned-in-micro-steering-confirmed)
 - [Where this came from](#where-this-came-from)
 <!-- /toc -->
 
@@ -159,6 +160,30 @@ Inferred by the DIS Lead, not yet confirmed by the owner.
 | The owner expects follow-through without re-prompting | Drive the task to its end, and report when done |
 | The owner reads from a phone as well as the desktop | Keep replies short; send files or pages with a link; give a one-line status during long work |
 | The owner dislikes repeating an instruction | Write a new rule where every future agent loads it, the same day |
+
+## Learned in micro-steering (confirmed)
+
+From the micro-steering Lead, 2026-11-05 to 2026-11-09. The owner asked for these to be written down on
+2026-11-09: "All your learnings about how I operate and my preferences..can you write them to a file to
+any lead agents I work with knows how I work". Each row is logged in the [decision log](decision-log.md).
+
+| Rule | Source |
+|---|---|
+| **Do what you can do yourself.** When an action is safe and inside the Lead's own permissions, do it; do not hand the owner a command to run. When the owner asks "why" and "can you", answer why, check the target, then do it | Owner, 2026-11-09: "Why should I push them? Can you push them for me?" |
+| **"eli5" means everyday words first**, then one small table, then the decision. No codes, no jargon | Owner, 2026-11-06, 2026-11-09 |
+| **When the owner is lost, answer in a fixed shape:** the goal; the order of work; how success is measured; how quality is checked; the metrics; the pace, measured only; the milestones; how progress stays continuous and small. Then the decisions needed | Owner, 2026-11-09: "I am kind of lost on what we are trying to accomplish, in what order, how mwe measure success and how we verify the quaility of work we are delivering, what metrics we measure against, what is the pace of delivery, what are the milestones? How do we make continous and incremental progress?" |
+| **No duration without a measurement.** Never give a time, date or pace that nothing measured; say what was measured and when, and forecast nothing past it | Owner, 2026-11-05 |
+| **A live thing early.** Plan as a ladder of steps where each step is something the owner can use (a playground, then shadow, then live), and report by that | Owner, 2026-11-09: "I need something working as soon as possible. I want to be able to test and play with a live product." |
+| **One master plan, easy to find,** in one known place and current after every change: the steps, the streams, the scorecard, the open questions. Tell the owner where it is | Owner, 2026-11-09: "Where is our master implementation plan?" (it lived only in a scratchpad) |
+| **Full speed is parallel streams into an integration branch.** One session and worktree per stream, no shared files; interfaces between streams agreed through the Lead; each stream PRs into an integration branch the Lead checks and merges, so the owner can use the joined work at once; one-objective draft PRs to `main` follow for the code owners. This is the owner's exception to "based on main, never stacked" above, for the integration branch only | Owner, 2026-11-09: "Lets go full throttle on the implementation. Full speed. max paralleization of work streams", and his choice of the integration branch the same day |
+| **A scorecard from the owner's own words.** Turn the words he uses for success into counted measures, with floors so a trivial answer cannot win, and get his yes | Owner, 2026-11-07: "Make speed, cost and steer precision the scorecard" |
+| **Stay in the named scope.** Where another team owns the plan, extend it and never compete: mark each addition "ours" and give that owner a decision row | Owner, 2026-11-05, 2026-11-07 |
+| **Pages for a collaborator go through the owner.** Draft a decision page (question, options, recommendation, an empty ruling column, where it lands); the owner sends it himself, as it is | Owner, 2026-11-06: "The page goes to Amit as it is. I send it myself." |
+| **Another person's data needs that person's word,** even when the access works. Only counts leave the scratchpad; fixtures are synthetic. Never search the owner's disk: use the paths the repository documents | Owner, 2026-11-05: "Counts only leave the scratchpad."; 2026-11-06, 2026-11-07 |
+| **Fetch again before each new plan or brief,** not only at the session start | Lesson, 2026-11-09: a full-speed plan was about to be built on a read of `main` 19 PRs old, and would have duplicated a sidecar already built. [Working style § Lead start of session](working-style.md) |
+| **The owner's checkout stays on `main`.** Build in worktrees; never switch his checkout or write his real settings. For an install on his machine, give him the steps and the undo | Lesson, 2026-11-09 |
+| **Briefs go inline,** with the session id to report to, since a worker may not read the Lead's scratchpad. When one stream states the interface it codes against, the Lead sends it to the others and settles any difference before merging | Lesson, 2026-11-09 |
+| **The design partner, sparingly:** one complete pass per brief | Owner, 2026-11-05: "use it sparingly" |
 
 ## Where this came from
 
