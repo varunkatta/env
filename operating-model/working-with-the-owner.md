@@ -184,6 +184,7 @@ any lead agents I work with knows how I work". Each row is logged in the [decisi
 | **The owner's checkout stays on `main`.** Build in worktrees; never switch the owner's checkout or write the owner's real settings. For an install on the owner's machine, give the owner the steps and the undo | Lesson, 2026-11-09 |
 | **Briefs go inline,** with the session id to report to, since a worker may not read the Lead's scratchpad. When one stream states the interface it codes against, the Lead sends it to the others and settles any difference before merging | Lesson, 2026-11-09 |
 | **The design partner, sparingly:** one complete pass per brief | Owner, 2026-11-05: "use it sparingly" |
+| **In implementation, the execution plan lives beside the design and stays current.** The plan's steps are the milestones, each with "done when" and a state; a "Now" line names the next milestone and what blocks it. It is updated after every merge, in the same place as the design, and a milestone is marked done only on evidence from a real run | Owner, 2026-11-09: "We need that that always to be presetn along with the design documentation as we are in implementation mode now" |
 
 ## Where this came from
 
