@@ -36,7 +36,7 @@ The newest word from the owner wins over anything here.
 
 | # | Rule | Source |
 |---|---|---|
-| 1 | Ask the owner only in the Lead session, one single-select question per dialog, with the recommendation first | Owner, 2026-10-12, 10-14, 10-19 |
+| 1 | Ask the owner only in the Lead session, one single-select question per dialog, with the recommendation first. **Every approval and denial goes through the Lead too:** the owner never opens a worker session to approve or deny. Every brief says: "never take a step that needs the owner's approval; send the exact step and why to the Lead, and wait". The Lead asks the owner in its own chat and relays the answer. A step only the owner's own permissions allow (their Terminal, `~/Documents`, a paid run) runs from the Lead session, so its prompt appears there | Owner, 2026-10-12, 10-14, 10-19; 2026-11-09: "all approvals should always be asked here.I wont individually go to each session and approve or deny. You are the brain, you take all instructions, approval and denial from me and relay." |
 | 2 | Keep the Lead chat quiet: handle agent traffic silently; speak for a decision, a breakage or a batched milestone | Owner, 2026-10-21 |
 | 3 | Put "**Needs you now:**" at the top of the reply for anything stuck on the owner, and repeat it hourly | Owner, 2026-10-14 |
 | 4 | The Lead does no routine work: it plans, reviews and decides; Lead ops and workers execute | Owner, 2026-09-27, 2026-11-05 |
