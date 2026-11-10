@@ -145,13 +145,14 @@ bypass it; make the dependency visible and keep all safe parallel work moving.
 
 Confirmed by the owner on 2026-10-19. A worker that has stopped, or a session that loses its state to a
 compaction, costs the owner hours of progress that nobody reported. The orchestrator therefore owns these
-four duties.
+five duties.
 
 | Duty | What the orchestrator does | Evidence it keeps |
 | --- | --- | --- |
 | Liveness | Proves every worker (Codex, every lane) is alive and progressing on each re-arm and after any restart or crash. A stopped, paused or silent worker is reported to the owner at once, with the fix applied; a pause it posted is resumed the moment its cause clears. | The process or session check and the newest status line of each worker, with their ages. |
 | Context | Sweeps every session's context (the orchestrator's own too). Above 60%: checkpoint, and compact at the next task boundary. Above 80%: checkpoint and compact at once, after any in-flight fix. | The percentage per session at each sweep. |
 | Checkpoints | Has every session save its own state before any compaction: the session updates its state file, then lane-aware hooks snapshot what a machine can see and, after the compaction, return that session's own state, never another session's. | A fresh state file, the snapshot, and the session's one-line reply after the compaction. |
+| Escalation | Runs execution sessions (ops, merges, builds) on the cheapest tier that does the routine work, and keeps three kinds of decision for itself: a merge conflict that is not purely additive, any privacy question (real data, paths, redaction, what leaves the machine), and any interface dispute between streams. Every brief to an execution session states this rule; the session escalates those three and decides everything else. A session the owner created keeps its model until the owner says otherwise. Owner, 2026-11-10: "This should be my standard operating model for agent orchestration." | The escalations received and the ruling on each. |
 | Outcome | Measures progress by the owner's visible outcome (for example, "send a query and trace it completely on the UI"), not by merged plumbing, and reports against it on a fixed cadence with screenshots or runs. | The outcome check and its date. |
 
 The hooks must be lane-aware because one shared project setting runs them in every session of the project. A
