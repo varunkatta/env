@@ -143,6 +143,26 @@ contracts, or architecture unless the decision owner has explicitly authorized
 the change. If an external approval or protected workflow is required, do not
 bypass it; make the dependency visible and keep all safe parallel work moving.
 
+## Iterative delivery: the potter's wheel
+
+Owner, 2026-11-10: "Think of product building as making a pot. We always need to think in terms of
+iterative, metrics driven progress, verifications with clear definition of acceptance and success."
+A potter shapes a little, looks, and corrects while the clay is still wet. Days of building for a big
+reveal are the opposite: the clay has set before anyone sees the shape. This is a principle to apply
+with judgment, not a rule to apply blindly. Each line below says what to judge.
+
+| Principle | What it means in practice | The judgment |
+| --- | --- | --- |
+| A working product, all the time | The thing the owner uses runs after every change. New behaviour ships dark first (off, shadow, a scoped flag), then is turned on | A change that cannot ship dark is split until one part can |
+| Small turns | Each step is the smallest change that moves a metric or a visible outcome, and it lands on `main` within a day (§ Landing cadence) | If a step cannot show a result within a day, cut it smaller, or show a measured part of it |
+| Acceptance before work | Before a stream starts, write down what the owner will see or use when it is done, and the metric with its bar | No check, no start. "Done" without a measurement is not done |
+| Measure every turn | After each step, measure against the bar, and verify it adversarially (§ Verification) | A result that misses the bar changes the plan the same day: re-plan, never push on |
+| Parallel where truly independent | Run streams at the same time when they touch different files, need no unmerged result from each other, and each has its own acceptance check | Parallelism is limited by what can be verified and integrated, not by how many agents can be started. A stream nobody verifies is a hidden waterfall. Two streams that share an undecided interface: decide the interface first, then split |
+| Feedback is input | Show the owner a working increment often. The owner's reaction is the next turn's input | Prefer a rough working slice the owner can try over a polished part they cannot |
+
+Signs of drift: a branch that grows for days without landing; a status that reports work done but no
+measurement; more streams running than the Lead can verify; a reveal planned for "when it's all done".
+
 ## Orchestrator duties: liveness, context, checkpoints
 
 Confirmed by the owner on 2026-10-19. A worker that has stopped, or a session that loses its state to a
