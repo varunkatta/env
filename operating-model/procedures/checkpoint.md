@@ -60,6 +60,7 @@ State file sections:
 | --- | --- |
 | 1 | Read the READ-FIRST state file in full, then the tail of the rulings log and the decisions log, then the memory index if the harness has one. |
 | 2 | **Re-verify live state before acting:** the main SHA, the open PRs (`gh pr list`), and each running agent's status. Trust the live state over the file where they differ, and note the difference. |
+| 2a | **Prove every watcher exists before anything else.** The state file's "Watchers" line names each scheduled job (its id and schedule) and each durable check. List them (for example `CronList` and the app's scheduled tasks). Re-create any that is missing with the same prompt, and write its new id back to the file. A session-only job dies with its session, and a self-pacing loop dies on any turn that does not re-arm it, so neither is assumed alive ([working with the owner](../working-with-the-owner.md), "A watcher is proven, not assumed"). |
 | 3 | Do not redo finished work. Do not re-ask answered questions. Do not restate the summary to the owner. |
 | 4 | Continue from "Next actions" in order, and pick up messages from agents that arrived during the compaction. |
 | 5 | If anything in the file is ambiguous, check the source (the PR, the log, the report) before deciding. Never fill a gap from memory. |
