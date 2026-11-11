@@ -4,7 +4,9 @@ enum UsageAPIError: LocalizedError {
     case noCredential
     case tokenExpired(Date)
     case unauthorized
+    case rateLimited
     case http(Int)
+    case network(String)
     case unrecognizedShape
 
     var errorDescription: String? {
@@ -16,8 +18,12 @@ enum UsageAPIError: LocalizedError {
             return "Sign-in token expired \(formatter.localizedString(for: when, relativeTo: Date())). Any terminal `claude` session renews it."
         case .unauthorized:
             return "The account rejected the stored sign-in token."
+        case .rateLimited:
+            return "The account asked us to slow down (HTTP 429). The next refresh will retry."
         case .http(let code):
             return "Account usage request failed (HTTP \(code))."
+        case .network(let reason):
+            return "Could not reach the account: \(reason)"
         case .unrecognizedShape:
             return "Account usage came back in an unrecognized format. Run with --dump-account."
         }
@@ -65,12 +71,22 @@ final class UsageAPI: @unchecked Sendable {
         var request = URLRequest(url: endpoint)
         request.setValue("Bearer \(token.value)", forHTTPHeaderField: "Authorization")
         request.setValue("oauth-2025-04-20", forHTTPHeaderField: "anthropic-beta")
-        request.setValue("claude-usage-menu/0.1.0", forHTTPHeaderField: "User-Agent")
+        request.setValue("claude-usage-menu/0.2.0", forHTTPHeaderField: "User-Agent")
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        // Well inside the refresh interval, so a hung request never overlaps the next one.
+        request.timeoutInterval = 20
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await URLSession.shared.data(for: request)
+        } catch {
+            throw UsageAPIError.network(error.localizedDescription)
+        }
         switch (response as? HTTPURLResponse)?.statusCode ?? 0 {
         case 200: return data
-        case 401: throw UsageAPIError.unauthorized
+        case 401, 403: throw UsageAPIError.unauthorized
+        case 429: throw UsageAPIError.rateLimited
         case let code: throw UsageAPIError.http(code)
         }
     }
@@ -92,7 +108,7 @@ final class UsageAPI: @unchecked Sendable {
               let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let oauth = root["claudeAiOauth"] as? [String: Any],
               let value = oauth["accessToken"] as? String,
-              let expiresAt = oauth["expiresAt"] as? Double
+              let expiresAt = (oauth["expiresAt"] as? NSNumber)?.doubleValue
         else { throw UsageAPIError.noCredential }
 
         return Token(value: value, expiresAt: Date(timeIntervalSince1970: expiresAt / 1000))
@@ -116,7 +132,7 @@ final class UsageAPI: @unchecked Sendable {
     }
 
     private static func window(fromLimit limit: [String: Any]) -> UsageWindow? {
-        guard let percent = limit["percent"] as? Double else { return nil }
+        guard let percent = (limit["percent"] as? NSNumber)?.doubleValue else { return nil }
         let kind = limit["kind"] as? String ?? limit["group"] as? String ?? "usage"
         let scopedModel = ((limit["scope"] as? [String: Any])?["model"] as? [String: Any])?["display_name"] as? String
 
@@ -141,7 +157,7 @@ final class UsageAPI: @unchecked Sendable {
         ]
         return known.compactMap { entry in
             guard let object = root[entry.key] as? [String: Any],
-                  let utilization = object["utilization"] as? Double
+                  let utilization = (object["utilization"] as? NSNumber)?.doubleValue
             else { return nil }
             return UsageWindow(title: entry.title,
                                utilization: utilization / 100,
@@ -156,7 +172,7 @@ final class UsageAPI: @unchecked Sendable {
         else { return [] }
         return rows.compactMap { row in
             guard let name = row["display_name"] as? String,
-                  let percent = row["percent"] as? Double
+                  let percent = (row["percent"] as? NSNumber)?.doubleValue
             else { return nil }
             return BreakdownRow(name: name, percent: Int(percent.rounded()))
         }

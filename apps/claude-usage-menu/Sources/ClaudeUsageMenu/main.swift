@@ -12,8 +12,10 @@ if CommandLine.arguments.contains("--dump-sessions") {
         let context = session.contextTokens.map(String.init) ?? "unknown"
         let limit = session.contextLimit.map(String.init) ?? "unknown"
         let percent = session.contextFraction.map { "\(Int(($0 * 100).rounded()))%" } ?? "—"
-        print("\(session.label)  ctx=\(context)/\(limit) (\(percent))  model=\(session.model ?? "?")  pid=\(session.pid)")
-        print("    \(session.cwd)")
+        let window = session.contextLimitIsReported ? "reported" : "inferred"
+        let last = session.lastActivity.map { "\($0)" } ?? "unknown"
+        print("\(session.label)  ctx=\(context)/\(limit) (\(percent), window \(window))  model=\(session.model ?? "?")  pid=\(session.pid)")
+        print("    \(session.cwd)  last turn \(last)")
     }
     exit(0)
 }
