@@ -1,0 +1,25 @@
+name: Claude Usage Menu
+
+on:
+  pull_request:
+    paths:
+      - "apps/claude-usage-menu/**"
+      - ".github/workflows/claude-usage-menu.yml"
+  push:
+    branches: [master]
+    paths:
+      - "apps/claude-usage-menu/**"
+
+jobs:
+  build-and-smoke-test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: swift --version
+      - name: Build, smoke test, and bundle
+        working-directory: apps/claude-usage-menu
+        run: |
+          ./scripts/smoke-test.sh
+          ./scripts/build-app-bundle.sh
+          codesign --verify --verbose dist/ClaudeUsageMenu.app

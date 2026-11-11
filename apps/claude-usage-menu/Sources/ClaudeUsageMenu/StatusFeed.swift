@@ -1,5 +1,16 @@
 import Foundation
 
+/// Claude Code's config directory: `$CLAUDE_CONFIG_DIR` when set, as Claude Code itself honours it,
+/// otherwise `~/.claude`.
+enum ClaudeConfig {
+    static let directory: URL = {
+        if let custom = ProcessInfo.processInfo.environment["CLAUDE_CONFIG_DIR"], !custom.isEmpty {
+            return URL(fileURLWithPath: (custom as NSString).expandingTildeInPath, isDirectory: true)
+        }
+        return FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".claude")
+    }()
+}
+
 /// One rate-limit window, e.g. the rolling 5-hour session allowance or a weekly cap.
 struct UsageWindow {
     let title: String
@@ -69,8 +80,7 @@ enum StatusFeedError: LocalizedError {
 /// `used_percentage` (0-100) plus `resets_at` (Unix epoch seconds). This is the fallback source,
 /// used when the account cannot be read.
 struct StatusFeed {
-    static let path = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent(".claude/usage-menu/status.json")
+    static let path = ClaudeConfig.directory.appendingPathComponent("usage-menu/status.json")
 
     func read() throws -> UsageSnapshot {
         guard let data = try? Data(contentsOf: Self.path) else { throw StatusFeedError.missing }

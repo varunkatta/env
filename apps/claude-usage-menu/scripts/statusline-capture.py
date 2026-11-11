@@ -16,7 +16,9 @@ import sys
 import tempfile
 import time
 
-FEED_DIR = os.path.expanduser("~/.claude/usage-menu")
+# Claude Code honours CLAUDE_CONFIG_DIR for its own files; the feed follows it there.
+CONFIG_DIR = os.path.expanduser(os.environ.get("CLAUDE_CONFIG_DIR") or "~/.claude")
+FEED_DIR = os.path.join(CONFIG_DIR, "usage-menu")
 FEED_PATH = os.path.join(FEED_DIR, "status.json")
 # Set CLAUDE_USAGE_MENU_DEBUG=1 to record the raw payload for diagnosing a missing quota feed.
 DEBUG_PATH = os.path.join(FEED_DIR, "last-payload.json")

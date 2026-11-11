@@ -1,6 +1,7 @@
 import Foundation
 
 enum UsageAPIError: LocalizedError {
+    case disabled
     case noCredential
     case tokenExpired(Date)
     case unauthorized
@@ -11,6 +12,8 @@ enum UsageAPIError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
+        case .disabled:
+            return "Account read turned off by CLAUDE_USAGE_MENU_NO_ACCOUNT."
         case .noCredential:
             return "No Claude Code sign-in in the Keychain."
         case .tokenExpired(let when):
@@ -65,6 +68,10 @@ final class UsageAPI: @unchecked Sendable {
     }
 
     func fetchRaw() async throws -> Data {
+        // Lets tests exercise the fallback without touching the Keychain or the network.
+        if ProcessInfo.processInfo.environment["CLAUDE_USAGE_MENU_NO_ACCOUNT"] != nil {
+            throw UsageAPIError.disabled
+        }
         let token = try readToken()
         guard token.expiresAt > Date() else { throw UsageAPIError.tokenExpired(token.expiresAt) }
 

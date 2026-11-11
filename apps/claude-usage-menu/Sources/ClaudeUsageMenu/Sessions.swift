@@ -49,7 +49,7 @@ private struct SessionFile: Decodable {
 /// Reads live-session state from `~/.claude`. Everything here is local file I/O — no network,
 /// no credentials, and no writes.
 struct SessionReader {
-    private let root = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".claude")
+    private let root = ClaudeConfig.directory
 
     /// Only the tail of a transcript is read; the newest usage block is all that matters and
     /// transcripts routinely reach tens of megabytes. A single large tool result can fill the
