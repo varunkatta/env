@@ -156,6 +156,19 @@ contracts, or architecture unless the decision owner has explicitly authorized
 the change. If an external approval or protected workflow is required, do not
 bypass it; make the dependency visible and keep all safe parallel work moving.
 
+### Design, then plan, then build (owner, 2026-11-12)
+
+The implementation plan is downstream of the design. Each step starts only after the owner approves the step before it.
+
+| Step | Starts only when | What it holds |
+|---|---|---|
+| 1. Design | the owner asks for it | the method, the choices and their reasons, the risks, the cost, and the effort estimate the owner needs to judge the design |
+| 2. Owner's review of the design | the design is complete and the agent has reviewed it adversarially | the design and its open gaps, on a page that is easy to review. No PR is a review step |
+| 3. Implementation plan | the owner approved the **final** design. "Approve with changes" approves the changes only: the agent applies them, shows the final design, and waits again | the PRs, their tests, the order, the run steps and their spend |
+| 4. Build | the owner approved the implementation plan | the code, in the planned PRs |
+
+No agent spends tokens on a plan for a design that can still change. A design that changes after a plan was written makes the plan wrong.
+
 ## Iterative delivery: the potter's wheel
 
 Owner, 2026-11-10: "Think of product building as making a pot. We always need to think in terms of
