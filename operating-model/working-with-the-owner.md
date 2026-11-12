@@ -88,6 +88,7 @@ The newest word from the owner wins over anything here.
 | When the owner says slow down or pause: let in-flight agents finish, start nothing new, then checkpoint. Never kill work midway | Owner, 2026-10-09 |
 | Workhorses stay in auto mode; never switch one to manual without the owner's yes. Work auto mode refuses goes to the Lead | Owner, 2026-10-12 |
 | Design sessions design only. A ratified direction starts no build until a reviewed design and a separate implementation plan are agreed with the owner | Owner, 2026-10-22 |
+| **A design is reviewed with the owner before its PR.** The Lead reviews the design adversarially, shows the owner the design and its gaps, and raises the PR only after the owner approves the revised design. A draft PR is not a review step | Owner, 2026-11-12: "lets review the design before we create a PR..what is the point of draft PR, if the design has gaps" |
 | A component's work stops at its protocol with the next component; product gaps in another team's component go to its owners through the owner | Owner, 2026-10-20; [Working style § Separation of concerns](working-style.md) |
 | Steer by the product: open it as a user; done means a visible check on a real call; record first, polish second | Owner, 2026-10-18 |
 | A working demo at all times; no regression on the demos | Owner, 2026-10-13, 2026-10-17 |
