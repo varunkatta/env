@@ -70,7 +70,19 @@ Where a vendor has no mapping, use its default model for bounded and ask the own
 
 ## Communication standard
 
-- **Clarity and useful explanation:** Treat ASD-STE100 as a guiding principle for clearer communication, not a rigid compliance gate. Explain what is happening, why it matters, how it works or will proceed, and the impact or outcome; connect the point to the Demo or North Star when relevant. Use plain words and explain necessary technical terms in context.
+- **ASD-STE100 Simplified Technical English, strictly (owner, 2026-11-12).** Every message to the owner obeys ASD-STE100: this includes status, reports, questions, recaps and drafts for the owner to send. The writing rules:
+  - Sentences are short: 20 words at most in an instruction, 25 at most in a description. One topic in each sentence.
+  - Paragraphs are short: 6 sentences at most.
+  - Use the active voice. Use the imperative for an instruction.
+  - Use simple tenses only: present, simple past, simple future.
+  - Each word has one meaning. Use the same word for the same thing every time. Do not use synonyms.
+  - Put no more than three nouns in a row. Write "the check of the deploy", not "the deploy health check".
+  - Do not use idioms, slang, metaphors or phrasal verbs (write "start", not "kick off").
+  - Use the definite article ("the", "a") where English needs it. Do not use telegraphic style.
+  - Define each technical name the first time you use it.
+  - Use a list for steps and a table for comparisons.
+
+  Inside the standard, still explain what is happening, why it matters, how it works or will proceed, and the impact; connect the point to the Demo or North Star when relevant. Code, commands, file names and quoted text stay as they are.
 
 - Lead with the current outcome or blocker.
 - Be concise, concrete, and technically honest.
