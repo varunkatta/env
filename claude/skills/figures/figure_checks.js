@@ -3,7 +3,7 @@
 // that follows section 6. It draws a table under each figure and sets window.FIGURE_CHECKS.
 // Pure DOM geometry: no network, no model.
 (function () {
-  const CLEARANCE = 12;     // L6: pixels between a wire and a box it does not connect
+  const CLEARANCE = 8;      // L6: pixels between a wire and a box it does not connect (owner, 2026-11-12)
   const TITLE_CLEAR = 6;    // L6: pixels between a wire and a group title
   const SIDE_TOL = 8;       // L7: how far an arrow end may sit from the box side
   const MAX_BOXES = 9, MAX_WIRES = 10, MAX_DEGREE = 4;

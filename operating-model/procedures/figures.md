@@ -33,7 +33,7 @@ the wires" hold the company's copy; where the two differ, follow the stricter ru
 | L3 | **Each box sits level with what its wires reach**, so wires are short and flat | inspect |
 | L4 | Wires are straight lines or right-angle lines. No curves, no diagonal lines | `curved`, `diagonal` = 0 |
 | L5 | **No wire crosses another wire, and no wire crosses a box.** A wire whose straight line would cross a box bends once, at a right angle, where both legs clear every box | `crossings`, `throughBox` = 0 |
-| L6 | **Clearance:** a wire stays at least 12 pixels away from every box it does not connect, and from every group title | `grazing` = 0 |
+| L6 | **Clearance:** a wire stays at least 8 pixels away from every box it does not connect, and 6 pixels from every group title (owner, 2026-11-12: "Yes, 8 pixels"; ELK keeps about 10) | `grazing` = 0 |
 | L7 | **Arrow ends:** a wire leaves and enters a box at the middle third of a side, at a right angle to that side, never at a corner | `badEnds` = 0 |
 | L8 | Two wires never share one track | `sharedTrack` = 0 |
 | L9 | At most 9 boxes and 10 wires in one figure, and at most 4 wires on one box. More: split the figure (C1) | `boxes`, `wires`, `maxDegree` |
@@ -70,8 +70,8 @@ the wires" hold the company's copy; where the two differ, follow the stricter ru
    direction (`LR` or `TB`) that keeps the figure inside the page width. Declare boxes in row order. Put an
    outside service in a group of its own, so the wire to it is short. Use `sequenceDiagram` for an order of
    events. When a figure still fails a check, change the order of the boxes, the direction or the split
-   before you change the rule. Known limits of ELK, which the owner saw before this ruling: wires can pass
-   about 10 pixels from a box, and ELK draws group fills grey. A hand-placed SVG (section 6) is used only on
+   before you change the rule. Known limits of ELK, which the owner saw before this ruling: wires pass
+   about 10 pixels from a box (inside L6), and ELK draws group fills grey. A hand-placed SVG (section 6) is used only on
    the owner's word. Before a figure in a repository relies on ELK, check that the repository's host renders it
    (GitHub bundles its own Mermaid).
 5. **Render and check** with the skill's tool (section 5), in the dark and the light theme, at the page's width.
