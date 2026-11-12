@@ -71,7 +71,8 @@ the wires" hold the company's copy; where the two differ, follow the stricter ru
    outside service in a group of its own, so the wire to it is short. Use `sequenceDiagram` for an order of
    events. When a figure still fails a check, change the order of the boxes, the direction or the split
    before you change the rule. Known limits of ELK, which the owner saw before this ruling: wires pass
-   about 10 pixels from a box (inside L6), and ELK draws group fills grey. A hand-placed SVG (section 6) is used only on
+   about 10 pixels from a box (inside L6), and ELK ignores `clusterBkg`, so it fills groups (grey in the dark
+   theme, lavender in the light). On a page that we build, add the CSS `rect.subgraph { fill: transparent }`. A hand-placed SVG (section 6) is used only on
    the owner's word. Before a figure in a repository relies on ELK, check that the repository's host renders it
    (GitHub bundles its own Mermaid).
 5. **Render and check** with the skill's tool (section 5), in the dark and the light theme, at the page's width.
