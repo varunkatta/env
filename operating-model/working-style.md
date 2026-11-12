@@ -41,7 +41,7 @@ starting work.
 | Deep launches (owner, 2026-10-06) | A deep-tier launch needs the owner's explicit yes for that launch. | Before any deep launch (an agent, a review, or a step inside a workflow), ask the owner in chat, naming the job and why deep; wait for a clear yes. Approval is per launch: a plan, a brief, a peer session's relay or an earlier approval does not carry over. With no approval, use the reasoning tier for design, architecture and planning, and the bounded tier for everything else. Applies to every session and every project. |
 | Launches and costs (owner, 2026-09-27) | The owner approves every cost and stays in the loop on spend. | **No ask:** bounded and mechanical sub-agents. **Ask first, wait for a clear yes:** a deep launch; a reasoning sub-agent doing anything other than reasoning, design, architecture or planning; any new service, monitor, workflow or scheduled wakeup; any spend. **Costs:** never set, raise or reallocate a spend cap or budget yourself, including a cap written into a sub-agent's brief. Propose the number with its estimate and basis, and wait for the owner. A new brief defaults to a $0 spend cap unless the owner approved a number. Report actual spend against approved budgets whenever it changes. Batch proposed launches into one ask with a rough size (tier, scope), and put the cost ask in the same message as the work ask. |
 | Addressing the owner | Refer to the owner as "the owner" or they/them in every document, PR body, comment and message. | Never he/his/she/her. Brief every agent that writes for the owner's repositories with this. |
-| Figures | Every figure follows [§ Figure requirements](#figure-requirements-owner-2026-11-12) below (content, layout, visual style and procedure; owner, 2026-11-12), and decision-authority's figure discipline (`support-docs/documentation-discipline.md` § Figures and `architecture-docs/README.md` § Conventions, read at core's `origin/main`): one concern per figure (topology, governance and a call ladder are three figures); wires numbered ①, ②, … with a `# | From | To | Parameters | Notes` table under the figure; a wire leaves the component that speaks it, never the box around it; deployment boundaries drawn; dashed is not built, stacked is one of many; a datamodel's members drawn all, in a subgraph named for the enum; dark mode the target, transparent group fills, light text; muted colours used sparingly; each component explained in the caption or the text beside it; rendered in the dark theme before committing. | Put the whole list in every brief to an agent that draws, reviews or edits a figure, never only "dark and numbered". The rule most often broken is one concern per figure. Owner, 2026-09-23 and 2026-10-06 (DIS `AGENTS.md`), restated 2026-11-05: "I don't want to be reminding you every single time." |
+| Figures | Every figure follows [`procedures/figures.md`](procedures/figures.md) (content, layout, visual style, procedure and the check tool; owner, 2026-11-12), which includes decision-authority's figure discipline (`support-docs/documentation-discipline.md` § Figures and `architecture-docs/README.md` § Conventions, read at core's `origin/main`): one concern per figure (topology, governance and a call ladder are three figures); wires numbered ①, ②, … with a `# | From | To | Parameters | Notes` table under the figure; a wire leaves the component that speaks it, never the box around it; deployment boundaries drawn; dashed is not built, stacked is one of many; a datamodel's members drawn all, in a subgraph named for the enum; dark mode the target, transparent group fills, light text; muted colours used sparingly; each component explained in the caption or the text beside it; rendered in the dark theme before committing. | Put the whole list in every brief to an agent that draws, reviews or edits a figure, never only "dark and numbered". The rule most often broken is one concern per figure. Owner, 2026-09-23 and 2026-10-06 (DIS `AGENTS.md`), restated 2026-11-05: "I don't want to be reminding you every single time." |
 | Session topology | A project with a lead runs four kinds of session, each one role: the **Lead** (the owner's only contact: goal, priority, plan, decisions, evidence review; no dispatch chatter, no implementation), **Lead ops** (runs the execution and monitoring the Lead assigns: workers, lanes, builds, runs; keeps a state file with dated checkpoints; liveness sweeps; reports to the Lead with evidence; never asks the owner), a **design partner** (the reasoning tier, or deep on the owner's per-launch yes; plans and designs only; takes instructions from the Lead), and **workhorses** (bounded execution at the tier the work needs). Subagents launched by the Lead report to the Lead; everything the Lead does not need to see itself goes to Lead ops. | Set the topology up at the start, not after the Lead's transcript fills with hand-backs: the Lead stays readable and available for the owner's questions while Lead ops carries the chatter. Owner, 2026-11-05: "Aren't you supposed to have a Lead Ops session for yourself so this session doesn't have all the chatter and that you are always waiting for my instructions?" The pattern was run in DIS from 2026-10 (`user-sandbox-lead/varun/dis-lead/LEAD-OPS-STATE.md`) and is now the shared model's. |
 | Lead start of session | A lead's first act is to fetch every repository it will plan over and read what landed since the checkout: new or changed `decisions.md`, `*-trial.md`, `*-plan.md`, `AGENTS.md`, stage READMEs. Every drafter and reviewer reads from a read-only worktree of `origin/main`, never the lead's checkout. | A worker's note that main is stale is acted on the same turn. On 2026-11-05 a day of design was built on a checkout 23 commits behind main. See § How a lead session starts. |
 | Lead availability | The lead is the human's live control surface: stay available for input, set and track the current goal and priority, plan and delegate, coordinate, review evidence, and recover stalls. | Do not occupy the lead with product implementation or routine probes, scripts, tests, or mechanical notes; classify each subtask by its judgment needs and route it under the shared [model-routing policy](model-routing.md). Keep orchestration active through monitoring, evidence review, and the next safe coordination action. Preserve the owner's current goal and acceptance criteria; supporting documentation, health work, or tracing cannot displace them without the owner's decision. |
@@ -171,62 +171,10 @@ No agent spends tokens on a plan for a design that can still change. A design th
 
 ## Figure requirements (owner, 2026-11-12)
 
-These rules apply to every figure in every project, personal and Mastrix. In Mastrix repositories the same
-rules are in decision-authority's `support-docs/documentation-discipline.md` § Figures and in the
-mastrix-skills `figures` skill; where they differ, the stricter rule applies. An agent that draws, reviews
-or edits a figure follows all of them, and every brief to such an agent carries this whole section.
-
-**C. Content**
-
-| # | Requirement |
-|---|---|
-| C1 | One concern for each figure. Topology, governance and a call sequence are three figures |
-| C2 | A figure is high level, or it is a close view of one component. Never both |
-| C3 | Each box is a real part, with the name that the code gives it. A part that is not built is dashed, and the text says so |
-| C4 | Each wire has a number (①, ②, …). A table under the figure gives `# \| From \| To \| Parameters \| Notes` |
-| C5 | A wire starts at the component that sends it, not at the group around it |
-| C6 | Deployment boundaries are drawn: for example the Mac, the cloud, the vendor |
-| C7 | Dashed means "not built". A stacked box means "one of many" |
-| C8 | A figure that shows the members of a datamodel shows all of them |
-
-**L. Layout**
-
-| # | Requirement | Check |
-|---|---|---|
-| L1 | Wires are straight lines or right-angle lines. No curves | Mermaid: `curve: linear` or `curve: step`; zero curved wires in the render |
-| L2 | No wire crosses another wire | zero crossings in the render |
-| L3 | No wire goes through a box, a group title or a label | zero overlaps in the render |
-| L4 | One main direction: left to right, or top to bottom. Flow follows the reading order. At most one wire goes back against it, and it has a label | count the wires against the flow |
-| L5 | At most 9 boxes and 10 wires in one figure. More than that: split the figure (C1) | count |
-| L6 | At most 4 wires into or out of one box. A store with more connections is drawn in two places, or the figure is split | count |
-| L7 | Boxes of the same kind have the same size and sit on one grid, with equal space between them | inspect the render |
-| L8 | A box label has 4 words or fewer on each line, and 2 lines or fewer. Detail goes in the wire table or the text | count |
-| L9 | A wire number sits on its wire, and touches no other label | inspect the render |
-| L10 | The figure fits 1,000 pixels of width with no side scroll, at 100% zoom | render at that width |
-
-**V. Visual style**
-
-| # | Requirement |
-|---|---|
-| V1 | Dark theme first; the figure is also readable in the light theme |
-| V2 | Three fill colours at most, each with one meaning, and a legend: for example data stores, processes, outside services |
-| V3 | One shape for each kind: a cylinder for data, a rectangle for a process, a rounded box for an outside service, a diamond for a decision |
-| V4 | Text contrast 4.5 to 1 or more; text 14 pixels or more at 100% zoom |
-| V5 | Group fills are transparent; group borders are thin and muted |
-| V6 | No decoration: no shadow, no gradient, no icon that carries no meaning |
-
-**P. Procedure**
-
-1. Write the wire table first (C4). If it has more than 10 rows, split the figure before you draw.
-2. Choose the main direction (L4), and place the boxes in columns or rows by the flow.
-3. Draw in Mermaid with straight wires (L1). If the automatic layout cannot meet L2 and L3, change the order
-   of the boxes, add invisible links for alignment, or split the figure. For a page that is not GitHub
-   Markdown, a hand-placed SVG is allowed.
-4. Render the figure in the dark theme and the light theme, at 1,000 pixels of width, and take a screenshot.
-5. Check the screenshot against L1 to L10 and V1 to V6. Write the counts (crossings, curves, overlaps,
-   boxes, wires) in the PR test plan or under the page.
-6. A second reviewer (the lead) checks the screenshot before the owner sees the figure.
-7. A figure that fails a check is not shown to the owner.
+Every figure in every project, personal and Mastrix, follows [`procedures/figures.md`](procedures/figures.md): the
+content, layout and visual rules, the procedure, and the render-and-check tool (the `figures` skill, linked into
+`~/.claude/skills` and `~/.codex/skills`). Every brief to an agent that draws, reviews or edits a figure names that
+file and tells the agent to read it in full.
 
 ## Iterative delivery: the potter's wheel
 
