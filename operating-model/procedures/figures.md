@@ -62,10 +62,18 @@ the wires" hold the company's copy; where the two differ, follow the stricter ru
    before that search.
 2. **Write the wire table first** (C4). If it has more than 10 rows, split the figure before you draw.
 3. **Place the boxes on a grid by the rows rule** (L1 to L3) on paper or in the table: row and column for each box.
-4. **Draw.** In Mermaid, use `%%{init: {"flowchart": {"curve": "step"}}}%%`, declare boxes in row order, and add
-   invisible links (`~~~`) to hold a column. When Mermaid's automatic layout cannot meet section 2, do not
-   keep changing its options: change the method. Use a hand-placed SVG on a page or an artifact; in a repository
-   whose rules require Mermaid, split the figure or bring the owner the options.
+4. **Draw in Mermaid** (the owner's ruling, 2026-11-12: "I like Mermaid over Hand-placed SVG"). Use the ELK
+   layout: start each flowchart with
+   `%%{init: {"flowchart": {"defaultRenderer": "elk"}, "themeVariables": {"clusterBkg": "transparent", "edgeLabelBackground": "#30363d"}}}%%`
+   and add `linkStyle default color:#e6edf3`, so wire numbers are light text on a dark chip in both themes. In a
+   trial on 2026-11-12, ELK gave 0 crossings and clean arrow ends where the default layout did not. Choose the
+   direction (`LR` or `TB`) that keeps the figure inside the page width. Declare boxes in row order. Put an
+   outside service in a group of its own, so the wire to it is short. Use `sequenceDiagram` for an order of
+   events. When a figure still fails a check, change the order of the boxes, the direction or the split
+   before you change the rule. Known limits of ELK, which the owner saw before this ruling: wires can pass
+   about 10 pixels from a box, and ELK draws group fills grey. A hand-placed SVG (section 6) is used only on
+   the owner's word. Before a figure in a repository relies on ELK, check that the repository's host renders it
+   (GitHub bundles its own Mermaid).
 5. **Render and check** with the skill's tool (section 5), in the dark and the light theme, at the page's width.
 6. **Look at the screenshot** of every figure, at 100% zoom. The tool finds most faults, not all.
 7. **Record** the check table in the PR test plan or under the page.
@@ -74,8 +82,25 @@ the wires" hold the company's copy; where the two differ, follow the stricter ru
 
 ## 5. The check tool
 
-`claude/skills/figures/render_figures.py <file.md or file.mmd> <out folder> [--width 1000|1600]` writes
-`figures-dark.html` and `figures-light.html`. Each page renders every Mermaid block and prints, under each
-figure, the measures of section 2 and 3 with a pass or fail. It also sets `window.FIGURE_CHECKS` for an agent
+`claude/skills/figures/render_figures.py <file.md, .mmd or .svg …> <out folder> [--width 1000|1600]` writes
+`figures-dark.html` and `figures-light.html`. Each page shows every Mermaid block and every SVG figure (an
+`.svg` file named on the command line, or one that a Markdown file links as an image), and prints, under each
+figure, the measures of sections 2 and 3 with a pass or fail. It also sets `window.FIGURE_CHECKS` for an agent
 that reads the page with a script. Open both pages in a browser and read the tables. The tool reads no network
-except the Mermaid library from the CDN.
+except the Mermaid library from the CDN. A check that reads fewer wires than the figure declares fails.
+
+## 6. Conventions of a hand-placed SVG (only on the owner's word)
+
+`svg_figure.py <spec.json>` in the skill writes one from a spec of hand-placed boxes and wires.
+
+| Part | Markup | Why |
+|---|---|---|
+| Size | `viewBox="0 0 <w> <h>"` with `width` and `height`; the width is the page's (1,000 for a document) | the check reads the width |
+| Grid | box positions on a 10-pixel grid; boxes of one kind have one size | L13 |
+| Box | `<g class="box <kind>" id="<name>">` with one shape and one `<text class="label">`; `<kind>` is `data`, `proc`, `outside` or `decision`; a box that is not built adds `planned` (a dashed border) | the check finds boxes; V2, V3, C7 |
+| Wire | `<line>`, `<polyline>` or `<path>` with `class="wire"`, `data-from="<box id>"`, `data-to="<box id>"` and `marker-end`; straight segments only | the check finds wires and their ends |
+| Wire number | `<g class="num">` with a `<rect>` and a `<text>` | L12 |
+| Group | `<g class="frame">` with a `<rect>` and a `<text class="title">` in its top-left corner | L14, C6 |
+| Legend | `<g class="legend">`, one swatch for each fill in use | V2 |
+| Theme | colours in the SVG's own `<style>`: light values first, dark values under `@media (prefers-color-scheme: dark)` and again under `.force-dark` (the check page sets it) | V1 |
+| Text | `font-family` with system fallbacks; 14 pixels or more | V4 |
