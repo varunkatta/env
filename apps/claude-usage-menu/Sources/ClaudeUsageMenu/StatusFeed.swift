@@ -1,5 +1,16 @@
 import Foundation
 
+/// Claude Code's config directory: `$CLAUDE_CONFIG_DIR` when set, as Claude Code itself honours it,
+/// otherwise `~/.claude`.
+enum ClaudeConfig {
+    static let directory: URL = {
+        if let custom = ProcessInfo.processInfo.environment["CLAUDE_CONFIG_DIR"], !custom.isEmpty {
+            return URL(fileURLWithPath: (custom as NSString).expandingTildeInPath, isDirectory: true)
+        }
+        return FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".claude")
+    }()
+}
+
 /// One rate-limit window, e.g. the rolling 5-hour session allowance or a weekly cap.
 struct UsageWindow {
     let title: String
@@ -41,10 +52,13 @@ struct UsageSnapshot {
         windows.max { $0.utilization < $1.utilization }
     }
 
-    /// A statusline reading only advances while a session renders, so age matters. An account
-    /// reading is fetched on the spot and is never stale.
+    /// Past this age a reading is no longer shown as a number in the menu bar.
+    static let staleAfter: TimeInterval = 30 * 60
+
+    /// A statusline reading only advances while a session renders, and an account reading stops
+    /// advancing when the account can no longer be read, so the age of either matters.
     var isStale: Bool {
-        source != .account && Date().timeIntervalSince(capturedAt) > 30 * 60
+        Date().timeIntervalSince(capturedAt) > Self.staleAfter
     }
 }
 
@@ -66,8 +80,7 @@ enum StatusFeedError: LocalizedError {
 /// `used_percentage` (0-100) plus `resets_at` (Unix epoch seconds). This is the fallback source,
 /// used when the account cannot be read.
 struct StatusFeed {
-    static let path = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent(".claude/usage-menu/status.json")
+    static let path = ClaudeConfig.directory.appendingPathComponent("usage-menu/status.json")
 
     func read() throws -> UsageSnapshot {
         guard let data = try? Data(contentsOf: Self.path) else { throw StatusFeedError.missing }
@@ -75,7 +88,7 @@ struct StatusFeed {
             throw StatusFeedError.unreadable
         }
 
-        let capturedAt = (root["captured_at"] as? Double).map { Date(timeIntervalSince1970: $0) } ?? .distantPast
+        let capturedAt = (root["captured_at"] as? NSNumber).map(\.doubleValue).map { Date(timeIntervalSince1970: $0) } ?? .distantPast
         let limits = root["rate_limits"] as? [String: Any] ?? [:]
 
         var windows: [UsageWindow] = []
@@ -100,7 +113,7 @@ struct StatusFeed {
     /// Claude Code documents `used_percentage` (0-100); the others are accepted defensively.
     private static func usedPercentage(in window: [String: Any]) -> Double? {
         for key in ["used_percentage", "used_percent", "usedPercent", "percent_used", "percent"] {
-            if let value = window[key] as? Double { return value }
+            if let value = window[key] as? NSNumber { return value.doubleValue }
         }
         return nil
     }
@@ -120,7 +133,7 @@ struct StatusFeed {
     static func resetDate(in window: [String: Any]) -> Date? {
         for key in ["resets_at", "resetsAt", "reset_at", "resetAt"] {
             if let text = window[key] as? String, let parsed = parseISO(text) { return parsed }
-            if let seconds = window[key] as? Double, seconds > 0 {
+            if let seconds = (window[key] as? NSNumber)?.doubleValue, seconds > 0 {
                 return Date(timeIntervalSince1970: seconds > 1e11 ? seconds / 1000 : seconds)
             }
         }
