@@ -74,7 +74,9 @@ the wires" hold the company's copy; where the two differ, follow the stricter ru
    about 10 pixels from a box (inside L6), and ELK ignores `clusterBkg`, so it fills groups (grey in the dark
    theme, lavender in the light). On a page that we build, add the CSS `rect.subgraph { fill: transparent }`. A hand-placed SVG (section 6) is used only on
    the owner's word. Before a figure in a repository relies on ELK, check that the repository's host renders it
-   (GitHub bundles its own Mermaid).
+   (GitHub bundles its own Mermaid). Trap: on a page that holds several ELK figures, `mermaid.run()` lets one
+   figure's wires be drawn into another's SVG when node or group ids repeat (a third or later figure reads
+   wrong boxes and wires); render one at a time with `await mermaid.render("figN", src)`, as the skill's tool does.
 5. **Render and check** with the skill's tool (section 5), in the dark and the light theme, at the page's width.
 6. **Look at the screenshot** of every figure, at 100% zoom. The tool finds most faults, not all.
 7. **Record** the check table in the PR test plan or under the page.

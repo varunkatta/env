@@ -60,7 +60,10 @@ h3{{font-size:15px;margin:28px 0 8px}} .figure-check{{font:12px/1.5 ui-monospace
 <script src="{MERMAID}"></script>
 <script>{CHECKS.read_text()}</script>
 <script>mermaid.initialize({{startOnLoad:false,theme:"{theme}"}});
-mermaid.run().catch(e=>console.error(e)).finally(()=>setTimeout(()=>figureChecks({width}),500));</script></body></html>"""
+(async()=>{{let n=0;
+for(const h of document.querySelectorAll('[data-figure=mermaid]')){{
+try{{const r=await mermaid.render("fig"+(++n),h.dataset.source);h.innerHTML=r.svg}}catch(e){{console.error(e);h.textContent="render error: "+e}}}}
+setTimeout(()=>figureChecks({width}),500)}})();</script></body></html>"""
 
 
 def main() -> None:
